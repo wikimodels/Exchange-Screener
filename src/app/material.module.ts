@@ -20,6 +20,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -36,12 +37,13 @@ const modules = [
   MatCardModule,
   MatListModule,
   MatTabsModule,
+  DragDropModule,
   MatTableModule,
+  MatRadioModule,
   MatInputModule,
   MatSliderModule,
   ScrollingModule,
   MatDialogModule,
-  MatRadioModule,
   MatSelectModule,
   MatRippleModule,
   MatButtonModule,

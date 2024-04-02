@@ -1,2 +1,21 @@
 <app-nav-bar></app-nav-bar>
-<ngx-gauge [type]="'full'" [value]="gaugeValue" [label]="gaugeLabel" [append]="gaugeAppendText">
+<ngx-gauge [type]="gaugeType" [value]="gaugeValue" [label]="gaugeLabel" [append]="gaugeAppendText"
+  [thresholds]="thresholdConfig"></ngx-gauge>
+
+<div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+
+  <div *ngFor="let timePeriod of timePeriods; track timePeriod" class="example-box" cdkDrag>{{timePeriod}}</div>
+
+</div>
+
+<!-- <div class="example-boundary">
+  <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
+    I can only be dragged within the dotted container
+  </div>
+  <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
+    I'm gonna fuck you up!
+  </div>
+  <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag>
+    Get the fuck off me!
+  </div>
+</div> -->
