@@ -178,9 +178,11 @@ export class ChartComponent {
           },
         ],
       };
-      this.echartInstance.setOption(this.options);
+      this.updateData(this.initialChartData);
+      //this.echartInstance.setOption(this.options);
     });
   }
+
   options: EChartsOption = {
     title: {
       text: 'ECharts 入门示例',
@@ -267,6 +269,13 @@ export class ChartComponent {
       values: values,
     };
   }
+
+  updateData(newData: any) {
+    this.echartInstance.setOption({
+      series: [{ data: newData }], // Update data series
+    });
+  }
+
   generateAscendingDates(startDate: Date, numDays: number) {
     const dates = [];
     for (let i = 0; i < numDays; i++) {
