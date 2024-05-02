@@ -4,3 +4,9 @@
   justify-content:  space-evenly;
   padding-top: 1em;
 }
+.chart{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: auto;
+}
