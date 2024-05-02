@@ -2,4 +2,4 @@
 <div echarts [options]="options" class="chart"></div>
 
 <h3>Easy to choose a theme: </h3>
-<div echarts [options]="echartOptions" theme="macarons" class="chart"></div>
+<div echarts [options]="echartOptions" theme="macarons" class="chart" (chartInit)="onChartInit($event)"></div>

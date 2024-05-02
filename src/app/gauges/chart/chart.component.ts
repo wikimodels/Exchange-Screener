@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Chart } from 'canvasjs';
 import { EChartsOption } from 'echarts';
+import { interval, map, takeWhile } from 'rxjs';
 const upColor = '#ec0000';
 const upBorderColor = '#8A0000';
 const downColor = '#00da3c';
@@ -94,57 +96,109 @@ const dataset = [
   ['2013/6/7', 2242.26, 2210.9, 2205.07, 2250.63],
   ['2013/6/13', 2190.1, 2148.35, 2126.22, 2190.1],
 ];
-interface MyEChartsOption extends EChartsOption {
-  xAxis: {
-    offset: 0;
-    type: 'category'; // Categorical data for x-axis (e.g., dates)
-    data: string[]; // Array of category labels (replace with your data)
-  };
-  yAxis: {
-    type: 'value'; // Numerical data for y-axis (e.g., stock prices)
-  };
-  series: {
-    type: 'candlestick'; // Candlestick chart type
-    data: number[][]; // Array of arrays representing candlestick data
-    // Additional candlestick-specific options (refer to ECharts docs)
-    // candlestickData: number[][], // Optional (if using separate data arrays)
-    barMaxWidth: number; // Adjust bar width visually (optional)
-  }[];
+// Function to generate ascending numbers
+function generateNumber(count: number) {
+  return count;
 }
+
+// Create an observable that emits every 30 seconds
+const source = interval(10 * 1000); // 30000 milliseconds = 30 seconds
+
+// Create an observable that starts emitting after a delay (optional)
+// const delayedSource = timer(10000).pipe(concat(source)); // Delay by 10 seconds
+
+// Combine with a function to generate numbers and takeWhile for a condition
+const observable = source.pipe(
+  map(generateNumber),
+  takeWhile((count) => count < 100) // Emit until count reaches 10 (optional)
+);
+
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css'],
 })
 export class ChartComponent {
-  prices = this.getPrices(200, 10, 100, 0.2);
-  dates = this.generateAscendingDates(new Date('2024-01-01'), 200);
-  moreDates = this.generateAscendingDates(
-    new Date(this.dates[this.dates.length - 1]),
-    30
-  );
-
+  echartInstance: any;
+  totalPrices = this.getPrices(400, 10, 100, 0.2);
+  totalDates = this.generateAscendingDates(new Date('2024-01-01'), 400);
+  totalChartData = this.prepareData(this.totalPrices, this.totalDates);
+  initialChartData = this.totalChartData.slice(0, 199);
+  secondoryData = this.totalChartData.slice(200);
   constructor() {
-    console.log(this.prices);
+    observable.subscribe((x) => {
+      this.initialChartData.push(this.secondoryData[x]);
+      this.echartOptions = {
+        title: {
+          text: '上证指数',
+          left: 0,
+        },
+        legend: {
+          data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
+        },
+        grid: {
+          left: '10%',
+          right: '10%',
+          bottom: '15%',
+        },
+        // tooltip: {
+        //   trigger: 'axis',
+        //   axisPointer: {
+        //     type: 'cross',
+        //   },
+        // },
+        xAxis: {
+          type: 'time',
+          //data: this.dates,
+        },
+        yAxis: {
+          type: 'value',
+          min: 0,
+          max: 120,
+        },
+        dataZoom: [
+          {
+            type: 'inside',
+            start: 50,
+            end: 100,
+          },
+          {
+            show: true,
+            type: 'slider',
+            top: '90%',
+            start: 50,
+            end: 100,
+          },
+        ],
+        series: [
+          {
+            type: 'candlestick',
+            data: this.initialChartData,
+            barMaxWidth: 30,
+          },
+        ],
+      };
+      this.echartInstance.setOption(this.options);
+    });
   }
   options: EChartsOption = {
     title: {
       text: 'ECharts 入门示例',
     },
-    tooltip: {},
+    //tooltip: {},
     legend: {
       data: ['销量'],
     },
     xAxis: {
-      data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+      type: 'time',
     },
     yAxis: {
       type: 'category', // Example property based on ECharts documentation
     },
     series: [
       {
-        data: [12, 34, 56], // Example data for a series
-        type: 'bar', // Example series type
+        data: [], // Example data for a series
+        type: 'line', // Example series type
       },
     ],
   };
@@ -161,15 +215,15 @@ export class ChartComponent {
       right: '10%',
       bottom: '15%',
     },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-      },
-    },
+    // tooltip: {
+    //   trigger: 'axis',
+    //   axisPointer: {
+    //     type: 'cross',
+    //   },
+    // },
     xAxis: {
-      type: 'category',
-      data: this.dates,
+      type: 'time',
+      //data: this.dates,
     },
     yAxis: {
       type: 'value',
@@ -193,12 +247,14 @@ export class ChartComponent {
     series: [
       {
         type: 'candlestick',
-        data: this.prices,
+        data: this.initialChartData,
         barMaxWidth: 30,
       },
     ],
   };
-
+  onChartInit(ec: Chart) {
+    this.echartInstance = ec;
+  }
   splitData(rawData: (number | string)[][]) {
     const categoryData = [];
     const values = [];
@@ -216,7 +272,8 @@ export class ChartComponent {
     for (let i = 0; i < numDays; i++) {
       const currentDay = new Date(startDate.getTime()); // Create a copy to avoid mutation
       currentDay.setDate(currentDay.getDate() + i); // Add 'i' days to the starting date
-      dates.push(currentDay.toISOString().slice(0, 10)); // Extract YYYY-MM-DD format
+      dates.push(currentDay.getTime());
+      //dates.push(currentDay.toISOString().slice(0, 10)); // Extract YYYY-MM-DD format
     }
 
     return dates;
@@ -270,5 +327,13 @@ export class ChartComponent {
     );
 
     return [openPrice, closePrice, lowPrice, highPrice];
+  }
+  prepareData(prices: any[], dates: any[]) {
+    const shit = prices.reduce((acc, cur, i) => {
+      const obj = [dates[i], cur[0], cur[1], cur[2], cur[3]];
+      acc.push(obj);
+      return acc;
+    }, []);
+    return shit;
   }
 }

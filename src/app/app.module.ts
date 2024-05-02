@@ -15,6 +15,7 @@ import {
   DataZoomComponent,
   DataZoomInsideComponent,
   DataZoomSliderComponent,
+  LegendComponent,
 } from 'echarts/components';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,7 @@ import { TestComponent } from './test/test.component';
 import { ChartComponent } from './gauges/chart/chart.component';
 
 echarts.use([
+  LegendComponent,
   TitleComponent,
   TooltipComponent,
   GridComponent,
