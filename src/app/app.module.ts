@@ -30,6 +30,7 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { TestComponent } from './test/test.component';
 
 import { ChartComponent } from './gauges/chart/chart.component';
+import { HttpClientModule } from '@angular/common/http';
 
 echarts.use([
   LegendComponent,
@@ -63,6 +64,7 @@ echarts.registerTheme('macarons', Marcaron);
     AppMaterialModule,
     AppRoutingModule,
     NgxGaugeModule,
+    HttpClientModule,
     CanvasJSAngularChartsModule,
   ],
   providers: [],

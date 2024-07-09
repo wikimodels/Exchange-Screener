@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Chart } from 'canvasjs';
 import { EChartsOption } from 'echarts';
 import { interval, map, takeWhile } from 'rxjs';
+import { echartOptions } from 'service/echat';
+import { ApiService } from 'service/kline.service';
 const upColor = '#ec0000';
 const upBorderColor = '#8A0000';
 const downColor = '#00da3c';
@@ -123,64 +125,68 @@ export class ChartComponent {
   totalPrices = this.getPrices(400, 10, 100, 0.2);
   totalDates = this.generateAscendingDates(new Date('2024-01-01'), 400);
   totalChartData = this.prepareData(this.totalPrices, this.totalDates);
-  initialChartData = this.totalChartData.slice(0, 199);
+  initialData = this.totalChartData.slice(0, 199);
   secondoryData = this.totalChartData.slice(200);
-  constructor() {
-    observable.subscribe((x) => {
-      this.initialChartData.push(this.secondoryData[x]);
-      this.echartOptions = {
-        title: {
-          text: '上证指数',
-          left: 0,
-        },
-        legend: {
-          data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
-        },
-        grid: {
-          left: '10%',
-          right: '10%',
-          bottom: '15%',
-        },
-        // tooltip: {
-        //   trigger: 'axis',
-        //   axisPointer: {
-        //     type: 'cross',
-        //   },
-        // },
-        xAxis: {
-          type: 'time',
-          //data: this.dates,
-        },
-        yAxis: {
-          type: 'value',
-          min: 0,
-          max: 120,
-        },
-        dataZoom: [
-          {
-            type: 'inside',
-            start: 50,
-            end: 100,
-          },
-          {
-            show: true,
-            type: 'slider',
-            top: '90%',
-            start: 50,
-            end: 100,
-          },
-        ],
-        series: [
-          {
-            type: 'candlestick',
-            data: this.initialChartData,
-            barMaxWidth: 30,
-          },
-        ],
-      };
-      this.updateData(this.initialChartData);
-      //this.echartInstance.setOption(this.options);
+  constructor(private apiService: ApiService) {
+    apiService.getData('http://localhost:80/get-echart').subscribe((data) => {
+      console.log('Data', data);
     });
+    this.echartOptions = echartOptions as EChartsOption;
+    // observable.subscribe((x) => {
+    //   this.initialData.push(this.secondoryData[x]);
+    //   this.echartOptions = {
+    //     title: {
+    //       text: '上证指数',
+    //       left: 0,
+    //     },
+    //     legend: {
+    //       data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
+    //     },
+    //     grid: {
+    //       left: '10%',
+    //       right: '10%',
+    //       bottom: '15%',
+    //     },
+    //     // tooltip: {
+    //     //   trigger: 'axis',
+    //     //   axisPointer: {
+    //     //     type: 'cross',
+    //     //   },
+    //     // },
+    //     xAxis: {
+    //       type: 'time',
+    //       //data: this.dates,
+    //     },
+    //     yAxis: {
+    //       type: 'value',
+    //       min: 0,
+    //       max: 120,
+    //     },
+    //     dataZoom: [
+    //       {
+    //         type: 'inside',
+    //         start: 50,
+    //         end: 100,
+    //       },
+    //       {
+    //         show: true,
+    //         type: 'slider',
+    //         top: '90%',
+    //         start: 50,
+    //         end: 100,
+    //       },
+    //     ],
+    //     series: [
+    //       {
+    //         type: 'candlestick',
+    //         data: this.initialData,
+    //         barMaxWidth: 30,
+    //       },
+    //     ],
+    //   };
+    //this.updateData(this.initialData);
+    //this.echartInstance.setOption(this.options);
+    // });
   }
 
   options: EChartsOption = {
@@ -204,59 +210,12 @@ export class ChartComponent {
       },
     ],
   };
-  echartOptions: EChartsOption = {
-    title: {
-      text: '上证指数',
-      left: 0,
-    },
-    legend: {
-      data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
-    },
-    grid: {
-      left: '10%',
-      right: '10%',
-      bottom: '15%',
-    },
-    // tooltip: {
-    //   trigger: 'axis',
-    //   axisPointer: {
-    //     type: 'cross',
-    //   },
-    // },
-    xAxis: {
-      type: 'time',
-      //data: this.dates,
-    },
-    yAxis: {
-      type: 'value',
-      min: 0,
-      max: 120,
-    },
-    dataZoom: [
-      {
-        type: 'inside',
-        start: 50,
-        end: 100,
-      },
-      {
-        show: true,
-        type: 'slider',
-        top: '90%',
-        start: 50,
-        end: 100,
-      },
-    ],
-    series: [
-      {
-        type: 'candlestick',
-        data: this.initialChartData,
-        barMaxWidth: 30,
-      },
-    ],
-  };
+  echartOptions: EChartsOption = echartOptions as EChartsOption;
+
   onChartInit(ec: Chart) {
     this.echartInstance = ec;
   }
+
   splitData(rawData: (number | string)[][]) {
     const categoryData = [];
     const values = [];
@@ -301,6 +260,7 @@ export class ChartComponent {
     }
     return prices;
   }
+
   generateOHLCNumbers(minPrice: number, maxPrice: number, volatility: number) {
     // Ensure minPrice is less than maxPrice
     if (minPrice >= maxPrice) {
@@ -337,6 +297,7 @@ export class ChartComponent {
 
     return [openPrice, closePrice, lowPrice, highPrice];
   }
+
   prepareData(prices: any[], dates: any[]) {
     const shit = prices.reduce((acc, cur, i) => {
       const obj = [dates[i], cur[0], cur[1], cur[2], cur[3]];
@@ -344,5 +305,17 @@ export class ChartComponent {
       return acc;
     }, []);
     return shit;
+  }
+
+  addEmptyCandles(initialData: any[], secondaryData: any[], index: number) {
+    const chank = secondaryData.splice(0, 50);
+    chank.forEach((c) => {
+      c[1] = 0;
+      c[2] = 0;
+      c[3] = 0;
+      c[4] = 0;
+    });
+    initialData = initialData.concat(chank);
+    return initialData;
   }
 }
