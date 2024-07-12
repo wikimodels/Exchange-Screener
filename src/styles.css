@@ -3,25 +3,29 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-mwl-gauge {
-  width: 150px;
-  height: 150px;
-  display: block;
-  padding: 10px;
+.chart{
+  height: 450px;
 }
-mwl-gauge > .gauge > .dial {
-  stroke: #eee;
-  stroke-width: 2;
-  fill: rgba(0, 0, 0, 0);
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 450px;
 }
-mwl-gauge > .gauge > .value {
-  stroke: rgb(47, 227, 255);
-  stroke-width: 2;
-  fill: rgba(0, 0, 0, 0);
+
+.mat-mdc-checkbox .mdc-form-field {
+  color: black;
 }
-mwl-gauge > .gauge > .value-text {
-  fill: rgb(47, 227, 255);
-  font-family: sans-serif;
-  font-weight: bold;
-  font-size: 1em;
+
+
+.mat-mdc-checkbox-checked .mat-checkbox-inner-container {
+  border-color: #2ecc71;
 }
+.mat-mdc-checkbox-checked .mdc-checkbox-inner-container {
+  border-color: red;
+}
+/*
+.mdc-checkbox .mdc-checkbox__native-control .mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background {
+  border-color: black;
+
+} */

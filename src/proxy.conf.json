@@ -1,0 +1,7 @@
+{
+  "/collective-vwap-15m": {
+    "target": "https://6976-37-215-15-248.ngrok-free.app",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

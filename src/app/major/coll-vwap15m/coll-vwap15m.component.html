@@ -1,0 +1,6 @@
+<!-- collective vwap 15m -->
+<div class="chart-container" *ngIf="!isHidden">
+  <div echarts [options]="echartOptions" theme="macarons" class="chart" (chartInit)="onChartInit($event)"></div>
+</div>
+
+<div *ngIf="isHidden && notLoaded"> <app-spinner></app-spinner></div>

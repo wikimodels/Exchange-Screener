@@ -22,6 +22,7 @@
     "@angular/router": "^16.2.0",
     "@canvasjs/angular-charts": "^1.2.0",
     "echarts": "^5.5.0",
+    "firebase-tools": "^13.13.1",
     "ngx-echarts": "^16.2.0",
     "ngx-gauge": "^8.0.0",
     "rxjs": "~7.8.0",

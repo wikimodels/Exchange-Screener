@@ -1,0 +1,15 @@
+.panel-container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+
+}
+
+.panel-element {
+  /* border: 1px solid #981f1f;
+  margin: 5px;
+  width: 100px; */
+}
