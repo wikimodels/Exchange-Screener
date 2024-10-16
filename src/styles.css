@@ -10,22 +10,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 450px;
-}
-
-.mat-mdc-checkbox .mdc-form-field {
-  color: black;
+  height: 500px;
 }
 
 
-.mat-mdc-checkbox-checked .mat-checkbox-inner-container {
-  border-color: #2ecc71;
-}
-.mat-mdc-checkbox-checked .mdc-checkbox-inner-container {
-  border-color: red;
-}
-/*
-.mdc-checkbox .mdc-checkbox__native-control .mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background {
-  border-color: black;
 
-} */
+

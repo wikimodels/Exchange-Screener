@@ -1,0 +1,55 @@
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+}
+
+.element-image{
+  width: 150px; /* Set desired width */
+  height: auto; /* Maintain aspect ratio */
+  /* Optionally, you can add margins, padding, or other styles */
+  margin: 10px 0;
+
+}
+
+.element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.element-description {
+  padding: 16px;
+  font: italic
+}
+
+.element-description-attribution {
+  opacity: 0.5;
+}
+/* Modal open state */
+/* Custom class for dialog animation */
+
+/* When the dialog is fully rendered, the opacity becomes 1 and scale back to normal */

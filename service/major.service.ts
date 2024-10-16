@@ -14,9 +14,12 @@ export class MajorService {
   constructor(private http: HttpClient) {}
 
   getCollVwap15m(): Observable<any> {
-    return this.http
-      .get(env.baseUrl + '/collective-vwap-15m', httpOptions)
-      .pipe(catchError((err) => of(err)));
+    return (
+      this.http
+        //.get(env.baseUrl + '/collective-vwap-15m', httpOptions)
+        .get(env.baseUrl + '/vo-1h', httpOptions)
+        .pipe(catchError((err) => of(err)))
+    );
   }
 
   getCollVwap1h(): Observable<any> {
