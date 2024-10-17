@@ -9,7 +9,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { Subscription } from 'rxjs';
-import { AlertsService } from 'src/services/alerts.service';
+import { AlertsService } from 'src/service/alerts.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { NewAlertComponent } from '../new-alert/new-alert.component';

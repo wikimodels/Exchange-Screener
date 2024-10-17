@@ -28,9 +28,6 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 import { HttpClientModule } from '@angular/common/http';
 import { MajorComponent } from './major/major.component';
-import { CollVwap15mComponent } from './major/coll-vwap15m/coll-vwap15m.component';
-import { CollVwap1hComponent } from './major/coll-vwap1h/coll-vwap1h.component';
-import { CollVwap4hComponent } from './major/coll-vwap4h/coll-vwap4h.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { PanelComponent } from './major/panel/panel.component';
 import { CheckboxComponent } from './major/checkbox/checkbox.component';
@@ -62,9 +59,6 @@ echarts.registerTheme('macarons', Marcaron);
     AppComponent,
     NavBarComponent,
     MajorComponent,
-    CollVwap15mComponent,
-    CollVwap1hComponent,
-    CollVwap4hComponent,
     SpinnerComponent,
     PanelComponent,
     CheckboxComponent,

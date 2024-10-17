@@ -4,7 +4,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Observable, map } from 'rxjs';
-import { KeyLevelNamesService } from 'src/services/key-level-names.service';
+import { KeyLevelNamesService } from 'src/service/key-level-names.service';
 
 export class KeyLevelNameValidator {
   static createValidator(service: KeyLevelNamesService): AsyncValidatorFn {
