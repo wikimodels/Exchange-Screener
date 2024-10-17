@@ -1,93 +1,45 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { AlertObj } from 'models/alerts/alert-obj';
+import { AlertsService } from 'src/service/alerts.service';
 
 /**
  * @title Table with sorting
  */
-export interface Task {
-  name: string;
-  completed: boolean;
-  color: ThemePalette;
-  subtasks?: Task[];
-}
+
 @Component({
   selector: 'app-triggered-alerts-table',
   templateUrl: './triggered-alerts-table.component.html',
   styleUrls: ['./triggered-alerts-table.component.css'],
 })
-export class TriggeredAlertsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = [
-    'position',
-    'name',
-    'weight',
-    'symbol',
-    'select',
-  ];
-  ELEMENT_DATA: PeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-    { position: 11, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 12, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 13, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 14, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 15, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 16, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 17, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 18, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 19, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 20, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  ];
+export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['symbol', 'keyLevelName', 'action', 'select'];
 
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-
-  pageSizes = [5, 10, 20];
-
-  totalCount = 0;
-  isLoading = true;
-  limitReached = false;
+  dataSource!: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
-  selection = new SelectionModel<PeriodicElement>(true, []); // Allows multiple selections
-  constructor() {}
-  allComplete: boolean = false;
-  task: Task = {
-    name: 'Indeterminate',
-    completed: false,
-    color: 'primary',
-    subtasks: [
-      { name: 'Primary', completed: false, color: 'primary' },
-      { name: 'Accent', completed: false, color: 'accent' },
-      { name: 'Warn', completed: false, color: 'warn' },
-    ],
-  };
+  selection = new SelectionModel<any>(true, []); // Allows multiple selections
+  constructor(private alertsService: AlertsService) {}
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  ngOnInit() {
+    this.alertsService.getAllAlerts().subscribe((data) => {});
+    this.alertsService.alerts$.subscribe((data) => {
+      console.log('DATA ==>', data);
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator; // Move paginator and sort setup inside subscribe
+      this.dataSource.sort = this.sort;
+    });
   }
+
+  ngAfterViewInit() {}
 
   // Filter function
   applyFilter(event: KeyboardEvent) {
@@ -100,14 +52,19 @@ export class TriggeredAlertsTableComponent implements AfterViewInit {
     console.log(this.selection.selected);
   }
 
+  // Toggle "Select All" checkbox
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.selection.select(...this.ELEMENT_DATA);
+      this.selection.select(...this.dataSource.data); // Use dataSource.data for the array of elements
     }
   }
+
+  // Check if all rows are selected
   isAllSelected() {
-    return this.selection.selected.length == this.ELEMENT_DATA.length;
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length; // Use dataSource.data.length
+    return numSelected === numRows;
   }
 }
