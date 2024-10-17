@@ -17,20 +17,20 @@ export class MajorService {
     return (
       this.http
         //.get(env.baseUrl + '/collective-vwap-15m', httpOptions)
-        .get(env.baseUrl + '/vo-1h', httpOptions)
+        .get('/vo-1h', httpOptions)
         .pipe(catchError((err) => of(err)))
     );
   }
 
   getCollVwap1h(): Observable<any> {
     return this.http
-      .get(env.baseUrl + '/collective-vwap-1h', httpOptions)
+      .get('/collective-vwap-1h', httpOptions)
       .pipe(catchError((err) => of(err)));
   }
 
   getCollVwap4h(): Observable<any> {
     return this.http
-      .get(env.baseUrl + '/collective-vwap-4h', httpOptions)
+      .get('/collective-vwap-4h', httpOptions)
       .pipe(catchError((err) => of(err)));
   }
 }

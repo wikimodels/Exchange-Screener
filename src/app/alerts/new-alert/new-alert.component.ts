@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoinsService } from 'src/service/coins.service';
-import { KeyLevelNamesService } from 'src/service/key-level-names.service';
+import { CoinsService } from 'src/services/coins.service';
+import { KeyLevelNamesService } from 'src/services/key-level-names.service';
 import { KeyLevelNameValidator } from 'src/functions/validators/key-level-name.validator';
-import { AlertsService } from 'src/service/alerts.service';
+import { AlertsService } from 'src/services/alerts.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({

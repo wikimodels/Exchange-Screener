@@ -1,6 +1,6 @@
+import { env } from 'environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { env } from 'environment/environment';
 
 import { AlertObj } from 'models/alerts/alert-obj';
 import {
@@ -36,7 +36,7 @@ export class AlertsService {
   // Getter to get the current value of alerts (using .value)
 
   getAllAlerts(): Observable<any> {
-    return this.http.get<AlertObj[]>(env.getAllAlertstUrl, httpOptions).pipe(
+    return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions).pipe(
       tap((data: AlertObj[]) => {
         this.alertsSubject.next(data); // Update BehaviorSubject with new data
       }),
@@ -54,7 +54,7 @@ export class AlertsService {
     return this.http.post<AlertObj>(env.createAlertUrl, data, { headers }).pipe(
       switchMap(() => {
         // After posting, fetch the updated list of alerts
-        return this.http.get<AlertObj[]>(env.getAllAlertstUrl, httpOptions);
+        return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
       }),
       tap((updatedAlerts: AlertObj[]) => {
         // Update the BehaviorSubject with the fresh list of alerts from the server

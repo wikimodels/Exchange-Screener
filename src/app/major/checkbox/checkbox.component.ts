@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PanelChart } from 'models/panel-charts.model';
 
-import { PanelService } from 'src/service/panel.service';
+import { PanelService } from 'src/services/panel.service';
 
 @Component({
   selector: 'app-checkbox',

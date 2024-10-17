@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ALERTS } from 'src/consts/url-consts';
+import { ALERTS, TRIGGERED_ALERTS } from 'src/consts/url-consts';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,6 +11,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
   goToAlerts() {
     this.router.navigate([ALERTS]);
+  }
+  goToTriggeredAlerts() {
+    this.router.navigate([TRIGGERED_ALERTS]);
   }
   ngOnInit(): void {}
   ngOnDestroy(): void {}
