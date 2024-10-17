@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { AlertsService } from 'service/alerts.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { NewAlertComponent } from '../new-alert/new-alert.component';
 
 @Component({
   selector: 'app-alerts-table',
@@ -38,7 +39,8 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
   deleteDisabled = true;
   constructor(
     private alertsService: AlertsService,
-    private dialog: MatDialog
+    private imageDialog: MatDialog,
+    private newAlertDialog: MatDialog
   ) {}
 
   dataSource!: AlertObj[];
@@ -73,8 +75,24 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
   }
 
   openImageModal(imageUrl: string): void {
-    this.dialog.open(ImageModalComponent, {
+    this.imageDialog.open(ImageModalComponent, {
       data: { imageUrl },
+      enterAnimationDuration: 10,
+      exitAnimationDuration: 300,
+    });
+  }
+
+  openNewAlertModal(): void {
+    this.imageDialog.open(NewAlertComponent, {
+      data: {},
+      enterAnimationDuration: 10,
+      exitAnimationDuration: 300,
+    });
+  }
+
+  addNewAlert() {
+    this.imageDialog.open(NewAlertComponent, {
+      data: {},
       enterAnimationDuration: 10,
       exitAnimationDuration: 300,
     });
@@ -108,6 +126,5 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  addNewAlert() {}
   deleteSelected() {}
 }

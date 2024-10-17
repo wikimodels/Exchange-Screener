@@ -29,6 +29,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const modules = [
   MatSortModule,
@@ -60,6 +61,7 @@ const modules = [
   MatProgressBarModule,
   MatSlideToggleModule,
   MatBottomSheetModule,
+  MatAutocompleteModule,
   MatProgressSpinnerModule,
 ];
 

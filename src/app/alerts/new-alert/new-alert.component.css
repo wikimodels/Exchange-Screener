@@ -1,0 +1,20 @@
+.container {
+  width: 35vw;
+  height: 90vh;
+}
+.form {
+  margin: auto auto;
+  width: 350px;
+  height: auto;
+  overflow: hidden;
+}
+.header{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-panel{
+  display: flex;
+  justify-content: right;
+}

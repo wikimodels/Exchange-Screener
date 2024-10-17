@@ -38,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertsComponent } from './alerts/alerts.component';
 import { AlertsTableComponent } from './alerts/alerts-table/alerts-table.component';
 import { ImageModalComponent } from './alerts/image-modal/image-modal.component';
+import { NewAlertComponent } from './alerts/new-alert/new-alert.component';
 
 echarts.use([
   LegendComponent,
@@ -68,6 +69,7 @@ echarts.registerTheme('macarons', Marcaron);
     AlertsComponent,
     AlertsTableComponent,
     ImageModalComponent,
+    NewAlertComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),
