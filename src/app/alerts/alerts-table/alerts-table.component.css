@@ -49,7 +49,30 @@ tr.element-row:not(.expanded-row):active {
 .element-description-attribution {
   opacity: 0.5;
 }
-/* Modal open state */
-/* Custom class for dialog animation */
+.round-image {
+  width: 25px; /* Set your desired width */
+  height: 25px; /* Set your desired height */
+  border-radius: 50%; /* This makes the image round */
+  object-fit: cover;
+  margin-right: 4px;
+}
+.symbol-cell {
+  display: flex;
+  align-items: center;
+   /* Vertically aligns items in the center */
+}
+.clickable-icon {
+  cursor: pointer;
+}
 
-/* When the dialog is fully rendered, the opacity becomes 1 and scale back to normal */
+.button-container {
+  display: flex;
+  justify-content: flex-end;  /* Align button to the right */
+  margin-bottom: 10px;        /* Add some space between the button and the table */
+}
+
+/* Optional: Additional styling for the button */
+.button-container button {
+  margin-right: 10px;
+  margin-left: 20px;            /* Ensure button aligns to the edge */
+}

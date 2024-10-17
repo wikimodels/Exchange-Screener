@@ -11,6 +11,7 @@ import { AlertObj } from 'models/alerts/alert-obj';
 import { Subscription } from 'rxjs';
 import { AlertsService } from 'service/alerts.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-alerts-table',
@@ -34,22 +35,34 @@ import { ImageModalComponent } from '../image-modal/image-modal.component';
 })
 export class AlertsTableComponent implements OnInit, OnDestroy {
   private dataSubscription: Subscription | null = null;
+  deleteDisabled = true;
   constructor(
     private alertsService: AlertsService,
     private dialog: MatDialog
   ) {}
 
   dataSource!: AlertObj[];
-  columnsToDisplay = ['symbol', 'keyLevelName', 'action', 'isActive', 'links'];
-  // columnAliases  = {
-  //   symbol: 'Symbol',
-  //   keyLevelName: 'Key Level Name',
-  //   isActive: 'Active Status',
-  //   expandedDetail: 'Details',
-  // };
+  columnsToDisplay = [
+    'symbol',
+    'keyLevelName',
+    'action',
+    'isActive',
+    'links',
+    'edit',
+  ];
+
+  columnAliases: { [key: string]: string } = {
+    symbol: 'Symbol',
+    keyLevelName: 'Key Level Name',
+    action: 'Action',
+    isActive: 'Active Status',
+    links: 'Links',
+  };
 
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement!: PeriodicElement | null;
+  expandedElement!: any | null;
+  selectedIds: string[] = [];
+
   ngOnInit(): void {
     this.dataSubscription = this.alertsService
       .getAllAlerts()
@@ -58,6 +71,7 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
         console.log(data);
       });
   }
+
   openImageModal(imageUrl: string): void {
     this.dialog.open(ImageModalComponent, {
       data: { imageUrl },
@@ -66,17 +80,34 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
     });
   }
 
+  editAlert(element: AlertObj) {
+    console.log(element);
+  }
+
+  deleteAlert(id: string) {
+    console.log(id);
+  }
+
+  onClick(event: MouseEvent) {
+    event.stopPropagation(); // Stops event propagation
+  }
+
+  onCheckboxChange(event: MatCheckboxChange, element: AlertObj) {
+    if (event.checked) {
+      this.selectedIds.push(element.id);
+    } else {
+      this.selectedIds = this.selectedIds.filter((id) => id !== element.id);
+    }
+    this.deleteDisabled = this.selectedIds.length == 0 ? true : false;
+    console.log(this.selectedIds);
+  }
+
   ngOnDestroy(): void {
     if (this.dataSubscription) {
       this.dataSubscription.unsubscribe();
     }
   }
-}
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  description: string;
+  addNewAlert() {}
+  deleteSelected() {}
 }

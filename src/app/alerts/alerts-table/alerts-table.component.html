@@ -1,24 +1,70 @@
+<div class="button-container">
+  <button mat-raised-button (click)="addNewAlert()">Add New Alert</button>
+  <button mat-raised-button [disabled]="deleteDisabled" (click)="deleteSelected()" color="warn">Delete Selected</button>
+</div>
+
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-
-  <ng-container *ngFor="let column of columnsToDisplay" [matColumnDef]="column">
-    <th mat-header-cell *matHeaderCellDef> {{ column }} </th>
-
-    <td mat-cell *matCellDef="let element"
-      [style.font-weight]="column === 'symbol' || column === 'keyLevelName' ? 'bold' : 'normal'">
-
-      <!-- Display checkbox for 'isActive' column -->
-      <ng-container *ngIf="column === 'isActive'; else defaultContent">
-        <mat-checkbox [(ngModel)]="element[column]" disabled> <!-- or use [checked]="element[column]" -->
-        </mat-checkbox>
-      </ng-container>
-
-      <!-- Default content for other columns -->
-      <ng-template #defaultContent>
-        {{ element[column] }}
-      </ng-template>
+  <!-- Position Column -->
+  <ng-container matColumnDef="symbol">
+    <th mat-header-cell *matHeaderCellDef> Symbol</th>
+    <td mat-cell *matCellDef="let element" class="symbol-cell">
+      <img [src]="element.logoLink" alt="logo" class="round-image" />
+      {{element.symbol}} ({{element.coinCategory}})
     </td>
   </ng-container>
 
+  <!-- Name Column -->
+  <ng-container matColumnDef="keyLevelName">
+    <th mat-header-cell *matHeaderCellDef> KL Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.keyLevelName}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> Price Action </th>
+    <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="isActive">
+    <th mat-header-cell *matHeaderCellDef> Active </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon *ngIf="element.isActive == true">check</mat-icon>
+      <mat-icon *ngIf="element.isActive == false">close</mat-icon>
+    </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="links">
+    <th mat-header-cell *matHeaderCellDef> Links </th>
+    <td mat-cell *matCellDef="let element">
+      <!-- TRADING VIEW -->
+      <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank" (click)="onClick($event)">
+        <img src="assets/icons/tv.svg" alt="TradingView" class="round-image" />
+      </a>
+      <!-- COIN GLASS -->
+      <a *ngIf="element.cgLink" [href]="element.cgLink" target="_blank" (click)="onClick($event)">
+        <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
+      </a>
+      <!-- BINANCE -->
+      <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank" (click)="onClick($event)">
+        <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
+      </a>
+      <!-- BYBIT -->
+      <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank" (click)="onClick($event)">
+        <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
+      </a>
+    </td>
+  </ng-container>
+  <!-- Name Column -->
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element" class="symbol-cell">
+      <mat-icon (click)="editAlert(element); $event.stopPropagation()" class="clickable-icon">edit</mat-icon>
+      <mat-icon (click)="deleteAlert(element.id); $event.stopPropagation()" class="clickable-icon">delete</mat-icon>
+      <mat-checkbox (click)="$event.stopPropagation()" (change)="onCheckboxChange($event, element)"></mat-checkbox>
+    </td>
+  </ng-container>
 
   <ng-container matColumnDef="expand">
     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
@@ -31,7 +77,8 @@
     </td>
   </ng-container>
 
-  <!-- Expanded Content Column -->
+
+
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
       <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
