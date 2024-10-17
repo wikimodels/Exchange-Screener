@@ -9,7 +9,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { Subscription } from 'rxjs';
-import { AlertsService } from 'service/alerts.service';
+import { AlertsService } from 'src/service/alerts.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { NewAlertComponent } from '../new-alert/new-alert.component';
@@ -66,12 +66,12 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
   selectedIds: string[] = [];
 
   ngOnInit(): void {
-    this.dataSubscription = this.alertsService
-      .getAllAlerts()
-      .subscribe((data: AlertObj[]) => {
+    this.dataSubscription = this.alertsService.alerts$.subscribe(
+      (data: AlertObj[]) => {
         this.dataSource = data;
         console.log(data);
-      });
+      }
+    );
   }
 
   openImageModal(imageUrl: string): void {

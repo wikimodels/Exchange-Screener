@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-import { CoinsService } from 'service/coins.service';
+import { CoinsService } from 'src/service/coins.service';
 
 @Component({
   selector: 'app-root',

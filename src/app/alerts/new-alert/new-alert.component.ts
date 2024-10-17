@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CoinsService } from 'service/coins.service';
-import { KeyLevelNamesService } from 'service/key-level-names.service';
-import { KeyLevelNameValidator } from 'validators/key-level-name.validator';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CoinsService } from 'src/service/coins.service';
+import { KeyLevelNamesService } from 'src/service/key-level-names.service';
+import { KeyLevelNameValidator } from 'src/functions/validators/key-level-name.validator';
+import { AlertsService } from 'src/service/alerts.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-alert',
@@ -17,7 +19,9 @@ export class NewAlertComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private coinsService: CoinsService,
-    private service: KeyLevelNamesService
+    private keyLevelNameservice: KeyLevelNamesService,
+    private alertService: AlertsService,
+    public dialogRef: MatDialogRef<NewAlertComponent>
   ) {}
   ngOnInit(): void {
     this.symbols = this.coinsService.Coins.map((c) => c.symbol);
@@ -27,7 +31,7 @@ export class NewAlertComponent implements OnInit {
         '',
         Validators.compose([Validators.required]),
         Validators.composeAsync([
-          KeyLevelNameValidator.createValidator(this.service),
+          KeyLevelNameValidator.createValidator(this.keyLevelNameservice),
         ]),
       ],
       action: ['', Validators.required],
@@ -49,7 +53,14 @@ export class NewAlertComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form);
+    if (this.form?.valid) {
+      const alert = this.form.value;
+      this.alertService.createAlert(alert).subscribe((data) => {
+        this.dialogRef.close();
+      });
+    }
   }
-  cancel() {}
+  cancel() {
+    this.dialogRef.close;
+  }
 }

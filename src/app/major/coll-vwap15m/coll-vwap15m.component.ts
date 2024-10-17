@@ -3,8 +3,8 @@ import { Chart, ChartOptions } from 'canvasjs';
 import { EChartsOption } from 'echarts';
 import { PanelChart } from 'models/panel-charts.model';
 
-import { MajorService } from 'service/major.service';
-import { PanelService } from 'service/panel.service';
+import { MajorService } from 'src/service/major.service';
+import { PanelService } from 'src/service/panel.service';
 
 @Component({
   selector: 'app-coll-vwap15m',
