@@ -57,7 +57,6 @@ tr.element-row:not(.expanded-row):active {
 .symbol-cell {
   display: flex;
   align-items: center;
-   /* Vertically aligns items in the center */
 }
 .clickable-icon {
   cursor: pointer;

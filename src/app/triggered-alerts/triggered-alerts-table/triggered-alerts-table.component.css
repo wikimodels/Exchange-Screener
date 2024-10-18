@@ -48,8 +48,8 @@ tr.element-row:not(.expanded-row):active {
   opacity: 0.5;
 }
 .round-image {
-  width: 25px; /* Set your desired width */
-  height: 25px; /* Set your desired height */
+  width: 22px; /* Set your desired width */
+  height: 22px; /* Set your desired height */
   border-radius: 50%; /* This makes the image round */
   object-fit: cover;
   margin-right: 4px;

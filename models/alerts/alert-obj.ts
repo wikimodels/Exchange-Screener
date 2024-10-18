@@ -10,6 +10,7 @@ export interface AlertObj {
   description?: string;
   creationTime?: number;
   activationTime?: number;
+  activationTimeStr?: string;
   price: number;
   high: number;
   low: number;

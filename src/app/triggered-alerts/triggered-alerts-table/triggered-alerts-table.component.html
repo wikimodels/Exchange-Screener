@@ -1,35 +1,92 @@
 <mat-form-field appearance="outline">
+  <mat-icon matPrefix>filter_list</mat-icon>
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Search">
 </mat-form-field>
 
 <div>
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12">
 
-    <!-- Position Column -->
+    <!-- SYMBOL -->
     <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-        No.
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
+      <td mat-cell *matCellDef="let element" class="symbol-cell">
+        <img [src]="element.logoLink" alt="logo" class="round-image" />
+        {{element.symbol}} ({{element.coinCategory}})
+      </td>
     </ng-container>
 
-    <!-- Name Column -->
+    <!-- KEY LEVEL NAME -->
     <ng-container matColumnDef="keyLevelName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-        Name
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        KL Name
       </th>
-      <td mat-cell *matCellDef="let element"> {{element.keyLevelName}} </td>
+      <td mat-cell *matCellDef="let element"> <b>{{element.keyLevelName}}</b> </td>
     </ng-container>
 
-    <!-- Weight Column -->
+    <!-- ACTION -->
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-        Weight
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Action
       </th>
       <td mat-cell *matCellDef="let element"> {{element.action}} </td>
     </ng-container>
-    <!-- Checkbox Column -->
+
+    <!-- ACTIVATION TIME STRING -->
+    <ng-container matColumnDef="activationTimeStr">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Activation Time
+      </th>
+      <td mat-cell *matCellDef="let element"> <i>{{element.activationTimeStr}}</i> </td>
+    </ng-container>
+
+    <!-- LINKS -->
+    <ng-container matColumnDef="links">
+      <th mat-header-cell *matHeaderCellDef> Links </th>
+      <td mat-cell *matCellDef="let element">
+        <!-- TRADING VIEW -->
+        <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank" (click)="onClick($event)">
+          <img src="assets/icons/tv.svg" alt="TradingView" class="round-image" />
+        </a>
+        <!-- COIN GLASS -->
+        <a *ngIf="element.cgLink" [href]="element.cgLink" target="_blank" (click)="onClick($event)">
+          <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
+        </a>
+        <!-- BINANCE -->
+        <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank" (click)="onClick($event)">
+          <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
+        </a>
+        <!-- BYBIT -->
+        <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank" (click)="onClick($event)">
+          <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
+        </a>
+      </td>
+    </ng-container>
+
+
+    <!-- DESCRIPTION -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank" (click)="onClick($event)">
+          <img src="assets/icons/quick-ref.svg" alt="TradingView" class="round-image" />
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- IMAGE -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank" (click)="onClick($event)">
+          <img src="assets/icons/flare.svg" alt="TradingView" class="round-image" />
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- CHECKBOX-->
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <!-- Select All Checkbox -->

@@ -19,7 +19,16 @@ import { AlertsService } from 'src/service/alerts.service';
   styleUrls: ['./triggered-alerts-table.component.css'],
 })
 export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['symbol', 'keyLevelName', 'action', 'select'];
+  displayedColumns: string[] = [
+    'symbol',
+    'keyLevelName',
+    'action',
+    'activationTimeStr',
+    'links',
+    'description',
+    'image',
+    'select',
+  ];
 
   dataSource!: any;
 
@@ -66,5 +75,9 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length; // Use dataSource.data.length
     return numSelected === numRows;
+  }
+
+  onClick(event: MouseEvent) {
+    event.stopPropagation(); // Stops event propagation
   }
 }
