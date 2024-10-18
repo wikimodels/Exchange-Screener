@@ -38,6 +38,8 @@ import { ImageModalComponent } from './alerts/image-modal/image-modal.component'
 import { NewAlertComponent } from './alerts/new-alert/new-alert.component';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
 import { TriggeredAlertsTableComponent } from './triggered-alerts/triggered-alerts-table/triggered-alerts-table.component';
+import { ScreenModalComponent } from './triggered-alerts/screen-modal/screen-modal.component';
+import { DescriptionModalComponent } from './triggered-alerts/description-modal/description-modal.component';
 
 echarts.use([
   LegendComponent,
@@ -68,6 +70,8 @@ echarts.registerTheme('macarons', Marcaron);
     NewAlertComponent,
     TriggeredAlertsComponent,
     TriggeredAlertsTableComponent,
+    ScreenModalComponent,
+    DescriptionModalComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

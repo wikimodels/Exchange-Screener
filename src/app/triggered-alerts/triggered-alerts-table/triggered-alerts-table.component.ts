@@ -3,11 +3,14 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { AlertsService } from 'src/service/alerts.service';
+import { ScreenModalComponent } from '../screen-modal/screen-modal.component';
+import { DescriptionModalComponent } from '../description-modal/description-modal.component';
 
 /**
  * @title Table with sorting
@@ -36,14 +39,18 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
   selection = new SelectionModel<any>(true, []); // Allows multiple selections
-  constructor(private alertsService: AlertsService) {}
+  constructor(
+    private alertsService: AlertsService,
+    private screenModalDialog: MatDialog,
+    private descriptionModalDialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.alertsService.getAllAlerts().subscribe((data) => {});
     this.alertsService.alerts$.subscribe((data) => {
       console.log('DATA ==>', data);
       this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator; // Move paginator and sort setup inside subscribe
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
@@ -79,5 +86,21 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
 
   onClick(event: MouseEvent) {
     event.stopPropagation(); // Stops event propagation
+  }
+
+  onOpenScreenModalDialog(obj: AlertObj): void {
+    this.screenModalDialog.open(ScreenModalComponent, {
+      data: { mainImgUrl: obj.mainImgUrl },
+      enterAnimationDuration: 10,
+      exitAnimationDuration: 300,
+    });
+  }
+
+  onOpenDescriptionModalDialog(obj: AlertObj): void {
+    this.descriptionModalDialog.open(DescriptionModalComponent, {
+      data: { mainImgUrl: obj.mainImgUrl, description: obj.description },
+      enterAnimationDuration: 10,
+      exitAnimationDuration: 300,
+    });
   }
 }

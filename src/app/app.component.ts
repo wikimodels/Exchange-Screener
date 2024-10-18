@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'coinglass', url: 'assets/icons/coinglass.svg' },
       { name: 'edit', url: 'assets/icons/edit.svg' },
       { name: 'delete', url: 'assets/icons/delete.svg' },
-      { name: 'quick-ref', url: 'assets/icons/quick-ref.svg' },
+      { name: 'info', url: 'assets/icons/info.svg' },
       { name: 'flare', url: 'assets/icons/flare.svg' },
       // Add more icons here
     ];
