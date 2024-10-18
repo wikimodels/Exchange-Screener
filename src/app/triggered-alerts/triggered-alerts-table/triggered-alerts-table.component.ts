@@ -29,7 +29,6 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
     'activationTimeStr',
     'links',
     'description',
-    'image',
     'select',
   ];
 
@@ -90,7 +89,7 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
 
   onOpenScreenModalDialog(obj: AlertObj): void {
     this.screenModalDialog.open(ScreenModalComponent, {
-      data: { mainImgUrl: obj.mainImgUrl },
+      data: obj,
       enterAnimationDuration: 10,
       exitAnimationDuration: 300,
     });
@@ -98,9 +97,11 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
 
   onOpenDescriptionModalDialog(obj: AlertObj): void {
     this.descriptionModalDialog.open(DescriptionModalComponent, {
-      data: { mainImgUrl: obj.mainImgUrl, description: obj.description },
+      data: obj,
       enterAnimationDuration: 10,
       exitAnimationDuration: 300,
+      width: '90vw',
+      height: '98vh',
     });
   }
 }

@@ -1,1 +1,27 @@
-<p>description-modal works!</p>
+<div class="modal-content" (click)="closeDialog()">
+  <div class="card">
+    <div class="card-symbol">
+      <div>
+        <img [src]="data.logoLink" [alt]="data.symbol" class="round-image" (load)="onImageLoad()" />
+      </div>
+      <div>
+        <h1 style="margin-top: 10px;">{{data.symbol}} ({{data.coinCategory}})</h1>
+      </div>
+    </div>
+    <div class="vertical-line"></div>
+    <div class="card-description" style="text-align: left;">
+      {{data.description}} 6. Create the Audits component in the apps/components folder. And add audits component in
+      router and path as audits. Run the project by using “ng serve” and open the audits component by using
+      “localhost:4200/audits” in the browser address bar.
+
+      7. In the side audits.component.ts file create a variable for displaying columns as below and also create the
+      total count variable.
+    </div>
+  </div>
+
+  <div class="image-container">
+    <img [src]="   data.mainImgUrl  " [alt]="data.symbol" class="large-image" (load)="onImageLoad()"
+      [@fadeIn]="imageLoaded ? 'visible' : 'hidden'" />
+  </div>
+
+</div>
