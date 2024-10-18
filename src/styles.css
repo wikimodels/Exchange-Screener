@@ -13,8 +13,39 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   height: 500px;
 }
 
-.no-scroll {
-  overflow: hidden;
+.custom-snackbar {
+  background-color: #ff5722 !important;
+  color: white !important;
+}
+
+/* SNACKBAR CSS FOR ANGULAR 16 */
+.info-snackbar {
+  --mdc-snackbar-container-color: green;
+  --mat-mdc-snack-bar-button-color: white;
 }
 
 
+/* .mat-mdc-row:nth-child(even){
+  background-color: #faf8f2!important;
+}
+
+.mat-mdc-row{
+  height: 35px!important;
+}
+
+.mat-mdc-header-row{
+  background-color: #ebe7df !important;
+} */
+
+.triggered-alerts-table .mat-mdc-row:nth-child(even) {
+  background-color: #faf8f2!important;
+}
+
+.triggered-alerts-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.triggered-alerts-table .mat-mdc-header-row {
+  background-color: #ebe7df !important;
+  height: 45px;
+}

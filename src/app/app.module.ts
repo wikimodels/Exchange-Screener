@@ -40,6 +40,7 @@ import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.co
 import { TriggeredAlertsTableComponent } from './triggered-alerts/triggered-alerts-table/triggered-alerts-table.component';
 import { ScreenModalComponent } from './triggered-alerts/screen-modal/screen-modal.component';
 import { DescriptionModalComponent } from './triggered-alerts/description-modal/description-modal.component';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 echarts.use([
   LegendComponent,
@@ -72,6 +73,7 @@ echarts.registerTheme('macarons', Marcaron);
     TriggeredAlertsTableComponent,
     ScreenModalComponent,
     DescriptionModalComponent,
+    SnackbarComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

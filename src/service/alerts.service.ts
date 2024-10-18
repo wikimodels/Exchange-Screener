@@ -14,6 +14,8 @@ import {
   BehaviorSubject,
   switchMap,
 } from 'rxjs';
+import { SnackbarService } from './snackbar.service';
+import { number } from 'echarts';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,7 +25,10 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class AlertsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private snackbarService: SnackbarService
+  ) {}
   private alertsSubject: BehaviorSubject<AlertObj[]> = new BehaviorSubject<
     AlertObj[]
   >([]);
@@ -62,6 +67,30 @@ export class AlertsService {
       }),
       catchError(this.handleError) // Handle errors for both POST and GET
     );
+  }
+
+  deleteTriggeredAlerts(alerts: AlertObj[]) {
+    const ids = alerts.map((a) => a.id);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http
+      .post<AlertObj>(env.deleteAlertsButchUrl, ids, { headers })
+      .pipe(
+        switchMap((data: any) => {
+          console.log('Delete Response', data);
+          const msg = `Deleted ${data.deleted} items`;
+          this.snackbarService.showSnackBar(msg, '');
+          // After posting, fetch the updated list of alerts
+          return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
+        }),
+        tap((updatedAlerts: AlertObj[]) => {
+          // Update the BehaviorSubject with the fresh list of alerts from the server
+          this.alertsSubject.next(updatedAlerts);
+        }),
+        catchError(this.handleError) // Handle errors for both POST and GET
+      );
   }
 
   // Handle errors in HTTP request

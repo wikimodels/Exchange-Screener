@@ -1,11 +1,23 @@
-<mat-form-field appearance="outline">
-  <mat-icon matPrefix>filter_list</mat-icon>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Search">
-</mat-form-field>
+<div class="controls-container">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-icon matPrefix>filter_list</mat-icon>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <div>
+    <h1>Triggered Alerts</h1>
+  </div>
+  <div>
+    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
+      style="height: 45px;">Delete
+      Selected</button>
+  </div>
+</div>
 
 <div>
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 triggered-alerts-table">
 
     <!-- SYMBOL -->
     <ng-container matColumnDef="symbol">

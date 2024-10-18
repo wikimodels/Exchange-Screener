@@ -1,0 +1,18 @@
+/* snackbar.component.css */
+.snackbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #ffd700; /* Example color for button */
+  font-size: 30px;
+  cursor: pointer;
+}
+
+
+

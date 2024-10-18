@@ -33,6 +33,7 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
   ];
 
   dataSource!: any;
+  deleteDisabled = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -64,18 +65,19 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
 
   onDataToggled(data: any) {
     this.selection.toggle(data);
+    this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
     console.log(this.selection.selected);
   }
-
   // Toggle "Select All" checkbox
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
+      this.deleteDisabled = true;
     } else {
-      this.selection.select(...this.dataSource.data); // Use dataSource.data for the array of elements
+      this.selection.select(...this.dataSource.data);
+      this.deleteDisabled = false;
     }
   }
-
   // Check if all rows are selected
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -103,5 +105,13 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
       width: '90vw',
       height: '98vh',
     });
+  }
+
+  onDeleteSelected() {
+    const objs = this.selection.selected;
+    this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
+      this.selection.clear();
+    });
+    console.log(this.selection.selected);
   }
 }

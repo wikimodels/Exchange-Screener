@@ -1,0 +1,3 @@
+interface DeleteResponse {
+  deleted: number;
+}
