@@ -15,10 +15,6 @@ export class CarouselComponent {
   previousSlide = 0;
   isNext = true;
 
-  constructor() {
-    //this.startAutoSlide();
-  }
-
   nextSlide() {
     this.previousSlide = this.currentSlide;
     this.isNext = true;
@@ -36,20 +32,5 @@ export class CarouselComponent {
     this.previousSlide = this.currentSlide;
     this.isNext = index > this.currentSlide;
     this.currentSlide = index;
-  }
-
-  // Start automatic slide transition
-  startAutoSlide() {
-    // this.slideInterval = setInterval(() => {
-    //   this.nextSlide();
-    // }, 5000); // Change slide every 5 seconds
-  }
-
-  // Stop automatic slide transition
-  stopAutoSlide() {}
-
-  // Optionally, stop auto-slide when the user interacts with the carousel
-  ngOnDestroy() {
-    this.stopAutoSlide();
   }
 }

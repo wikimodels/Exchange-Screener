@@ -42,6 +42,8 @@ import { ScreenModalComponent } from './triggered-alerts/screen-modal/screen-mod
 import { DescriptionModalComponent } from './triggered-alerts/description-modal/description-modal.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { MenuComponent } from './nav-bar/menu/menu.component';
+import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
 
 echarts.use([
   LegendComponent,
@@ -76,6 +78,8 @@ echarts.registerTheme('macarons', Marcaron);
     DescriptionModalComponent,
     SnackbarComponent,
     CarouselComponent,
+    MenuComponent,
+    ArchivedAlertsComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

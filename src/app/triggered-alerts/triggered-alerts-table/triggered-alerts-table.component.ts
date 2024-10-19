@@ -102,8 +102,8 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
       data: obj,
       enterAnimationDuration: 10,
       exitAnimationDuration: 300,
-      width: '90vw',
-      height: '98vh',
+      width: '100vw',
+      height: '100vh',
     });
   }
 

@@ -1,4 +1,4 @@
-<div class="modal-content" (click)="closeDialog()">
+<div class="modal-content">
   <div class="card">
     <div class="card-symbol">
       <div>
@@ -19,9 +19,10 @@
     </div>
   </div>
 
-  <div class="image-container">
-    <img [src]="   data.mainImgUrl  " [alt]="data.symbol" class="large-image" (load)="onImageLoad()"
-      [@fadeIn]="imageLoaded ? 'visible' : 'hidden'" />
+  <div style="width: 90%;">
+    <app-carousel></app-carousel>
+    <!-- <img [src]="   data.mainImgUrl  " [alt]="data.symbol" class="large-image" (load)="onImageLoad()"
+      [@fadeIn]="imageLoaded ? 'visible' : 'hidden'" /> -->
   </div>
 
 </div>

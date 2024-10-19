@@ -1,14 +1,12 @@
 <mat-toolbar class="container">
-  <button mat-icon-button>
-    <mat-icon>menu</mat-icon>
-  </button>
+  <app-menu></app-menu>
 
   <span></span>
-  <button mat-icon-button (click)="goToAlerts()">
+  <button mat-icon-button>
     <mat-icon svgIcon="alarm"></mat-icon>
   </button>
 
-  <button mat-icon-button (click)="goToTriggeredAlerts()">
+  <button mat-icon-button>
     <mat-icon svgIcon="triggered-alarm"></mat-icon>
   </button>
 

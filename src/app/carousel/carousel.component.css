@@ -1,37 +1,44 @@
 .carousel-container {
   position: relative;
-  width:1000px;
-  height: 600px;
+  width: 77vw;
+  height: 90vh;
   margin: 0 auto;
   overflow: hidden;
 }
 
 .carousel-slide {
-  display: none;
+  display: none; /* Hide all slides by default */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
-
+  opacity: 0; /* Fully transparent */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition */
 }
 
 .carousel-slide.active {
-  display: block;
-  opacity: 1;
+  display: block; /* Show active slide */
+  opacity: 1; /* Fully opaque */
   transform: translateX(0); /* The active slide is visible */
+}
+
+.carousel-slide:not(.active) {
+  display: block; /* Keep slides in the DOM to allow transition */
+  opacity: 0; /* Fully transparent */
+  transform: translateX(100%); /* Position non-active slides off the screen */
 }
 
 .carousel-slide img {
   width: 100%;
-  height: 800px;
+  height: 100%; /* Ensure the image fills the height of the slide */
+  object-fit: cover; /* Maintain aspect ratio and cover the slide area */
 }
 
 .carousel-control {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%); /* Center vertically */
 
   cursor: pointer;
   padding: 10px;
@@ -49,14 +56,14 @@
 }
 
 .carousel-control.prev {
-  left: 10px;
+  left: 10px; /* Position from the left */
 }
 
 .carousel-control.next {
-  right: 10px;
-
+  right: 10px; /* Position from the right */
 }
 
+/* Carousel Indicators */
 .carousel-indicators {
   position: absolute;
   bottom: 10px;
@@ -70,11 +77,11 @@
   display: inline-block;
   width: 12px;
   height: 12px;
-  background-color: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
+  background-color: #ccc; /* Default color for inactive indicators */
+  border-radius: 50%; /* Make them circular */
+  cursor: pointer; /* Pointer cursor on hover */
 }
 
 .carousel-indicators .active {
-  background-color: #333;
+  background-color: #333; /* Color for active indicator */
 }

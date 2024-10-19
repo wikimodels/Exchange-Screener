@@ -25,4 +25,8 @@ export class CoinsService {
       })
     );
   }
+
+  checkSymbolNameExists(symbol: string): Observable<any> {
+    return of(this.coins.some((c) => c.symbol == symbol));
+  }
 }

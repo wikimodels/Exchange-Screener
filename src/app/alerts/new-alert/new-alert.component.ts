@@ -5,6 +5,7 @@ import { KeyLevelNamesService } from 'src/service/key-level-names.service';
 import { KeyLevelNameValidator } from 'src/functions/validators/key-level-name.validator';
 import { AlertsService } from 'src/service/alerts.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { SymbolNameValidator } from 'src/functions/validators/symbol-name.validator';
 
 @Component({
   selector: 'app-new-alert',
@@ -26,7 +27,13 @@ export class NewAlertComponent implements OnInit {
   ngOnInit(): void {
     this.symbols = this.coinsService.Coins.map((c) => c.symbol);
     this.form = this.fb.group({
-      symbol: ['', Validators.required],
+      symbol: [
+        '',
+        Validators.compose([Validators.required]),
+        Validators.composeAsync([
+          SymbolNameValidator.createValidator(this.coinsService),
+        ]),
+      ],
       keyLevelName: [
         '',
         Validators.compose([Validators.required]),
