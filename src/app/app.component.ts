@@ -44,6 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'delete', url: 'assets/icons/delete.svg' },
       { name: 'info', url: 'assets/icons/info.svg' },
       { name: 'flare', url: 'assets/icons/flare.svg' },
+      { name: '_arrow_forward', url: 'assets/icons/arrow-forward.svg' },
+      { name: '_arrow_back', url: 'assets/icons/arrow-back.svg' },
       // Add more icons here
     ];
 

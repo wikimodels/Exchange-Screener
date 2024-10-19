@@ -1,0 +1,80 @@
+.carousel-container {
+  position: relative;
+  width:1000px;
+  height: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+
+}
+
+.carousel-slide.active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0); /* The active slide is visible */
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 800px;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  cursor: pointer;
+  padding: 10px;
+  color: red;
+  visibility: hidden; /* Initially hide the icons */
+  opacity: 0; /* Fully transparent */
+  transition: opacity 0.3s ease, visibility 0s 0.3s; /* Smooth transition */
+}
+
+/* Show the icons when hovering over the carousel container */
+.carousel-container:hover .carousel-control {
+  visibility: visible; /* Make the icons visible on hover */
+  opacity: 1; /* Fully opaque */
+  transition: opacity 0.3s ease; /* Smooth transition for the opacity */
+}
+
+.carousel-control.prev {
+  left: 10px;
+}
+
+.carousel-control.next {
+  right: 10px;
+
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.carousel-indicators span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.carousel-indicators .active {
+  background-color: #333;
+}

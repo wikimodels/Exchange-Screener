@@ -1,0 +1,16 @@
+<div class="carousel-container">
+  <div class="carousel-slide" *ngFor="let image of images; let i = index" [class.active]="i === currentSlide">
+    <img [src]="image" alt="Slide {{ i + 1 }}" />
+  </div>
+
+  <!-- Carousel controls -->
+
+
+  <mat-icon svgIcon="_arrow_back" class="carousel-control prev" (click)="prevSlide()">_arrow_back</mat-icon>
+  <mat-icon svgIcon="_arrow_forward" class="carousel-control next" (click)="nextSlide()">_arrow_back</mat-icon>
+
+  <!-- Carousel indicators -->
+  <div class="carousel-indicators">
+    <span *ngFor="let image of images; let i = index" [class.active]="i === currentSlide" (click)="goToSlide(i)"></span>
+  </div>
+</div>
