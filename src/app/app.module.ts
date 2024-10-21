@@ -45,6 +45,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { MenuComponent } from './nav-bar/menu/menu.component';
 import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
 import { ValidationSummaryComponent } from './validation-summary/validation-summary.component';
+import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
 
 echarts.use([
   LegendComponent,
@@ -81,6 +82,7 @@ echarts.registerTheme('macarons', Marcaron);
     MenuComponent,
     ArchivedAlertsComponent,
     ValidationSummaryComponent,
+    EditAlertComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

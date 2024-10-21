@@ -1,0 +1,222 @@
+[
+  {
+    "symbol": "LQTYUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "SOLUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "ATOMUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "BTCUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "AAVEUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "LSKUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "MKRUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "GALAUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "GALUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "NTRNUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "OMGUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "NEARUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "MAVUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "MAVIAUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "MASKUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "RENUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "RIFUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "ROSEUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "SKLUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  },
+  {
+    "symbol": "TIAUSDT",
+     "price": 2605.74,
+     "high": 0,
+     "low": 0,
+     "action": "Price is crossing lower boundary",
+     "keyLevelName":"SR-HIHOT",
+     "isActive": false,
+     "description":"Do some shit here. This is flip level.",
+     "imgUrls":["https://www.tradingview.com/x/mbXMduRw/", "https://www.tradingview.com/x/zG2IFbld/", "https://www.tradingview.com/x/7NxMrDe4/"]
+  }
+]

@@ -6,6 +6,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .chart{
   height: 450px;
 }
+
 .spinner-container {
   display: flex;
   justify-content: center;
@@ -25,17 +26,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
-/* .mat-mdc-row:nth-child(even){
-  background-color: #faf8f2!important;
+/* Override the default styling of disabled fields */
+.mat-form-field.mat-form-field-disabled .mat-input-element {
+  color: rgba(0, 0, 0, 0.6) !important;    /* Set a different color for disabled text */
+  background-color: #aaff !important;    /* Set a background color */
+  opacity: 1 !important;                   /* Remove the default opacity */
+  cursor: not-allowed !important;          /* Keep the 'not-allowed' cursor */
 }
 
-.mat-mdc-row{
-  height: 35px!important;
+.mat-form-field.mat-form-field-disabled .mat-placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;    /* Adjust the label color for disabled fields */
 }
 
-.mat-mdc-header-row{
-  background-color: #ebe7df !important;
-} */
 
 .triggered-alerts-table .mat-mdc-row:nth-child(even) {
   background-color: #faf8f2!important;

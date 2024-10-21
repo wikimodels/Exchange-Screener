@@ -6,13 +6,14 @@ import {
   animate,
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { Subscription } from 'rxjs';
 import { AlertsService } from 'src/service/alerts.service';
 import { ImageModalComponent } from '../image-modal/image-modal.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { NewAlertComponent } from '../new-alert/new-alert.component';
+import { EditAlertComponent } from '../edit-alert/edit-alert.component';
 
 @Component({
   selector: 'app-alerts-table',
@@ -40,30 +41,12 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
   constructor(
     private alertsService: AlertsService,
     private imageDialog: MatDialog,
-    private newAlertDialog: MatDialog
+    private newAlertDialog: MatDialog,
+    public editDialot: MatDialog
   ) {}
 
   dataSource!: AlertObj[];
-  columnsToDisplay = [
-    'symbol',
-    'keyLevelName',
-    'action',
-    'isActive',
-    'links',
-    'edit',
-  ];
-
-  columnAliases: { [key: string]: string } = {
-    symbol: 'Symbol',
-    keyLevelName: 'Key Level Name',
-    action: 'Action',
-    isActive: 'Active Status',
-    links: 'Links',
-  };
-
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-  expandedElement!: any | null;
-  selectedIds: string[] = [];
+  displayedColumns = ['symbol', 'keyLevelName', 'action', 'isActive', 'edit'];
 
   ngOnInit(): void {
     this.dataSubscription = this.alertsService.alerts$.subscribe(
@@ -98,8 +81,12 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  editAlert(element: AlertObj) {
-    console.log(element);
+  editAlert(alertObj: AlertObj) {
+    this.editDialot.open(EditAlertComponent, {
+      data: alertObj,
+      enterAnimationDuration: 10,
+      exitAnimationDuration: 300,
+    });
   }
 
   deleteAlert(id: string) {
@@ -110,15 +97,15 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
     event.stopPropagation(); // Stops event propagation
   }
 
-  onCheckboxChange(event: MatCheckboxChange, element: AlertObj) {
-    if (event.checked) {
-      this.selectedIds.push(element.id);
-    } else {
-      this.selectedIds = this.selectedIds.filter((id) => id !== element.id);
-    }
-    this.deleteDisabled = this.selectedIds.length == 0 ? true : false;
-    console.log(this.selectedIds);
-  }
+  // onCheckboxChange(event: MatCheckboxChange, element: AlertObj) {
+  //   if (event.checked) {
+  //     this.selectedIds.push(element.id);
+  //   } else {
+  //     this.selectedIds = console.log(elementthis.selectedIds.filter((id) => id !== element.id);
+  //   }
+  //   this.deleteDisabled = this.selectedIds.length == 0 ? true : false;
+  //   console.log(this.selectedIds);
+  // }
 
   ngOnDestroy(): void {
     if (this.dataSubscription) {

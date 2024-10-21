@@ -35,38 +35,18 @@
   </ng-container>
 
   <!-- Name Column -->
-  <ng-container matColumnDef="links">
-    <th mat-header-cell *matHeaderCellDef> Links </th>
-    <td mat-cell *matCellDef="let element">
-      <!-- TRADING VIEW -->
-      <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank" (click)="onClick($event)">
-        <img src="assets/icons/tv.svg" alt="TradingView" class="round-image" />
-      </a>
-      <!-- COIN GLASS -->
-      <a *ngIf="element.cgLink" [href]="element.cgLink" target="_blank" (click)="onClick($event)">
-        <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
-      </a>
-      <!-- BINANCE -->
-      <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank" (click)="onClick($event)">
-        <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
-      </a>
-      <!-- BYBIT -->
-      <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank" (click)="onClick($event)">
-        <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
-      </a>
-    </td>
-  </ng-container>
+
   <!-- Name Column -->
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef> </th>
     <td mat-cell *matCellDef="let element" class="symbol-cell">
       <mat-icon (click)="editAlert(element); $event.stopPropagation()" class="clickable-icon">edit</mat-icon>
       <mat-icon (click)="deleteAlert(element.id); $event.stopPropagation()" class="clickable-icon">delete</mat-icon>
-      <mat-checkbox (click)="$event.stopPropagation()" (change)="onCheckboxChange($event, element)"></mat-checkbox>
+      <mat-checkbox></mat-checkbox>
     </td>
   </ng-container>
 
-  <ng-container matColumnDef="expand">
+  <!-- <ng-container matColumnDef="expand">
     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
     <td mat-cell *matCellDef="let element">
       <button mat-icon-button aria-label="expand row"
@@ -75,11 +55,11 @@
         <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
       </button>
     </td>
-  </ng-container>
+  </ng-container> -->
 
 
 
-  <ng-container matColumnDef="expandedDetail">
+  <!-- <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
       <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <div class="element-description" [style.font-style]="'italic'">
@@ -91,12 +71,8 @@
         </div>
       </div>
     </td>
-  </ng-container>
+  </ng-container> -->
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="element-row"
-    [class.expanded-row]="expandedElement === element"
-    (click)="expandedElement = expandedElement === element ? null : element">
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
