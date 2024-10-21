@@ -57,8 +57,10 @@ export class AlertsService {
 
     // First, post the new alert, then switch to fetching the updated list
     return this.http.post<AlertObj>(env.createAlertUrl, data, { headers }).pipe(
-      switchMap(() => {
+      switchMap((data: any) => {
         // After posting, fetch the updated list of alerts
+        const msg = `Alert Creation ${data.ok}`;
+        this.snackbarService.showSnackBar(msg, '');
         return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
       }),
       tap((updatedAlerts: AlertObj[]) => {

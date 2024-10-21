@@ -9,7 +9,7 @@ import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { AlertsService } from 'src/service/alerts.service';
-import { ScreenModalComponent } from '../screen-modal/screen-modal.component';
+
 import { DescriptionModalComponent } from '../description-modal/description-modal.component';
 
 /**
@@ -89,19 +89,11 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
     event.stopPropagation(); // Stops event propagation
   }
 
-  onOpenScreenModalDialog(obj: AlertObj): void {
-    this.screenModalDialog.open(ScreenModalComponent, {
-      data: obj,
-      enterAnimationDuration: 10,
-      exitAnimationDuration: 300,
-    });
-  }
-
   onOpenDescriptionModalDialog(obj: AlertObj): void {
     this.descriptionModalDialog.open(DescriptionModalComponent, {
       data: obj,
-      enterAnimationDuration: 10,
-      exitAnimationDuration: 300,
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
       width: '100vw',
       height: '100vh',
     });

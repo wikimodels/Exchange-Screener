@@ -18,6 +18,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
         console.log(data);
       });
   }
+
   ngOnDestroy(): void {
     if (this.dataSubscription) {
       this.dataSubscription.unsubscribe();

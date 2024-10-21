@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.coinsService
       .getAllCoins()
       .subscribe((data: any) => {
-        console.log(this.coinsService.Coins);
+        console.log('Coins fetched: ', this.coinsService.Coins.length);
       });
   }
   ngOnDestroy(): void {

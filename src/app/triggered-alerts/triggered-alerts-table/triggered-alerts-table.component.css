@@ -82,3 +82,4 @@ tr.element-row:not(.expanded-row):active {
   align-items: center; /* Vertically align the items */
   margin-bottom: 10px; /* Space between the header-actions and the table */
 }
+

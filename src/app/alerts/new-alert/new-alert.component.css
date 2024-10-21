@@ -1,20 +1,39 @@
 .container {
-  width: 35vw;
+  width: 80vw;
   height: 90vh;
-}
-.form {
-  margin: auto auto;
-  width: 350px;
-  height: auto;
-  overflow: hidden;
-}
-.header{
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
+  flex-direction: column;
+ }
 
-.button-panel{
+ .header{
   display: flex;
-  justify-content: right;
+  justify-content: space-around;
+  margin-top: 20px;
+ }
+
+ .button-panel{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 60px;
+  margin-bottom: 60px;
+ }
+
+ .form-container{
+  width: 100%;
+ }
+
+ .form{
+  width: 350px;
+ }
+
+ .column{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+ }
+
+
+ textarea {
+  resize: vertical; /* Allow resizing both horizontally and vertically */
+  overflow: auto; /* Ensures the scrollbars are added if the content exceeds the area */
 }

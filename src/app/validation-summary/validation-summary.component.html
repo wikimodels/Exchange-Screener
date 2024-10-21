@@ -1,0 +1,6 @@
+<div *ngIf="errors.length > 0" class="validation-summary" @validationSummaryAnimation>
+  <p>Please fix the following errors:</p>
+  <ul>
+    <li *ngFor="let error of errors">{{ error }}</li>
+  </ul>
+</div>

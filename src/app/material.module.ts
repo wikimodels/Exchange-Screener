@@ -30,6 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 const modules = [
   MatSortModule,
@@ -63,6 +64,7 @@ const modules = [
   MatBottomSheetModule,
   MatAutocompleteModule,
   MatProgressSpinnerModule,
+  TextFieldModule,
 ];
 
 @NgModule({

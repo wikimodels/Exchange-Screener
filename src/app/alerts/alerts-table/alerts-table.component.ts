@@ -69,7 +69,7 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.alertsService.alerts$.subscribe(
       (data: AlertObj[]) => {
         this.dataSource = data;
-        console.log(data);
+        console.log('Alerts fetched: ', data.length);
       }
     );
   }

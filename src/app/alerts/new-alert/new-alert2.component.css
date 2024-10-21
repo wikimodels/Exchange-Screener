@@ -1,0 +1,37 @@
+.container {
+  width: 80vw;
+  height: 90vh;
+}
+.form {
+  margin: auto auto;
+  width: 1050px;
+  height: auto;
+  overflow: hidden;
+}
+.header{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.button-panel{
+  display: flex;
+  justify-content: right;
+}
+.link-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.full-width {
+  flex: 1;
+  margin-right: 10px;
+}
+
+button[mat-icon-button] {
+  flex-shrink: 0;
+}
+.mat-grid-tile {
+  background: lightblue;
+}

@@ -1,0 +1,12 @@
+.validation-summary {
+  width: 92%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #721c24;
+  padding: 0.8em;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: .25rem;
+}
+
