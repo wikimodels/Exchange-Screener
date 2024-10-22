@@ -83,24 +83,6 @@ export class EditAlertComponent {
     ]);
   }
 
-  preventEKey(event: KeyboardEvent): void {
-    if (event.key === 'e' || event.key === 'E') {
-      event.preventDefault(); // Prevent default behavior of the 'e' key
-    }
-  }
-  // Method to filter the symbol list based on user input
-  filterSymbols(): void {
-    let inputValue = '';
-    if (this.form) {
-      inputValue = this.form.get('symbol')?.value.toLowerCase() || '';
-    }
-    if (this.symbols) {
-      this.filteredSymbols = this.symbols.filter((symbol) =>
-        symbol.toLowerCase().includes(inputValue)
-      );
-    }
-  }
-
   get imageLinks() {
     return this.form?.get('imageLinks') as FormArray;
   }
@@ -123,7 +105,11 @@ export class EditAlertComponent {
     this.form?.markAsDirty();
     this.form?.updateValueAndValidity();
     if (this.form?.valid) {
-      this.alertService.createAlert(this.form.value).subscribe();
+      this.data.description = this.form.get('description')?.value;
+      this.data.imgUrls = this.imageLinks.value;
+      this.data.isActive = this.form.get('isActive')?.value;
+
+      this.alertService.updataAlert(this.data).subscribe();
       this.dialogRef.close();
     }
   }

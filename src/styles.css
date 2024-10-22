@@ -26,19 +26,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
-/* Override the default styling of disabled fields */
-.mat-form-field.mat-form-field-disabled .mat-input-element {
-  color: rgba(0, 0, 0, 0.6) !important;    /* Set a different color for disabled text */
-  background-color: #aaff !important;    /* Set a background color */
-  opacity: 1 !important;                   /* Remove the default opacity */
-  cursor: not-allowed !important;          /* Keep the 'not-allowed' cursor */
-}
-
-.mat-form-field.mat-form-field-disabled .mat-placeholder {
-  color: rgba(0, 0, 0, 0.4) !important;    /* Adjust the label color for disabled fields */
-}
-
-
 .triggered-alerts-table .mat-mdc-row:nth-child(even) {
   background-color: #faf8f2!important;
 }
@@ -73,3 +60,12 @@ input[type=number] {
   -webkit-appearance: none;    /* Chrome, Safari, and WebKit-based browsers */
   appearance: none;            /* Standard property */
 }
+
+
+/* .mat-mdc-form-field-type-mat-input.mat-form-field-disabled {
+
+  opacity: 1 !important;
+} */
+/* .mat-mdc-form-field-type-mat-input
+.mat-form-field-disabled
+.mat-form-field-appearance-fill  */

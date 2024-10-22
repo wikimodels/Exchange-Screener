@@ -104,6 +104,7 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
     this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
       this.selection.clear();
     });
+    this.deleteDisabled = true;
     console.log(this.selection.selected);
   }
 }

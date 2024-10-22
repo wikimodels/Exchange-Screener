@@ -14,8 +14,7 @@
             <!-- Symbol -->
             <mat-form-field appearance="fill" class="form">
               <mat-label>Symbol</mat-label>
-              <input type="text" matInput formControlName="symbol" [matAutocomplete]="auto" (input)="filterSymbols()"
-                tabindex="-1" />
+              <input type="text" matInput formControlName="symbol" [matAutocomplete]="auto" tabindex="-1" />
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let suggestion of filteredSymbols" [value]="suggestion">
                   {{ suggestion }}
@@ -53,8 +52,7 @@
             <!-- Price -->
             <mat-form-field appearance="fill" class="form">
               <mat-label>Price</mat-label>
-              <input matInput type="number" formControlName="price" inputmode="numeric" (keydown)="preventEKey($event)"
-                tabindex="-1" />
+              <input matInput type="number" formControlName="price" inputmode="numeric" tabindex="-1" />
               <mat-error *ngIf="form.get('price')?.hasError('pattern')">
                 Price should have only numbers
               </mat-error>

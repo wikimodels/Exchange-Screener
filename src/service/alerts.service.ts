@@ -95,6 +95,26 @@ export class AlertsService {
       );
   }
 
+  updataAlert(data: AlertObj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    // First, post the new alert, then switch to fetching the updated list
+    return this.http.post<AlertObj>(env.updateAlertUrl, data, { headers }).pipe(
+      switchMap((data: any) => {
+        // After posting, fetch the updated list of alerts
+        const msg = `Alert Update ${data.ok}`;
+        this.snackbarService.showSnackBar(msg, '');
+        return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
+      }),
+      tap((updatedAlerts: AlertObj[]) => {
+        // Update the BehaviorSubject with the fresh list of alerts from the server
+        this.alertsSubject.next(updatedAlerts);
+      }),
+      catchError(this.handleError) // Handle errors for both POST and GET
+    );
+  }
   // Handle errors in HTTP request
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error); // Log to console or send to a logging service

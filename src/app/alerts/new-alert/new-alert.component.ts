@@ -61,6 +61,7 @@ export class NewAlertComponent implements OnInit {
           Validators.pattern('^-?\\d*(\\.\\d+)?$'),
         ]),
       ],
+      isTv: [false],
       action: ['', Validators.required],
       description: ['', Validators.required],
       imageLinks: this.fb.array([this.createImageLinkControl()]),
