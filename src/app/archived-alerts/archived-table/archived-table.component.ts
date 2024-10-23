@@ -1,32 +1,24 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { AlertObj } from 'models/alerts/alert-obj';
+import { DescriptionModalComponent } from 'src/app/description-modal/description-modal.component';
 import { AlertsService } from 'src/service/alerts.service';
 
-import { DescriptionModalComponent } from '../../description-modal/description-modal.component';
-
-/**
- * @title Table with sorting
- */
-
 @Component({
-  selector: 'app-triggered-alerts-table',
-  templateUrl: './triggered-alerts-table.component.html',
-  styleUrls: ['./triggered-alerts-table.component.css'],
+  selector: 'app-archived-table',
+  templateUrl: './archived-table.component.html',
+  styleUrls: ['./archived-table.component.css'],
 })
-export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
+export class ArchivedTableComponent {
   displayedColumns: string[] = [
     'symbol',
     'keyLevelName',
     'action',
-    'activationTimeStr',
     'links',
     'description',
     'select',
@@ -38,22 +30,21 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
-  selection = new SelectionModel<any>(true, []); // Allows multiple selections
+
+  selection = new SelectionModel<any>(true, []);
   constructor(
     private alertsService: AlertsService,
-    private matDialog: MatDialog
+    private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.alertsService.getAllTriggeredAlerts().subscribe((data) => {});
-    this.alertsService.alertsTriggered$.subscribe((data) => {
+    this.alertsService.getAllArchivedAlerts().subscribe((data) => {});
+    this.alertsService.alertsArchived$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
-
-  ngAfterViewInit() {}
 
   // Filter function
   applyFilter(event: KeyboardEvent) {
@@ -64,8 +55,8 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
   onDataToggled(data: any) {
     this.selection.toggle(data);
     this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
-    console.log(this.selection.selected);
   }
+
   // Toggle "Select All" checkbox
   toggleAll() {
     if (this.isAllSelected()) {
@@ -83,9 +74,9 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
     return numSelected === numRows;
   }
 
-  onOpenDescriptionModalDialog(obj: AlertObj): void {
-    this.matDialog.open(DescriptionModalComponent, {
-      data: obj,
+  onOpenDescriptionModalDialog(alertObj: AlertObj): void {
+    this.modelDialog.open(DescriptionModalComponent, {
+      data: alertObj,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '100vw',
@@ -95,10 +86,9 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
+    this.alertsService.deleteAlertsArchived(objs).subscribe((data) => {
       this.selection.clear();
     });
     this.deleteDisabled = true;
-    console.log(this.selection.selected);
   }
 }

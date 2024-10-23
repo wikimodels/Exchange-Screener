@@ -25,7 +25,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --mat-mdc-snack-bar-button-color: white;
 }
 
-
+/* ------------------------*/
+/* TRIGGERED ALERTS TABLE  */
+/*-------------------------*/
 .triggered-alerts-table .mat-mdc-row:nth-child(even) {
   background-color: #faf8f2!important;
 }
@@ -43,6 +45,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   cursor: pointer; /* Optional: Add pointer cursor on hover */
 }
 
+/* ----------------------*/
+/* ALERTS AT WORK        */
+/*---------------------- */
 .alerts-at-work-table .mat-mdc-row:nth-child(even) {
   background-color: #e4f7df!important;
 }
@@ -55,10 +60,33 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #8dfccc !important;
   height: 45px;
 }
+
 .alerts-at-work-table .mat-mdc-row:hover {
   background-color: #f5f4f2 !important; /* Replace with your desired color */
   cursor: pointer; /* Optional: Add pointer cursor on hover */
 }
+
+/* ----------------------*/
+/* ARCHIVED ALERTS TABLE */
+/*---------------------- */
+.archived-alerts-table .mat-mdc-row:nth-child(even) {
+  background-color: #e4f7df!important;
+}
+
+.archived-alerts-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.archived-alerts-table .mat-mdc-header-row {
+  background-color: #cbdff5 !important;
+  height: 45px;
+}
+
+.archived-alerts-table .mat-mdc-row:hover {
+  background-color: #f5f4f2 !important; /* Replace with your desired color */
+  cursor: pointer; /* Optional: Add pointer cursor on hover */
+}
+
 
 .mat-mdc-input-element{
   height: 15px !important;

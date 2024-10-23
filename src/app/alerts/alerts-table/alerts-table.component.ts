@@ -32,21 +32,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   selector: 'app-alerts-table',
   templateUrl: './alerts-table.component.html',
   styleUrls: ['./alerts-table.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('void', style({ height: '0px', minHeight: '0' })), // 'void' state for when the row is removed
-      state('expanded', style({ height: '*' })),
-      transition(
-        'expanded <=> collapsed',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ),
-      transition(
-        'expanded <=> void',
-        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
-      ), // Adding transition for 'void'
-    ]),
-  ],
 })
 export class AlertsTableComponent implements OnInit {
   displayedColumns: string[] = [
@@ -153,6 +138,6 @@ export class AlertsTableComponent implements OnInit {
   }
 
   onMoveToArchive(alertObj: AlertObj) {
-    //do something;
+    this.alertsService.moveAlertToArchive(alertObj).subscribe();
   }
 }
