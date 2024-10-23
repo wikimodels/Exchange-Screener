@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, catchError, throwError, retry, of, tap } from 'rxjs';
 import { Coin } from 'models/shared/coin';
+import { coinsUrl } from 'src/consts/url-consts';
 
 @Injectable({ providedIn: 'root' })
 export class CoinsService {
@@ -12,7 +13,7 @@ export class CoinsService {
   }
   constructor(private http: HttpClient) {}
   getAllCoins(): Observable<any> {
-    return this.http.get(env.coinsUrl).pipe(
+    return this.http.get(coinsUrl).pipe(
       tap((data: any) => {
         this.coins = data;
       }),
