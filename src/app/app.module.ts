@@ -39,7 +39,7 @@ import { NewAlertComponent } from './alerts/new-alert/new-alert.component';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
 import { TriggeredAlertsTableComponent } from './triggered-alerts/triggered-alerts-table/triggered-alerts-table.component';
 
-import { DescriptionModalComponent } from './triggered-alerts/description-modal/description-modal.component';
+import { DescriptionModalComponent } from './description-modal/description-modal.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MenuComponent } from './nav-bar/menu/menu.component';

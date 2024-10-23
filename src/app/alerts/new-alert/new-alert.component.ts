@@ -64,7 +64,7 @@ export class NewAlertComponent implements OnInit {
       isTv: [false],
       action: ['', Validators.required],
       description: ['', Validators.required],
-      imageLinks: this.fb.array([this.createImageLinkControl()]),
+      imgUrls: this.fb.array([this.createImageUrlControl()]),
     });
   }
 
@@ -76,7 +76,7 @@ export class NewAlertComponent implements OnInit {
   }
 
   // Create a FormControl with URL validator
-  createImageLinkControl() {
+  createImageUrlControl() {
     return this.fb.control('', [
       Validators.required,
       Validators.pattern(
@@ -103,27 +103,30 @@ export class NewAlertComponent implements OnInit {
     }
   }
 
-  get imageLinks() {
-    return this.form?.get('imageLinks') as FormArray;
+  get imgUrls() {
+    return this.form?.get('imgUrls') as FormArray;
   }
 
   addLink() {
-    this.imageLinks.push(this.createImageLinkControl());
+    this.imgUrls.push(this.createImageUrlControl());
   }
 
   removeLink(index: number) {
-    if (this.imageLinks.length > 1) {
-      this.imageLinks.removeAt(index);
+    if (this.imgUrls.length > 1) {
+      this.imgUrls.removeAt(index);
     }
   }
 
   onSubmit() {
     this.form?.markAllAsTouched();
-    this.imageLinks.controls.forEach((c) => {
-      c.markAllAsTouched();
-    });
     this.form?.markAsDirty();
     this.form?.updateValueAndValidity();
+    this.imgUrls.controls.forEach((c) => {
+      c.markAllAsTouched();
+      c.markAsDirty();
+      c.updateValueAndValidity();
+    });
+
     if (this.form?.valid) {
       this.alertService.createAlert(this.form.value).subscribe();
       this.dialogRef.close();

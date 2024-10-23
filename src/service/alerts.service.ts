@@ -40,6 +40,9 @@ export class AlertsService {
   }
   // Getter to get the current value of alerts (using .value)
 
+  //---------------------------------------------
+  // ✅ ALERTS AT WORK
+  //---------------------------------------------
   getAllAlerts(): Observable<any> {
     return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions).pipe(
       tap((data: AlertObj[]) => {
@@ -49,7 +52,6 @@ export class AlertsService {
     );
   }
 
-  // Create a new alert and update BehaviorSubject
   createAlert(data: AlertObj): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -71,6 +73,66 @@ export class AlertsService {
     );
   }
 
+  updateAlert(data: AlertObj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    return this.http.post<AlertObj>(env.updateAlertUrl, data, { headers }).pipe(
+      switchMap((data: any) => {
+        const msg = `Alert Update ${data.ok}`;
+        this.snackbarService.showSnackBar(msg, '');
+        return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
+      }),
+      tap((updatedAlerts: AlertObj[]) => {
+        this.alertsSubject.next(updatedAlerts);
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  deleteAlerts(alerts: AlertObj[]) {
+    const ids = alerts.map((a) => a.id);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http
+      .post<AlertObj>(env.deleteAlertsButchUrl, ids, { headers })
+      .pipe(
+        switchMap((data: any) => {
+          const msg = `Deleted ${data.deleted} item(s)`;
+          this.snackbarService.showSnackBar(msg, '');
+          return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
+        }),
+        tap((updatedAlerts: AlertObj[]) => {
+          this.alertsSubject.next(updatedAlerts);
+        }),
+        catchError(this.handleError) // Handle errors for both POST and GET
+      );
+  }
+
+  moveAlertToArchive(alert: AlertObj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    return this.http
+      .post<AlertObj>(env.createArchiveAlertUrl, alert, { headers })
+      .pipe(
+        switchMap((data: any) => {
+          const msg = `Alert move to Archive`;
+          this.snackbarService.showSnackBar(msg, '');
+          return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
+        }),
+        tap((updatedAlerts: AlertObj[]) => {
+          this.alertsSubject.next(updatedAlerts);
+        }),
+        catchError(this.handleError) // Handle errors for both POST and GET
+      );
+  }
+
+  //---------------------------------------------
+  // ✅ TRIGGERED ALERTS
+  //---------------------------------------------
   deleteTriggeredAlerts(alerts: AlertObj[]) {
     const ids = alerts.map((a) => a.id);
     const headers = new HttpHeaders({
@@ -95,26 +157,6 @@ export class AlertsService {
       );
   }
 
-  updataAlert(data: AlertObj) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    // First, post the new alert, then switch to fetching the updated list
-    return this.http.post<AlertObj>(env.updateAlertUrl, data, { headers }).pipe(
-      switchMap((data: any) => {
-        // After posting, fetch the updated list of alerts
-        const msg = `Alert Update ${data.ok}`;
-        this.snackbarService.showSnackBar(msg, '');
-        return this.http.get<AlertObj[]>(env.allAlertsUrl, httpOptions);
-      }),
-      tap((updatedAlerts: AlertObj[]) => {
-        // Update the BehaviorSubject with the fresh list of alerts from the server
-        this.alertsSubject.next(updatedAlerts);
-      }),
-      catchError(this.handleError) // Handle errors for both POST and GET
-    );
-  }
   // Handle errors in HTTP request
   private handleError(error: any): Observable<never> {
     console.error('An error occurred:', error); // Log to console or send to a logging service

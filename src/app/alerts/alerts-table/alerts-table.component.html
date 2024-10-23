@@ -1,78 +1,128 @@
-<div class="button-container">
-  <button mat-raised-button (click)="addNewAlert()">Add New Alert</button>
-  <button mat-raised-button [disabled]="deleteDisabled" (click)="deleteSelected()" color="warn">Delete Selected</button>
+<div class="controls-container">
+  <div>
+    <mat-form-field appearance="outline" class="filter-box">
+      <mat-icon matPrefix>filter_list</mat-icon>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <div>
+    <h1>Alerts at Work</h1>
+  </div>
+  <div>
+    <button mat-raised-button (click)="onAddAlert()" style="margin-right: 20px; height: 45px;">Add Alert</button>
+    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
+      style="height: 45px;">Delete
+      Selected</button>
+  </div>
 </div>
 
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-  <!-- Position Column -->
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> Symbol</th>
-    <td mat-cell *matCellDef="let element" class="symbol-cell">
-      <img [src]="element.logoLink" alt="logo" class="round-image" />
-      {{element.symbol}} ({{element.coinCategory}})
-    </td>
-  </ng-container>
+<div>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 alerts-at-work-table">
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="keyLevelName">
-    <th mat-header-cell *matHeaderCellDef> KL Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.keyLevelName}} </td>
-  </ng-container>
+    <!-- SYMBOL -->
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
+      <td mat-cell *matCellDef="let element" class="symbol-cell">
+        <img [src]="element.logoLink" alt="logo" class="round-image" />
+        {{element.symbol}} ({{element.coinCategory}})
+      </td>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="action">
-    <th mat-header-cell *matHeaderCellDef> Price Action </th>
-    <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-  </ng-container>
+    <!-- KEY LEVEL NAME -->
+    <ng-container matColumnDef="keyLevelName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Key Level Name
+      </th>
+      <td mat-cell *matCellDef="let element"> <b>{{element.keyLevelName}}</b> </td>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="isActive">
-    <th mat-header-cell *matHeaderCellDef> Active </th>
-    <td mat-cell *matCellDef="let element">
-      <mat-icon *ngIf="element.isActive == true">check</mat-icon>
-      <mat-icon *ngIf="element.isActive == false">close</mat-icon>
-    </td>
-  </ng-container>
+    <!-- ACTION -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Action
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+    </ng-container>
 
-  <!-- Name Column -->
+    <!-- IS ACTIVE -->
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.isActive == true">check</mat-icon>
+        <mat-icon *ngIf="element.isActive == false">close</mat-icon>
+      </td>
+    </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef> </th>
-    <td mat-cell *matCellDef="let element" class="symbol-cell">
-      <mat-icon (click)="editAlert(element); $event.stopPropagation()" class="clickable-icon">edit</mat-icon>
-      <mat-icon (click)="deleteAlert(element.id); $event.stopPropagation()" class="clickable-icon">delete</mat-icon>
-      <mat-checkbox></mat-checkbox>
-    </td>
-  </ng-container>
+    <!-- LINKS -->
+    <ng-container matColumnDef="links">
+      <th mat-header-cell *matHeaderCellDef> Links </th>
+      <td mat-cell *matCellDef="let element">
+        <!-- TRADING VIEW -->
+        <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank">
+          <img src="assets/icons/tv.svg" alt="TradingView" class="round-image" />
+        </a>
+        <!-- COIN GLASS -->
+        <a *ngIf="element.cgLink" [href]="element.cgLink" target="_blank">
+          <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
+        </a>
+        <!-- BINANCE -->
+        <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank">
+          <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
+        </a>
+        <!-- BYBIT -->
+        <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank">
+          <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
+        </a>
+      </td>
+    </ng-container>
 
-  <!-- <ng-container matColumnDef="expand">
-    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-icon-button aria-label="expand row"
-        (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
-        <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
-        <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-      </button>
-    </td>
-  </ng-container> -->
+    <!-- DESCRIPTION -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon (click)="onOpenDescriptionModalDialog(element)" class="clickable-icon">details</mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- EDIT -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon (click)="onEdit(element)" class="clickable-icon" svgIcon="edit"></mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- ARCHIVE -->
+    <ng-container matColumnDef="archive">
+      <th mat-header-cell *matHeaderCellDef>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon (click)="onMoveToArchive(element)" class="clickable-icon" svgIcon="flare" matTooltip="Move to Archive"
+          [matTooltipPosition]="tooltipPosition"></mat-icon>
+      </td>
+    </ng-container>
 
 
+    <!-- CHECKBOX-->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <!-- Select All Checkbox -->
+        <mat-checkbox [checked]="selection.hasValue() && isAllSelected()" (change)="toggleAll()"
+          [indeterminate]="selection.hasValue()&&!isAllSelected()"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <!-- Individual Row Checkbox -->
+        <mat-checkbox (change)="onDataToggled(element)" [checked]="selection.isSelected(element)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
-  <!-- <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-      <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-        <div class="element-description" [style.font-style]="'italic'">
-          {{element.description}}
-        </div>
-        <div>
-          <img [src]="element.mainImgUrl" alt="{{element.symbol}}" class="element-image"
-            (click)="openImageModal(element.mainImgUrl)">
-        </div>
-      </div>
-    </td>
-  </ng-container> -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+  <div>
+    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" showFirstLastButtons></mat-paginator>

@@ -40,7 +40,9 @@ export class DescriptionModalComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: AlertObj,
     public dialogRef: MatDialogRef<DescriptionModalComponent>
-  ) {}
+  ) {
+    console.log('===> ', data);
+  }
   imageLoaded: boolean = false; // Tracks if the actual image has
   placeholderImage: string = 'assets/img/placeholder600x400.svg'; //
 
@@ -49,7 +51,6 @@ export class DescriptionModalComponent {
   }
 
   onImageLoad() {
-    console.log('Image loaded');
     this.imageLoaded = true;
   }
 }

@@ -74,8 +74,8 @@
           </mat-form-field>
 
           <!-- Image Links -->
-          <div formArrayName="imageLinks">
-            <div *ngFor="let link of imageLinks.controls; let i = index">
+          <div formArrayName="imgUrls">
+            <div *ngFor="let link of imgUrls.controls; let i = index">
               <div>
                 <mat-form-field appearance="fill" class="form">
                   <mat-label>Image Link {{i + 1}}</mat-label>

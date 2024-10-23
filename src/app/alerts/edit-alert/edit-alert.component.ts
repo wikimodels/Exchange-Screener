@@ -4,13 +4,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertsService } from 'src/service/alerts.service';
 import { CoinsService } from 'src/service/coins.service';
 import { KeyLevelNamesService } from 'src/service/key-level-names.service';
-import { NewAlertComponent } from '../new-alert/new-alert.component';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
-import { KeyLevelNameValidator } from 'src/functions/validators/key-level-name.validator';
-import { SymbolNameValidator } from 'src/functions/validators/symbol-name.validator';
-import { symbol } from 'd3-shape';
 
 @Component({
   selector: 'app-edit-alert',
@@ -21,7 +17,6 @@ export class EditAlertComponent {
   constructor(
     private fb: FormBuilder,
     private coinsService: CoinsService,
-    private keyLevelNameservice: KeyLevelNamesService,
     public dialogRef: MatDialogRef<EditAlertComponent>,
     private alertService: AlertsService,
     @Inject(MAT_DIALOG_DATA) public data: AlertObj,
@@ -109,7 +104,7 @@ export class EditAlertComponent {
       this.data.imgUrls = this.imageLinks.value;
       this.data.isActive = this.form.get('isActive')?.value;
 
-      this.alertService.updataAlert(this.data).subscribe();
+      this.alertService.updateAlert(this.data).subscribe();
       this.dialogRef.close();
     }
   }

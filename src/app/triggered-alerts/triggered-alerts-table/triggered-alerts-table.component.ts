@@ -10,7 +10,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { AlertsService } from 'src/service/alerts.service';
 
-import { DescriptionModalComponent } from '../description-modal/description-modal.component';
+import { DescriptionModalComponent } from '../../description-modal/description-modal.component';
 
 /**
  * @title Table with sorting

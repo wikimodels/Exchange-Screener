@@ -1,0 +1,21 @@
+<div class="modal-content">
+  <div class="card">
+    <div class="card-symbol">
+      <div>
+        <img [src]="data.logoLink" [alt]="data.symbol" class="round-image" (load)="onImageLoad()" />
+      </div>
+      <div>
+        <h1 style="margin-top: 10px;">{{data.symbol}} ({{data.coinCategory}})</h1>
+      </div>
+    </div>
+    <div class="vertical-line"></div>
+    <div class="card-description" style="text-align: left;">
+      {{data.description}}
+    </div>
+  </div>
+
+  <div style="width: 90%;">
+    <app-carousel [images]="data.imgUrls"></app-carousel>
+  </div>
+
+</div>
