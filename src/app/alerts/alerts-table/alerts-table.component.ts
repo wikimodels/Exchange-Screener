@@ -120,7 +120,7 @@ export class AlertsTableComponent implements OnInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
+    this.alertsService.deleteAlertsButch(objs).subscribe((data) => {
       this.selection.clear();
     });
     this.deleteDisabled = true;

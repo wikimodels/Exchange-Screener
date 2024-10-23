@@ -1,12 +1,10 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { AlertsService } from 'src/service/alerts.service';
 
@@ -21,7 +19,7 @@ import { DescriptionModalComponent } from '../../description-modal/description-m
   templateUrl: './triggered-alerts-table.component.html',
   styleUrls: ['./triggered-alerts-table.component.css'],
 })
-export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
+export class TriggeredAlertsTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'keyLevelName',
@@ -52,8 +50,6 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     });
   }
-
-  ngAfterViewInit() {}
 
   // Filter function
   applyFilter(event: KeyboardEvent) {
@@ -95,10 +91,10 @@ export class TriggeredAlertsTableComponent implements OnInit, AfterViewInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
+    console.log(this.selection.selected);
     this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
       this.selection.clear();
     });
     this.deleteDisabled = true;
-    console.log(this.selection.selected);
   }
 }

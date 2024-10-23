@@ -47,7 +47,7 @@ export class AlertsService {
   private alertsTriggeredSubject: BehaviorSubject<AlertObj[]> =
     new BehaviorSubject<AlertObj[]>([]);
 
-  public alertsTriggered$ = this.alertsSubject.asObservable(); //
+  public alertsTriggered$ = this.alertsTriggeredSubject.asObservable(); //
 
   get AlertsTriggered(): AlertObj[] {
     return this.alertsTriggeredSubject.value;
@@ -127,7 +127,7 @@ export class AlertsService {
       );
   }
 
-  deleteAlerts(alerts: AlertObj[]) {
+  deleteAlertsButch(alerts: AlertObj[]) {
     const ids = alerts.map((a) => a.id);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
