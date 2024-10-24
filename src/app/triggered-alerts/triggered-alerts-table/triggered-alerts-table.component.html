@@ -6,8 +6,10 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Search">
     </mat-form-field>
   </div>
-  <div>
-    <h1>Triggered Alerts</h1>
+  <div style="display: flex; align-items: start center;">
+    <h1 style="margin-right: 5px;">Triggered Alerts</h1>
+    <mat-icon style="cursor: pointer; margin-top: 4px;" class="rotate" (click)="refreshDataTable()"
+      [ngClass]="{ 'rotate': isRotating }">sync</mat-icon>
   </div>
   <div>
     <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"

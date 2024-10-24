@@ -1,9 +1,5 @@
-<button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+<button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon>Alerts</button>
 <mat-menu #menu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="alerts">Alerts</button>
-</mat-menu>
-
-<mat-menu #alerts="matMenu">
   <button mat-menu-item (click)="goToAlertsAtWork()"> <mat-icon svgIcon="alarm"></mat-icon>
     <span>Alerts at Work</span></button>
   <button mat-menu-item (click)="goToTriggeredAlerts()"> <mat-icon svgIcon="triggered-alarm"></mat-icon>
@@ -11,3 +7,12 @@
   <button mat-menu-item (click)="goToArchivedAlerts()"> <mat-icon>history</mat-icon>
     <span>Archived Alerts</span></button>
 </mat-menu>
+
+<!-- <mat-menu #alerts="matMenu">
+  <button mat-menu-item (click)="goToAlertsAtWork()"> <mat-icon svgIcon="alarm"></mat-icon>
+    <span>Alerts at Work</span></button>
+  <button mat-menu-item (click)="goToTriggeredAlerts()"> <mat-icon svgIcon="triggered-alarm"></mat-icon>
+    <span>Triggered Alerts</span></button>
+  <button mat-menu-item (click)="goToArchivedAlerts()"> <mat-icon>history</mat-icon>
+    <span>Archived Alerts</span></button>
+</mat-menu> -->

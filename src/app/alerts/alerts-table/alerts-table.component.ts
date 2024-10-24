@@ -38,6 +38,7 @@ export class AlertsTableComponent implements OnInit {
     'symbol',
     'keyLevelName',
     'action',
+    'price',
     'links',
     'isActive',
     'description',

@@ -47,6 +47,7 @@ tr.element-row:not(.expanded-row):active {
 .element-description-attribution {
   opacity: 0.5;
 }
+
 .round-image {
   width: 20px; /* Set your desired width */
   height: 20px; /* Set your desired height */
@@ -60,6 +61,7 @@ tr.element-row:not(.expanded-row):active {
   margin-top: 14px;
    /* Vertically aligns items in the center */
 }
+
 .clickable-icon {
   cursor: pointer;
 }
@@ -83,3 +85,15 @@ tr.element-row:not(.expanded-row):active {
   margin-bottom: 10px; /* Space between the header-actions and the table */
 }
 
+.rotate {
+  animation: rotate 0.6s linear forwards;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}

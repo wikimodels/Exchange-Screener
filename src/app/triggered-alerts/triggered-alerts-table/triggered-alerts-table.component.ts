@@ -32,6 +32,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
 
   dataSource!: any;
   deleteDisabled = true;
+  isRotating = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -49,6 +50,14 @@ export class TriggeredAlertsTableComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
+  }
+
+  refreshDataTable() {
+    this.alertsService.getAllTriggeredAlerts().subscribe((data) => {});
+    this.isRotating = true;
+    setTimeout(() => {
+      this.isRotating = false;
+    }, 1000);
   }
 
   // Filter function

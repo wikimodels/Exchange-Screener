@@ -45,6 +45,14 @@
       <td mat-cell *matCellDef="let element"> {{element.action}} </td>
     </ng-container>
 
+    <!-- PRICE -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Price
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
     <!-- IS ACTIVE -->
     <ng-container matColumnDef="isActive">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
