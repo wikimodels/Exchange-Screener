@@ -49,6 +49,7 @@ export class AlertsTableComponent implements OnInit {
 
   dataSource!: any;
   deleteDisabled = true;
+  filterValue = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -140,5 +141,10 @@ export class AlertsTableComponent implements OnInit {
 
   onMoveToArchive(alertObj: AlertObj) {
     this.alertsService.moveAlertToArchive(alertObj).subscribe();
+  }
+
+  clearInput() {
+    this.filterValue = '';
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 }

@@ -83,3 +83,11 @@ tr.element-row:not(.expanded-row):active {
   margin-bottom: 10px; /* Space between the header-actions and the table */
 }
 
+.small-icon-button {
+  width: 30px;   /* Adjust the width */
+  height: 30px;  /* Adjust the height */
+  padding: 0;    /* Adjust padding */
+  font-size: 12px; /* Adjust the icon size */
+  margin-right: 5px;
+}
+

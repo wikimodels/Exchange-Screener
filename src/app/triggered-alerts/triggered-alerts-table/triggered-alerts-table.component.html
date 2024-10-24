@@ -1,9 +1,13 @@
 <div class="controls-container">
   <div>
+    <!-- FILTER BOX -->
     <mat-form-field appearance="outline" class="filter-box">
       <mat-icon matPrefix>filter_list</mat-icon>
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+      <input matInput [(ngModel)]="filterValue" (keyup)="applyFilter($event)" placeholder="Search">
+      <button mat-icon-button matSuffix class="small-icon-button" (click)="clearInput()">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
   </div>
   <div style="display: flex; align-items: start center;">

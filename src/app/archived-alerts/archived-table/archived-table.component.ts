@@ -26,6 +26,7 @@ export class ArchivedTableComponent {
 
   dataSource!: any;
   deleteDisabled = true;
+  filterValue = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -90,5 +91,10 @@ export class ArchivedTableComponent {
       this.selection.clear();
     });
     this.deleteDisabled = true;
+  }
+
+  clearInput() {
+    this.filterValue = '';
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 }

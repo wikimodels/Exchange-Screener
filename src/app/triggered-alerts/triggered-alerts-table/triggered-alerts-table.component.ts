@@ -32,6 +32,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
     'select',
   ];
 
+  filterValue = '';
   dataSource!: any;
   deleteDisabled = true;
   isRotating = false;
@@ -117,5 +118,10 @@ export class TriggeredAlertsTableComponent implements OnInit {
       this.selection.clear();
     });
     this.deleteDisabled = true;
+  }
+
+  clearInput() {
+    this.filterValue = '';
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 }
