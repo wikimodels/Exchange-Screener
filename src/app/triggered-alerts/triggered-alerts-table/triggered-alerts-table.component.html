@@ -86,12 +86,12 @@
       </td>
     </ng-container>
 
-    <!-- IMAGE -->
-    <ng-container matColumnDef="image">
+    <!-- EDIT -->
+    <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>
       </th>
       <td mat-cell *matCellDef="let element">
-
+        <mat-icon (click)="onEdit(element)" class="clickable-icon" svgIcon="edit"></mat-icon>
       </td>
     </ng-container>
 

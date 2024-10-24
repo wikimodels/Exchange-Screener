@@ -103,7 +103,6 @@ export class EditAlertComponent {
       this.data.description = this.form.get('description')?.value;
       this.data.imgUrls = this.imageLinks.value;
       this.data.isActive = this.form.get('isActive')?.value;
-
       this.alertService.updateAlert(this.data).subscribe();
       this.dialogRef.close();
     }

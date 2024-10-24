@@ -9,6 +9,7 @@ import { AlertObj } from 'models/alerts/alert-obj';
 import { AlertsService } from 'src/service/alerts.service';
 
 import { DescriptionModalComponent } from '../../description-modal/description-modal.component';
+import { EditAlertComponent } from 'src/app/alerts/edit-alert/edit-alert.component';
 
 /**
  * @title Table with sorting
@@ -26,6 +27,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
     'action',
     'activationTimeStr',
     'links',
+    'edit',
     'description',
     'select',
   ];
@@ -94,6 +96,16 @@ export class TriggeredAlertsTableComponent implements OnInit {
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '100vw',
+      height: '100vh',
+    });
+  }
+
+  onEdit(alertObj: AlertObj) {
+    this.matDialog.open(EditAlertComponent, {
+      data: alertObj,
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
+      width: '95vw',
       height: '100vh',
     });
   }
