@@ -1,28 +1,56 @@
 <div class="container">
-  <div style="display: flex; flex-direction: row; align-items: baseline;">
-    <div>
-      <form [formGroup]="form" *ngIf="form">
-        <!-- Symbol -->
-        <mat-form-field appearance="fill" class="form">
-          <mat-icon matPrefix>filter_list</mat-icon>
-          <mat-label>Filter</mat-label>
-          <input type="text" matInput formControlName="symbol" [matAutocomplete]="auto" (input)="filterSymbols()"
-            tabindex="-1" />
-          <button mat-icon-button matSuffix class="small-icon-button" (click)="clearInput()">
-            <mat-icon>close</mat-icon>
-          </button>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let suggestion of filteredSymbols" [value]="suggestion">
-              {{ suggestion }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </form>
+  <div style="display: flex; flex-direction: row; justify-content: space-between;">
+    <!-- GROUP-1 -->
+    <div style="display: flex; flex-direction: row; align-items: baseline; gap: 10px;">
+      <!-- FILTER INPUT -->
+      <div>
+        <form [formGroup]="form" *ngIf="form">
+          <!-- Symbol -->
+          <mat-form-field appearance="fill">
+            <mat-icon matPrefix>filter_list</mat-icon>
+            <mat-label>Filter</mat-label>
+            <input type="text" matInput formControlName="symbol" [matAutocomplete]="auto" (input)="filterSymbols()"
+              tabindex="-1" />
+            <button mat-icon-button matSuffix class="small-icon-button" (click)="clearInput()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let suggestion of filteredSymbols" [value]="suggestion">
+                {{ suggestion }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </div>
+
+      <!-- ADD BUTTON -->
+      <button mat-mini-fab (click)="addWorkingSymbol()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
-    <div style="margin-left: 10px;">
-      <button mat-mini-fab (click)="addWorkingSymbol()"><mat-icon>add</mat-icon></button>
+
+    <!-- GROUP-2 -->
+    <div style="display: flex; flex-direction: row; align-items: baseline; gap: 10px;">
+      <!-- SELECT CHECKBOX -->
+      <button mat-raised-button class="panel-button">
+        <mat-checkbox [checked]="false" [indeterminate]="false"></mat-checkbox>
+        <mat-icon svgIcon="check"></mat-icon>
+      </button>
+
+      <!-- TV BUTTON -->
+      <button mat-raised-button class="panel-button">
+        <mat-icon svgIcon="tv"></mat-icon>
+        Open Tradingview
+      </button>
+
+      <!-- COINGLASS BUTTON -->
+      <button mat-raised-button class="panel-button">
+        <mat-icon svgIcon="coinglass"></mat-icon>
+        Open Coinglass
+      </button>
     </div>
   </div>
+
 
   <app-work-field></app-work-field>
 </div>

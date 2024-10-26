@@ -3,6 +3,7 @@
   min-width: 98%;            /* Ensure the width is at least 97% */
   margin: 3em auto;
 }
+
 .small-icon-button {
   width: 30px;   /* Adjust the width */
   height: 30px;  /* Adjust the height */
@@ -11,3 +12,19 @@
   margin-right: 5px;
 }
 
+.panel-button {
+  display: flex;
+  align-items: center;
+  height: 55px;
+  gap: 1px; /* Adjusts space between icon and text */
+  font-size: 16px; /* Adjusts font size of text */
+  padding: 8px 16px; /* Adjusts padding if needed */
+}
+
+.panel-button mat-icon {
+  width: 30px; /* Adjust icon width */
+  height: 30px; /* Adjust icon height */
+  fill: currentColor; /* Ensures the icon color matches text color */
+  display: inline-block; /* Keeps the icon in-line with text */
+  vertical-align: middle; /* Aligns icon with text */
+}

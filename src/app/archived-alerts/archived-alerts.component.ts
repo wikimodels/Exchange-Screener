@@ -29,12 +29,12 @@ export class ArchivedAlertsComponent {
 
   dataSource!: any;
   deleteDisabled = true;
+  selection = new SelectionModel<any>(true, []);
+  searchKeywordFilter = new FormControl();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  searchKeywordFilter = new FormControl();
 
-  selection = new SelectionModel<any>(true, []);
   constructor(
     private alertsService: AlertsService,
     private modelDialog: MatDialog

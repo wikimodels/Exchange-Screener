@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataSubscription1 = this.coinsService
       .getAllCoins()
       .subscribe((data: Coin[]) => {
+        console.log(data.slice(0, 2));
         console.log('Coins fetched: ', data.length);
       });
     this.dataSubscription2 = this.coinsService
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'coinglass', url: 'assets/icons/coinglass.svg' },
       { name: 'edit', url: 'assets/icons/edit.svg' },
       { name: 'delete', url: 'assets/icons/delete.svg' },
+      { name: 'magic', url: 'assets/icons/magic.svg' },
       { name: 'bitcoin', url: 'assets/icons/bitcoin.svg' },
       { name: 'info', url: 'assets/icons/info.svg' },
       { name: 'flare', url: 'assets/icons/flare.svg' },
