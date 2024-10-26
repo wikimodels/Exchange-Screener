@@ -6,9 +6,11 @@ import {
   ALERTS_AT_WORK,
   ARCHIVED_ALERTS,
   TRIGGERED_ALERTS,
+  WORK,
 } from 'src/consts/url-consts';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
 import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
+import { WorkComponent } from './work/work.component';
 
 const routes: Routes = [
   { path: '', component: MajorComponent }, // Default route
@@ -17,6 +19,7 @@ const routes: Routes = [
   { path: ALERTS_AT_WORK, component: AlertsComponent },
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },
   { path: ARCHIVED_ALERTS, component: ArchivedAlertsComponent },
+  { path: WORK, component: WorkComponent },
   { path: '**', redirectTo: '' }, // Wildcard route for unmatched paths (optional)
 ];
 

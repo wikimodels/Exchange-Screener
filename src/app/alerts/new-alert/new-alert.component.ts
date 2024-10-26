@@ -29,7 +29,7 @@ export class NewAlertComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private coinsService: CoinsService,
-    private keyLevelNameservice: KeyLevelNamesService,
+    private keyLevelNameService: KeyLevelNamesService,
     public dialogRef: MatDialogRef<NewAlertComponent>,
     private alertService: AlertsService,
     private _ngZone: NgZone
@@ -39,6 +39,7 @@ export class NewAlertComponent implements OnInit {
 
   ngOnInit(): void {
     this.symbols = this.coinsService.Coins.map((c) => c.symbol);
+    console.log('!!! ebat ', this.symbols);
     this.form = this.fb.group({
       symbol: [
         '',
@@ -51,7 +52,7 @@ export class NewAlertComponent implements OnInit {
         '',
         Validators.compose([Validators.required]),
         Validators.composeAsync([
-          KeyLevelNameValidator.createValidator(this.keyLevelNameservice),
+          KeyLevelNameValidator.createValidator(this.keyLevelNameService),
         ]),
       ],
       price: [

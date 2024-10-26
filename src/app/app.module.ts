@@ -47,6 +47,9 @@ import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.compo
 import { ValidationSummaryComponent } from './validation-summary/validation-summary.component';
 import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
 import { ArchivedTableComponent } from './archived-alerts/archived-table/archived-table.component';
+import { WorkComponent } from './work/work.component';
+import { WorkFieldComponent } from './work/work-field/work-field.component';
+import { WorkItemComponent } from './work/work-item/work-item.component';
 
 echarts.use([
   LegendComponent,
@@ -85,6 +88,9 @@ echarts.registerTheme('macarons', Marcaron);
     ValidationSummaryComponent,
     EditAlertComponent,
     ArchivedTableComponent,
+    WorkComponent,
+    WorkFieldComponent,
+    WorkItemComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

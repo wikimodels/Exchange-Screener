@@ -14,9 +14,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   height: 500px;
 }
 
-.custom-snackbar {
-  background-color: #ff5722 !important;
-  color: white !important;
+
+
+/* SNACKBAR CSS FOR ANGULAR 16 */
+.warning-snackbar {
+  --mdc-snackbar-container-color: orange;
+  --mat-mdc-snack-bar-button-color: white;
+}
+
+/* SNACKBAR CSS FOR ANGULAR 16 */
+.error-snackbar {
+  --mdc-snackbar-container-color: red;
+  --mat-mdc-snack-bar-button-color: white;
 }
 
 /* SNACKBAR CSS FOR ANGULAR 16 */

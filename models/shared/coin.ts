@@ -9,4 +9,8 @@ export interface Coin {
   minQty: number;
   minNotional: number;
   tickSize: number;
+  tvLink?: string;
+  cgLink?: string;
+  exchBiLink?: string;
+  exchByLink?: string;
 }

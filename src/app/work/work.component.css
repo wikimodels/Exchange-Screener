@@ -1,0 +1,13 @@
+.container{
+  width: 98%;                /* Set the width to 97% */
+  min-width: 98%;            /* Ensure the width is at least 97% */
+  margin: 3em auto;
+}
+.small-icon-button {
+  width: 30px;   /* Adjust the width */
+  height: 30px;  /* Adjust the height */
+  padding: 0;    /* Adjust padding */
+  font-size: 12px; /* Adjust the icon size */
+  margin-right: 5px;
+}
+

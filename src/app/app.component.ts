@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Coin } from 'models/shared/coin';
 import { Subscription } from 'rxjs';
 import { CoinsService } from 'src/service/coins.service';
 
@@ -10,7 +11,8 @@ import { CoinsService } from 'src/service/coins.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private dataSubscription: Subscription | null = null;
+  private dataSubscription1: Subscription | null = null;
+  private dataSubscription2: Subscription | null = null;
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
@@ -19,17 +21,27 @@ export class AppComponent implements OnInit, OnDestroy {
     this.registerIcons();
   }
   ngOnInit(): void {
-    this.dataSubscription = this.coinsService
+    this.dataSubscription1 = this.coinsService
       .getAllCoins()
-      .subscribe((data: any) => {
-        console.log('Coins fetched: ', this.coinsService.Coins.length);
+      .subscribe((data: Coin[]) => {
+        console.log('Coins fetched: ', data.length);
+      });
+    this.dataSubscription2 = this.coinsService
+      .getAllWorkingCoins()
+      .subscribe((data: Coin[]) => {
+        console.log('Working Coins fetched: ', data.length);
       });
   }
   ngOnDestroy(): void {
-    if (this.dataSubscription) {
-      this.dataSubscription.unsubscribe();
+    if (this.dataSubscription1) {
+      this.dataSubscription1.unsubscribe();
+    }
+
+    if (this.dataSubscription2) {
+      this.dataSubscription2.unsubscribe();
     }
   }
+
   registerIcons(): void {
     const icons: { name: string; url: string }[] = [
       { name: 'check', url: 'assets/icons/check.svg' },
@@ -42,6 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'coinglass', url: 'assets/icons/coinglass.svg' },
       { name: 'edit', url: 'assets/icons/edit.svg' },
       { name: 'delete', url: 'assets/icons/delete.svg' },
+      { name: 'bitcoin', url: 'assets/icons/bitcoin.svg' },
       { name: 'info', url: 'assets/icons/info.svg' },
       { name: 'flare', url: 'assets/icons/flare.svg' },
       { name: '_arrow_forward', url: 'assets/icons/arrow-forward.svg' },

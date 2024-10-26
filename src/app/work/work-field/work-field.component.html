@@ -1,0 +1,13 @@
+<div class="field">
+  <div style="height: auto; display: flex; flex-direction: row; flex-wrap: wrap;">
+    <div *ngFor="let coin of coins">
+      <app-work-item [coin]="coin"></app-work-item>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: flex-end;">
+    <button mat-raised-button (click)="onDeleteAllWorkingCoins()">Delete</button>
+    <!-- Select All Checkbox -->
+    <mat-checkbox [checked]="selection.hasValue() && isAllSelected()" (change)="toggleAll()"
+      [indeterminate]="selection.hasValue()&&!isAllSelected()"></mat-checkbox>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
+import { SnackbarType } from 'models/shared/snackbar-type';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -91,7 +92,7 @@ export class AlertsService {
         switchMap((data: any) => {
           // After posting, fetch the updated list of alerts
           const msg = `Alert Creation ${data.ok}`;
-          this.snackbarService.showSnackBar(msg, '');
+          this.snackbarService.showSnackBar(msg, '', 3000, SnackbarType.Info);
           return this.http.get<AlertObj[]>(
             ALERTS_URLS.allAlertsUrl,
             httpOptions
@@ -114,7 +115,7 @@ export class AlertsService {
       .pipe(
         switchMap((data: any) => {
           const msg = `Alert Update ${data.ok}`;
-          this.snackbarService.showSnackBar(msg, '');
+          this.snackbarService.showSnackBar(msg, '', 3000, SnackbarType.Info);
           return this.http.get<AlertObj[]>(
             ALERTS_URLS.allAlertsUrl,
             httpOptions
@@ -138,7 +139,7 @@ export class AlertsService {
       .pipe(
         switchMap((data: any) => {
           const msg = `Deleted ${data.deleted} item(s)`;
-          this.snackbarService.showSnackBar(msg, '');
+          this.snackbarService.showSnackBar(msg, '', 3000, SnackbarType.Info);
           return this.http.get<AlertObj[]>(
             ALERTS_URLS.allAlertsUrl,
             httpOptions
@@ -160,7 +161,7 @@ export class AlertsService {
       .pipe(
         switchMap((data: any) => {
           const msg = `Alert move to Archive`;
-          this.snackbarService.showSnackBar(msg, '');
+          this.snackbarService.showSnackBar(msg, '', 3000, SnackbarType.Info);
           return this.http.get<AlertObj[]>(
             ALERTS_URLS.allAlertsUrl,
             httpOptions
@@ -201,7 +202,7 @@ export class AlertsService {
         switchMap((data: any) => {
           console.log('Delete Response', data);
           const msg = `Deleted ${data.deleted} items`;
-          this.snackbarService.showSnackBar(msg, '');
+          this.snackbarService.showSnackBar(msg, '', 3000, SnackbarType.Info);
 
           return this.http.get<AlertObj[]>(
             ALERTS_URLS.allTriggeredAlertsUrl,

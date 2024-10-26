@@ -1,0 +1,33 @@
+<mat-card class="coin-card">
+  <mat-card-header style="display: flex; align-items: baseline; justify-content: space-between;">
+    <div>
+      <img mat-card-image [src]="'assets/logo/' + coin.logo" alt="" class="round-image">
+      <strong>{{coin.symbol}}({{coin.category}})</strong>
+    </div>
+    <div style="margin-bottom: 10px;"> <!-- Individual Row Checkbox -->
+      <mat-checkbox (change)="onDataToggled(coin)">
+      </mat-checkbox>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <!-- TRADING VIEW -->
+    <a *ngIf="coin.tvLink" [href]="coin.tvLink" target="_blank">
+      <img src="assets/icons/tv.svg" alt="TradingView" class="round-image" />
+    </a>
+    <!-- COIN GLASS -->
+    <a *ngIf="coin.cgLink" [href]="coin.cgLink" target="_blank">
+      <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
+    </a>
+    <!-- BINANCE -->
+    <a *ngIf="coin.exchBiLink" [href]="coin.exchBiLink" target="_blank">
+      <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
+    </a>
+    <!-- BYBIT -->
+    <a *ngIf="coin.exchByLink" [href]="coin.exchByLink" target="_blank">
+      <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
+    </a>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,19 @@
+.coin-card{
+  width: 190px;
+  margin:10px;
+}
+.round-image {
+  width: 40px; /* Set your desired width */
+  height: 40px; /* Set your desired height */
+  border-radius: 50%; /* This makes the image round */
+  object-fit: cover;
+  margin: auto;
+
+}
+.small-icon-button {
+  width: 33px;   /* Adjust the width */
+  height: 33px;  /* Adjust the height */
+  padding: 0;    /* Adjust padding */
+  border-radius: 50%; /* This makes the image round */
+  object-fit: cover;
+}

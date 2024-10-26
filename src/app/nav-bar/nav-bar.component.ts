@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NewAlertComponent } from '../alerts/new-alert/new-alert.component';
+import { WORK } from 'src/consts/url-consts';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,6 +15,9 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
   ngOnDestroy(): void {}
 
+  onGetToWork() {
+    this.router.navigate([WORK]);
+  }
   onAddAlert() {
     console.log('SHIT');
     this.modelDialog.open(NewAlertComponent, {
