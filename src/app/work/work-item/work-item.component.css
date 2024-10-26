@@ -2,9 +2,18 @@
   width: 190px;
   margin:10px;
 }
+
+.logo {
+  width: 50px; /* Set your desired width */
+  height: 50px; /* Set your desired height */
+  border-radius: 50%; /* This makes the image round */
+  object-fit: cover;
+  margin: auto;
+
+}
 .round-image {
-  width: 40px; /* Set your desired width */
-  height: 40px; /* Set your desired height */
+  width: 23px; /* Set your desired width */
+  height: 23px; /* Set your desired height */
   border-radius: 50%; /* This makes the image round */
   object-fit: cover;
   margin: auto;

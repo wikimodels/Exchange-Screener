@@ -21,6 +21,7 @@ export class WorkComponent implements OnInit, OnDestroy {
   filteredSymbols: string[] = [];
   coinsSub!: Subscription | null;
   workingCoinsSub!: Subscription | null;
+  defaultLink = 'https://www.tradingview.com/chart?symbol=BINANCE:BTCUSDT.P';
   private openedWindows: Window[] = [];
 
   constructor(
@@ -39,6 +40,7 @@ export class WorkComponent implements OnInit, OnDestroy {
     this.workingCoinsSub = this.coinsService.workingCoins$.subscribe(
       (data: Coin[]) => {
         this.workingCoins = data;
+        this.selectionService.clear();
       }
     );
 
@@ -98,6 +100,10 @@ export class WorkComponent implements OnInit, OnDestroy {
     }
   }
 
+  isAllSelected() {
+    return this.selectionService.isAllSelected(this.workingCoins);
+  }
+
   onOpenCoinglass() {
     this.selectionService.selectedValues().forEach((v: Coin, index: number) => {
       setTimeout(() => {
@@ -120,13 +126,22 @@ export class WorkComponent implements OnInit, OnDestroy {
     });
   }
 
+  onOpenSingleTradingview() {
+    const newWindow = window.open(this.defaultLink, '_blank');
+    if (newWindow) {
+      this.openedWindows.push(newWindow);
+    }
+  }
+
   onCloseAllWindows() {
     this.openedWindows.forEach((win) => win.close());
     this.openedWindows = [];
   }
 
   onDelete() {
-    this.coinsService.deleteAllWorkingCoins().subscribe();
+    this.coinsService
+      .deleteWorkingCoinsButch(this.selectionService.selectedValues())
+      .subscribe();
   }
 
   ngOnDestroy(): void {

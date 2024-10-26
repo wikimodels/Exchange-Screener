@@ -33,22 +33,26 @@
     <div style="display: flex; flex-direction: row; align-items: baseline; gap: 10px;">
       <!-- SELECT CHECKBOX -->
       <button mat-raised-button class="panel-button">
-        <mat-checkbox [checked]="selectionService.hasValue() && selectionService.isAllSelected(workingCoins)"
-          (change)="toggleAll()"
-          [indeterminate]="selectionService.hasValue()&&!selectionService.isAllSelected(workingCoins)"></mat-checkbox>
+        <mat-checkbox [checked]="selectionService.hasValue() && isAllSelected()" (change)="toggleAll()"
+          [indeterminate]="selectionService.hasValue()&& !isAllSelected()"></mat-checkbox>
         <mat-icon svgIcon="check"></mat-icon>
       </button>
 
-      <!-- TV BUTTON -->
+      <!-- OPEN IN TV BUTTON -->
       <button mat-raised-button class="panel-button" (click)="onOpenTradingview()">
         <mat-icon svgIcon="tv"></mat-icon>
         Open Tradingview
       </button>
 
-      <!-- COINGLASS BUTTON -->
+      <!-- OPEN IN COINGLASS BUTTON -->
       <button mat-raised-button class="panel-button" (click)="onOpenCoinglass()">
         <mat-icon svgIcon="coinglass"></mat-icon>
         Open Coinglass
+      </button>
+
+      <!-- TV BUTTON -->
+      <button mat-raised-button class="panel-button" (click)="onOpenSingleTradingview()">
+        <mat-icon svgIcon="tv-white" style="margin-left: 6px;"></mat-icon>
       </button>
 
       <!-- CLOSE ALL WINDOWS -->
