@@ -5,7 +5,8 @@
       <strong>{{coin.symbol}}({{coin.category}})</strong>
     </div>
     <div style="margin-bottom: 10px;"> <!-- Individual Row Checkbox -->
-      <mat-checkbox (change)="onDataToggled(coin)">
+      <mat-checkbox (change)="toggleItem(coin)" [checked]="selectionService.isSelected(coin)">
+
       </mat-checkbox>
     </div>
   </mat-card-header>

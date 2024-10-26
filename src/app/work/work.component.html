@@ -33,7 +33,9 @@
     <div style="display: flex; flex-direction: row; align-items: baseline; gap: 10px;">
       <!-- SELECT CHECKBOX -->
       <button mat-raised-button class="panel-button">
-        <mat-checkbox [checked]="false" [indeterminate]="false"></mat-checkbox>
+        <mat-checkbox [checked]="selectionService.hasValue() && selectionService.isAllSelected(workingCoins)"
+          (change)="toggleAll()"
+          [indeterminate]="selectionService.hasValue()&&!selectionService.isAllSelected(workingCoins)"></mat-checkbox>
         <mat-icon svgIcon="check"></mat-icon>
       </button>
 
@@ -47,6 +49,11 @@
       <button mat-raised-button class="panel-button">
         <mat-icon svgIcon="coinglass"></mat-icon>
         Open Coinglass
+      </button>
+
+      <!-- DELETED -->
+      <button mat-raised-button class="panel-button" (click)="onDelete()" color="warning">
+        <mat-icon svgIcon="delete" style="margin-left: 6px;"></mat-icon>
       </button>
     </div>
   </div>

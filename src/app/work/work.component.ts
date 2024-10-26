@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Coin } from 'models/shared/coin';
@@ -5,6 +6,7 @@ import { SnackbarType } from 'models/shared/snackbar-type';
 import { Subscription } from 'rxjs';
 import { CoinsService } from 'src/service/coins.service';
 import { SnackbarService } from 'src/service/snackbar.service';
+import { WorkSelectionService } from 'src/service/work.selection.service';
 
 @Component({
   selector: 'app-work',
@@ -13,17 +15,20 @@ import { SnackbarService } from 'src/service/snackbar.service';
 })
 export class WorkComponent implements OnInit, OnDestroy {
   coins!: Coin[];
+  workingCoins!: Coin[];
   symbols!: string[];
-  coinsSub!: Subscription | null;
-  workingCoinsSub!: Subscription | null;
   form!: FormGroup | null;
   filteredSymbols: string[] = [];
-  workingCoins!: Coin[];
+  coinsSub!: Subscription | null;
+  workingCoinsSub!: Subscription | null;
+  deleteDisabled = true;
+  selectedItems$ = this.selectionService.selectionChanges$;
 
   constructor(
     private coinsService: CoinsService,
     private fb: FormBuilder,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    public selectionService: WorkSelectionService<any>
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +89,20 @@ export class WorkComponent implements OnInit, OnDestroy {
     this.filteredSymbols = [];
     this.form?.reset();
     this.form?.markAsPristine();
+  }
+
+  toggleAll() {
+    if (this.selectionService.isAllSelected(this.workingCoins)) {
+      this.selectionService.clear();
+      this.deleteDisabled = true;
+    } else {
+      this.selectionService.select(this.workingCoins);
+      this.deleteDisabled = false;
+    }
+  }
+
+  onDelete() {
+    this.coinsService.deleteAllWorkingCoins().subscribe();
   }
 
   ngOnDestroy(): void {
