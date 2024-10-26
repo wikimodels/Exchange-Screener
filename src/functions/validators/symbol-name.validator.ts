@@ -11,7 +11,6 @@ export class SymbolNameValidator {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       return service.checkSymbolNameExists(control.value).pipe(
         map((result) => {
-          console.log('Validator result', result);
           const hasError =
             result === true ? null : { SymbolNameNotExists: true };
           return hasError;

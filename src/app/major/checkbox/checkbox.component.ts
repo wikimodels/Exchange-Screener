@@ -25,7 +25,7 @@ export class CheckboxComponent implements AfterViewInit {
         codeName: this.chart.codeName,
         isHidden: !(value as boolean),
       };
-      console.log(obj);
+
       this.panelService.setShowChartSubj(obj);
     });
   }

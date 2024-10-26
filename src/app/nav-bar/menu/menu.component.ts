@@ -14,17 +14,9 @@ import {
 export class MenuComponent implements OnInit {
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        console.log('Navigation occurred:', event.url);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   goToAlertsAtWork() {
-    //TODO
-    console.log('Shit is click');
     this.router.navigate([ALERTS_AT_WORK]);
   }
 

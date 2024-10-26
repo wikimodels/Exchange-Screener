@@ -57,7 +57,6 @@ export class ValidationSummaryComponent implements OnInit, OnDestroy {
   }
 
   generateErrorMessages(formGroup: FormGroup) {
-    //console.log(formGroup.controls['imageLinks']);
     Object.keys(formGroup.controls).forEach((controlName) => {
       if (controlName == 'imageLinks') {
         const array = formGroup.controls['imageLinks'] as FormArray;

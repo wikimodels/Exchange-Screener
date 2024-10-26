@@ -12,11 +12,7 @@ export class WorkItemComponent implements OnInit {
   selectedItems$ = this.selectionService.selectionChanges$;
   constructor(public selectionService: WorkSelectionService<any>) {}
 
-  ngOnInit(): void {
-    this.selectedItems$.subscribe((items) => {
-      console.log('Component 1 selected items:', items);
-    });
-  }
+  ngOnInit(): void {}
 
   toggleItem(item: Coin): void {
     this.selectionService.toggle(item);

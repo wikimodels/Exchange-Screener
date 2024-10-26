@@ -40,7 +40,6 @@ export class EditAlertComponent {
       imageLinks: this.fb.array([]),
     });
     this.populateForm();
-    console.log(this.data);
   }
 
   populateForm() {

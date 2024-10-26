@@ -40,19 +40,24 @@
       </button>
 
       <!-- TV BUTTON -->
-      <button mat-raised-button class="panel-button">
+      <button mat-raised-button class="panel-button" (click)="onOpenTradingview()">
         <mat-icon svgIcon="tv"></mat-icon>
         Open Tradingview
       </button>
 
       <!-- COINGLASS BUTTON -->
-      <button mat-raised-button class="panel-button">
+      <button mat-raised-button class="panel-button" (click)="onOpenCoinglass()">
         <mat-icon svgIcon="coinglass"></mat-icon>
         Open Coinglass
       </button>
 
+      <!-- CLOSE ALL WINDOWS -->
+      <button mat-raised-button class="panel-button" (click)="onCloseAllWindows()">
+        <mat-icon svgIcon="close" style="margin-left: 6px;"></mat-icon>
+      </button>
+
       <!-- DELETED -->
-      <button mat-raised-button class="panel-button" (click)="onDelete()" color="warning">
+      <button mat-raised-button class="panel-button" (click)="onDelete()">
         <mat-icon svgIcon="delete" style="margin-left: 6px;"></mat-icon>
       </button>
     </div>

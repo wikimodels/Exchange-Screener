@@ -35,10 +35,6 @@ export class WorkSelectionService<T> {
     this.selection.toggle(item);
   }
 
-  clearSelection(): void {
-    this.selection.clear();
-  }
-
   isSelected(item: T): boolean {
     return this.selection.isSelected(item);
   }
@@ -53,5 +49,9 @@ export class WorkSelectionService<T> {
 
   hasValue(): boolean {
     return this.selection.hasValue();
+  }
+
+  selectedValues(): T[] {
+    return this.selection.selected;
   }
 }

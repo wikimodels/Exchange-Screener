@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Coin } from 'models/shared/coin';
 import { SnackbarType } from 'models/shared/snackbar-type';
-import { Subscription } from 'rxjs';
+import { delay, Subscription } from 'rxjs';
 import { CoinsService } from 'src/service/coins.service';
 import { SnackbarService } from 'src/service/snackbar.service';
 import { WorkSelectionService } from 'src/service/work.selection.service';
@@ -21,8 +21,7 @@ export class WorkComponent implements OnInit, OnDestroy {
   filteredSymbols: string[] = [];
   coinsSub!: Subscription | null;
   workingCoinsSub!: Subscription | null;
-  deleteDisabled = true;
-  selectedItems$ = this.selectionService.selectionChanges$;
+  private openedWindows: Window[] = [];
 
   constructor(
     private coinsService: CoinsService,
@@ -94,11 +93,36 @@ export class WorkComponent implements OnInit, OnDestroy {
   toggleAll() {
     if (this.selectionService.isAllSelected(this.workingCoins)) {
       this.selectionService.clear();
-      this.deleteDisabled = true;
     } else {
       this.selectionService.select(this.workingCoins);
-      this.deleteDisabled = false;
     }
+  }
+
+  onOpenCoinglass() {
+    this.selectionService.selectedValues().forEach((v: Coin, index: number) => {
+      setTimeout(() => {
+        const newWindow = window.open(v.cgLink, '_blank');
+        if (newWindow) {
+          this.openedWindows.push(newWindow);
+        }
+      }, index * 1500);
+    });
+  }
+
+  onOpenTradingview() {
+    this.selectionService.selectedValues().forEach((v: Coin, index: number) => {
+      setTimeout(() => {
+        const newWindow = window.open(v.tvLink, '_blank');
+        if (newWindow) {
+          this.openedWindows.push(newWindow);
+        }
+      }, index * 1500);
+    });
+  }
+
+  onCloseAllWindows() {
+    this.openedWindows.forEach((win) => win.close());
+    this.openedWindows = [];
   }
 
   onDelete() {

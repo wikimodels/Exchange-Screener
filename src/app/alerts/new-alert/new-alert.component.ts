@@ -39,7 +39,6 @@ export class NewAlertComponent implements OnInit {
 
   ngOnInit(): void {
     this.symbols = this.coinsService.Coins.map((c) => c.symbol);
-    console.log('!!! ebat ', this.symbols);
     this.form = this.fb.group({
       symbol: [
         '',

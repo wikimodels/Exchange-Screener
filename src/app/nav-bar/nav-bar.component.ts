@@ -19,7 +19,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.router.navigate([WORK]);
   }
   onAddAlert() {
-    console.log('SHIT');
     this.modelDialog.open(NewAlertComponent, {
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,

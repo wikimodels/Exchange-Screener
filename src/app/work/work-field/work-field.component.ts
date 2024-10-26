@@ -17,7 +17,6 @@ export class WorkFieldComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.coinsService.workingCoins$.subscribe((data: Coin[]) => {
       this.coins = data;
-      console.log(this.coins);
     });
   }
 

@@ -200,7 +200,6 @@ export class AlertsService {
       })
       .pipe(
         switchMap((data: any) => {
-          console.log('Delete Response', data);
           const msg = `Deleted ${data.deleted} items`;
           this.snackbarService.showSnackBar(msg, '', 3000, SnackbarType.Info);
 

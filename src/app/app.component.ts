@@ -24,7 +24,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.dataSubscription1 = this.coinsService
       .getAllCoins()
       .subscribe((data: Coin[]) => {
-        console.log(data.slice(0, 2));
         console.log('Coins fetched: ', data.length);
       });
     this.dataSubscription2 = this.coinsService

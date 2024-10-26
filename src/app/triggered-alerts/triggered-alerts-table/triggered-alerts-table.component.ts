@@ -72,7 +72,6 @@ export class TriggeredAlertsTableComponent implements OnInit {
   onDataToggled(data: any) {
     this.selection.toggle(data);
     this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
-    console.log(this.selection.selected);
   }
   // Toggle "Select All" checkbox
   toggleAll() {
@@ -113,7 +112,6 @@ export class TriggeredAlertsTableComponent implements OnInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    console.log(this.selection.selected);
     this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
       this.selection.clear();
     });

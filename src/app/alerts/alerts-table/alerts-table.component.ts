@@ -65,7 +65,6 @@ export class AlertsTableComponent implements OnInit {
   ngOnInit() {
     this.alertsService.getAllAlerts().subscribe((data) => {});
     this.alertsService.alerts$.subscribe((data) => {
-      console.log('DATA ==>', data);
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -81,7 +80,6 @@ export class AlertsTableComponent implements OnInit {
   onDataToggled(data: any) {
     this.selection.toggle(data);
     this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
-    console.log(this.selection.selected);
   }
   // Toggle "Select All" checkbox
   toggleAll() {
@@ -110,7 +108,6 @@ export class AlertsTableComponent implements OnInit {
   }
 
   onOpenDescriptionModalDialog(alertObj: AlertObj): void {
-    console.log('--->... ', alertObj);
     this.modelDialog.open(DescriptionModalComponent, {
       data: alertObj,
       enterAnimationDuration: 250,
@@ -126,7 +123,6 @@ export class AlertsTableComponent implements OnInit {
       this.selection.clear();
     });
     this.deleteDisabled = true;
-    console.log(this.selection.selected);
   }
 
   onEdit(alertObj: AlertObj) {
