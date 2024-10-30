@@ -6,10 +6,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertObj } from 'models/alerts/alert-obj';
-import { AlertsService } from 'src/service/alerts.service';
 
-import { DescriptionModalComponent } from '../../description-modal/description-modal.component';
+import { DescriptionModalComponent } from '../../shared/description-modal/description-modal.component';
 import { EditAlertComponent } from 'src/app/alerts/edit-alert/edit-alert.component';
+import { TriggeredAlertsService } from 'src/service/alerts/triggered-alerts.service';
 
 /**
  * @title Table with sorting
@@ -42,13 +42,13 @@ export class TriggeredAlertsTableComponent implements OnInit {
   searchKeywordFilter = new FormControl();
   selection = new SelectionModel<any>(true, []); // Allows multiple selections
   constructor(
-    private alertsService: AlertsService,
+    private triggeredAlertsService: TriggeredAlertsService,
     private matDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.alertsService.getAllTriggeredAlerts().subscribe((data) => {});
-    this.alertsService.alertsTriggered$.subscribe((data) => {
+    this.triggeredAlertsService.getAllTriggeredAlerts().subscribe((data) => {});
+    this.triggeredAlertsService.alertsTriggered$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -56,7 +56,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
   }
 
   refreshDataTable() {
-    this.alertsService.getAllTriggeredAlerts().subscribe((data) => {});
+    this.triggeredAlertsService.getAllTriggeredAlerts().subscribe((data) => {});
     this.isRotating = true;
     setTimeout(() => {
       this.isRotating = false;
@@ -112,9 +112,11 @@ export class TriggeredAlertsTableComponent implements OnInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
-      this.selection.clear();
-    });
+    this.triggeredAlertsService
+      .deleteTriggeredAlertsButch(objs)
+      .subscribe((data: any) => {
+        this.selection.clear();
+      });
     this.deleteDisabled = true;
   }
 

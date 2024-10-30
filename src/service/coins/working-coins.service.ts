@@ -1,23 +1,20 @@
-import { env } from 'environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   Observable,
-  map,
   catchError,
   throwError,
-  retry,
   of,
   tap,
   BehaviorSubject,
   switchMap,
 } from 'rxjs';
 import { Coin } from 'models/shared/coin';
-import { ALERTS_URLS, coinsUrl } from 'src/consts/url-consts';
-import { SnackbarService } from './snackbar.service';
+import { WORKING_COINS_URLS } from 'src/consts/url-consts';
+import { SnackbarService } from '../snackbar.service';
 
 @Injectable({ providedIn: 'root' })
-export class CoinsService {
+export class WorkingCoinsService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -30,18 +27,6 @@ export class CoinsService {
     private snackbarService: SnackbarService
   ) {}
 
-  //---------------------------------------------
-  // ✴️ COINS
-  //---------------------------------------------
-  private coinsSubject: BehaviorSubject<Coin[]> = new BehaviorSubject<Coin[]>(
-    []
-  );
-
-  public coins$ = this.coinsSubject.asObservable(); //
-
-  public get Coins(): Coin[] {
-    return this.coinsSubject.value;
-  }
   //---------------------------------------------
   // ✴️ WORKING COINS
   //---------------------------------------------
@@ -60,37 +45,11 @@ export class CoinsService {
   }
 
   //---------------------------------------------
-  // ✅ COINS
+  // ✅ GET ALL WORKING COINS
   //---------------------------------------------
-  getAllCoins(): Observable<any> {
-    return this.http.get<Coin[]>(coinsUrl).pipe(
-      tap((data: Coin[]) => {
-        this.coinsSubject.next(data);
-      }),
-      catchError((error) => {
-        // Handle the error
-        console.error('Error fetching data:', error);
-        // You can also display an error message or return a fallback value
-        // Return an observable with a user-facing error message
-        return throwError('Error fetching data; please try again later.');
-      })
-    );
-  }
-
-  //---------------------------------------------
-  // ✅ VALIDATOR
-  //---------------------------------------------
-  checkSymbolNameExists(symbol: string): Observable<any> {
-    return of(this.coinsSubject.value.some((c) => c.symbol == symbol));
-  }
-
-  //---------------------------------------------
-  // ✅ WORKING COINS
-  //---------------------------------------------
-
   getAllWorkingCoins(): Observable<any> {
     return this.http
-      .get<Coin[]>(ALERTS_URLS.getAllWorkingCoinsUrls, this.httpOptions)
+      .get<Coin[]>(WORKING_COINS_URLS.workingCoinsUrl, this.httpOptions)
       .pipe(
         tap((data: Coin[]) => {
           this.workingCoinsSubject.next(data);
@@ -99,16 +58,22 @@ export class CoinsService {
       );
   }
 
+  //---------------------------------------------
+  // ✅ ADD WORKING COINS
+  //---------------------------------------------
   addWorkingCoins(data: Coin[]): Observable<any> {
     return this.http
-      .post<Coin[]>(ALERTS_URLS.addWorkingCoinsUrl, data, this.httpOptions)
+      .post<Coin[]>(
+        WORKING_COINS_URLS.workingCoinsAddUrl,
+        data,
+        this.httpOptions
+      )
       .pipe(
         switchMap((data: any) => {
-          // After posting, fetch the updated list of alerts
           const msg = `Coin successfully added`;
           this.snackbarService.showSnackBar(msg, '');
           return this.http.get<Coin[]>(
-            ALERTS_URLS.getAllWorkingCoinsUrls,
+            WORKING_COINS_URLS.workingCoinsUrl,
             this.httpOptions
           );
         }),
@@ -120,38 +85,22 @@ export class CoinsService {
       );
   }
 
-  deleteAllWorkingCoins() {
+  //---------------------------------------------
+  // ✅ DELETE WORKING COINS BATCH
+  //---------------------------------------------
+  deleteWorkingCoinsBatch(coins: Coin[]) {
+    const symbols = coins.map((c) => c.symbol);
     return this.http
-      .get(ALERTS_URLS.deleteAllWorkingCoinsUrl, this.httpOptions)
+      .delete<Coin[]>(WORKING_COINS_URLS.workingCoinsDeleteBatchUrl, {
+        body: symbols,
+        ...this.httpOptions,
+      })
       .pipe(
         switchMap((data: any) => {
           const msg = `Working Coins deleted: ${data.deleted}`;
           this.snackbarService.showSnackBar(msg, '');
           return this.http.get<Coin[]>(
-            ALERTS_URLS.getAllWorkingCoinsUrls,
-            this.httpOptions
-          );
-        }),
-        tap((updatedCoins: Coin[]) => {
-          this.workingCoinsSubject.next(updatedCoins);
-        }),
-        catchError(this.handleError)
-      );
-  }
-
-  deleteWorkingCoinsButch(coins: Coin[]) {
-    return this.http
-      .post<Coin[]>(
-        ALERTS_URLS.deleteWorkingCoinsButchUrl,
-        coins,
-        this.httpOptions
-      )
-      .pipe(
-        switchMap((data: any) => {
-          const msg = `Working Coins deleted: ${data.deleted}`;
-          this.snackbarService.showSnackBar(msg, '');
-          return this.http.get<Coin[]>(
-            ALERTS_URLS.getAllWorkingCoinsUrls,
+            WORKING_COINS_URLS.workingCoinsUrl,
             this.httpOptions
           );
         }),
@@ -159,6 +108,28 @@ export class CoinsService {
           this.workingCoinsSubject.next(updatedCoins);
         }),
         catchError(this.handleError) // Handle errors for both POST and GET
+      );
+  }
+
+  //---------------------------------------------
+  // ✅ DELETE ALL WORKING COINS
+  //---------------------------------------------
+  deleteAllWorkingCoins() {
+    return this.http
+      .get(WORKING_COINS_URLS.workingCoinsDeleteAllUrl, this.httpOptions)
+      .pipe(
+        switchMap((data: any) => {
+          const msg = `Working Coins deleted: ${data.deleted}`;
+          this.snackbarService.showSnackBar(msg, '');
+          return this.http.get<Coin[]>(
+            WORKING_COINS_URLS.workingCoinsUrl,
+            this.httpOptions
+          );
+        }),
+        tap((updatedCoins: Coin[]) => {
+          this.workingCoinsSubject.next(updatedCoins);
+        }),
+        catchError(this.handleError)
       );
   }
 

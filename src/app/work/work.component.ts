@@ -3,8 +3,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Coin } from 'models/shared/coin';
 import { SnackbarType } from 'models/shared/snackbar-type';
-import { delay, Subscription } from 'rxjs';
-import { CoinsService } from 'src/service/coins.service';
+import { Subscription } from 'rxjs';
+import { CoinsService } from 'src/service/coins/coins.service';
+import { WorkingCoinsService } from 'src/service/coins/working-coins.service';
 import { SnackbarService } from 'src/service/snackbar.service';
 import { WorkSelectionService } from 'src/service/work.selection.service';
 
@@ -25,6 +26,7 @@ export class WorkComponent implements OnInit, OnDestroy {
   private openedWindows: Window[] = [];
 
   constructor(
+    private workingCoinsService: WorkingCoinsService,
     private coinsService: CoinsService,
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
@@ -37,7 +39,7 @@ export class WorkComponent implements OnInit, OnDestroy {
       this.symbols = data.map((d) => d.symbol);
     });
 
-    this.workingCoinsSub = this.coinsService.workingCoins$.subscribe(
+    this.workingCoinsSub = this.workingCoinsService.workingCoins$.subscribe(
       (data: Coin[]) => {
         this.workingCoins = data;
         this.selectionService.clear();
@@ -71,7 +73,7 @@ export class WorkComponent implements OnInit, OnDestroy {
       );
       if (coin && !alreadyAdded) {
         this.workingCoins.push(coin);
-        this.coinsService.addWorkingCoins(this.workingCoins).subscribe();
+        this.workingCoinsService.addWorkingCoins(this.workingCoins).subscribe();
       }
       if (coin && alreadyAdded) {
         this.snackbarService.showSnackBar(
@@ -139,8 +141,8 @@ export class WorkComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.coinsService
-      .deleteWorkingCoinsButch(this.selectionService.selectedValues())
+    this.workingCoinsService
+      .deleteWorkingCoinsBatch(this.selectionService.selectedValues())
       .subscribe();
   }
 

@@ -4,7 +4,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Observable, map } from 'rxjs';
-import { CoinsService } from 'src/service/coins.service';
+import { CoinsService } from 'src/service/coins/coins.service';
 
 export class SymbolNameValidator {
   static createValidator(service: CoinsService): AsyncValidatorFn {

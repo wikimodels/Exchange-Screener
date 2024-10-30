@@ -27,10 +27,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 import { HttpClientModule } from '@angular/common/http';
-import { MajorComponent } from './major/major.component';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { PanelComponent } from './major/panel/panel.component';
-import { CheckboxComponent } from './major/checkbox/checkbox.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertsComponent } from './alerts/alerts.component';
 import { AlertsTableComponent } from './alerts/alerts-table/alerts-table.component';
@@ -39,17 +36,18 @@ import { NewAlertComponent } from './alerts/new-alert/new-alert.component';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
 import { TriggeredAlertsTableComponent } from './triggered-alerts/triggered-alerts-table/triggered-alerts-table.component';
 
-import { DescriptionModalComponent } from './description-modal/description-modal.component';
-import { SnackbarComponent } from './snackbar/snackbar.component';
-import { CarouselComponent } from './carousel/carousel.component';
+import { DescriptionModalComponent } from './shared/description-modal/description-modal.component';
+import { SnackbarComponent } from './shared/snackbar/snackbar.component';
+import { CarouselComponent } from './shared/carousel/carousel.component';
 import { MenuComponent } from './nav-bar/menu/menu.component';
 import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
-import { ValidationSummaryComponent } from './validation-summary/validation-summary.component';
-import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
+import { ValidationSummaryComponent } from './shared/validation-summary/validation-summary.component';
+
 import { ArchivedTableComponent } from './archived-alerts/archived-table/archived-table.component';
 import { WorkComponent } from './work/work.component';
 import { WorkFieldComponent } from './work/work-field/work-field.component';
 import { WorkItemComponent } from './work/work-item/work-item.component';
+import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
 
 echarts.use([
   LegendComponent,
@@ -70,10 +68,7 @@ echarts.registerTheme('macarons', Marcaron);
   declarations: [
     AppComponent,
     NavBarComponent,
-    MajorComponent,
     SpinnerComponent,
-    PanelComponent,
-    CheckboxComponent,
     AlertsComponent,
     AlertsTableComponent,
     ImageModalComponent,

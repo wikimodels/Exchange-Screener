@@ -1,23 +1,7 @@
-import {
-  trigger,
-  state,
-  transition,
-  style,
-  animate,
-} from '@angular/animations';
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertObj } from 'models/alerts/alert-obj';
-import { Subscription } from 'rxjs';
-import { AlertsService } from 'src/service/alerts.service';
-import { ImageModalComponent } from '../image-modal/image-modal.component';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { AlertsService } from 'src/service/alerts/alerts.service';
 import { NewAlertComponent } from '../new-alert/new-alert.component';
 import { EditAlertComponent } from '../edit-alert/edit-alert.component';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -25,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DescriptionModalComponent } from 'src/app/description-modal/description-modal.component';
+import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
 import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
@@ -119,7 +103,7 @@ export class AlertsTableComponent implements OnInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    this.alertsService.deleteAlertsButch(objs).subscribe((data) => {
+    this.alertsService.deleteAlertsBatch(objs).subscribe((data: any) => {
       this.selection.clear();
     });
     this.deleteDisabled = true;

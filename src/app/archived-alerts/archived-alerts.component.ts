@@ -7,10 +7,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { AlertObj } from 'models/alerts/alert-obj';
-import { AlertsService } from 'src/service/alerts.service';
+import { AlertsService } from 'src/service/alerts/alerts.service';
 import { EditAlertComponent } from '../alerts/edit-alert/edit-alert.component';
 import { NewAlertComponent } from '../alerts/new-alert/new-alert.component';
-import { DescriptionModalComponent } from '../description-modal/description-modal.component';
+import { DescriptionModalComponent } from '../shared/description-modal/description-modal.component';
+import { ArchivedAlertsService } from 'src/service/alerts/archived-alerts.service';
 
 @Component({
   selector: 'app-archived-alerts',
@@ -36,13 +37,13 @@ export class ArchivedAlertsComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private alertsService: AlertsService,
+    private archivedAlertsService: ArchivedAlertsService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.alertsService.getAllArchivedAlerts().subscribe((data) => {});
-    this.alertsService.alertsArchived$.subscribe((data) => {
+    this.archivedAlertsService.getAllArchivedAlerts().subscribe((data) => {});
+    this.archivedAlertsService.alertsArchived$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -88,9 +89,11 @@ export class ArchivedAlertsComponent {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    this.alertsService.deleteTriggeredAlerts(objs).subscribe((data) => {
-      this.selection.clear();
-    });
+    this.archivedAlertsService
+      .deleteArchivedAlertsBatch(objs)
+      .subscribe((data: any) => {
+        this.selection.clear();
+      });
     this.deleteDisabled = true;
   }
 }

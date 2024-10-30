@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MajorComponent } from './major/major.component';
 import { AlertsComponent } from './alerts/alerts.component';
 import {
   ALERTS_AT_WORK,
@@ -13,7 +12,6 @@ import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.compo
 import { WorkComponent } from './work/work.component';
 
 const routes: Routes = [
-  { path: '', component: MajorComponent }, // Default route
   // Other routes for your application
   //{ path: 'about', component: AboutComponent }, // Example route
   { path: ALERTS_AT_WORK, component: AlertsComponent },

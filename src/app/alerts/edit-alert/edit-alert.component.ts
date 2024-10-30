@@ -1,11 +1,11 @@
 import { Component, Inject, NgZone, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AlertsService } from 'src/service/alerts.service';
-import { CoinsService } from 'src/service/coins.service';
+import { AlertsService } from 'src/service/alerts/alerts.service';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
+import { CoinsService } from 'src/service/coins/coins.service';
 
 @Component({
   selector: 'app-edit-alert',

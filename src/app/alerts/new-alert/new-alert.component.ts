@@ -1,19 +1,13 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { CoinsService } from 'src/service/coins.service';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { KeyLevelNamesService } from 'src/service/key-level-names.service';
 import { KeyLevelNameValidator } from 'src/functions/validators/key-level-name.validator';
-import { AlertsService } from 'src/service/alerts.service';
+import { AlertsService } from 'src/service/alerts/alerts.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SymbolNameValidator } from 'src/functions/validators/symbol-name.validator';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
+import { CoinsService } from 'src/service/coins/coins.service';
 
 @Component({
   selector: 'app-new-alert',
