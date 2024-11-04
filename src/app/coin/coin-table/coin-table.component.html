@@ -13,13 +13,10 @@
   </div>
 
   <div>
-    <h1>Alerts at Work</h1>
+    <h1>Coins</h1>
   </div>
   <div>
-    <button mat-raised-button (click)="onAddAlert()" style="margin-right: 20px; height: 45px;">Add Alert</button>
-    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
-      style="height: 45px;">Delete
-      Selected</button>
+    <button mat-raised-button (click)="onAdd()" style="margin-right: 20px; height: 45px;">Add Coin</button>
   </div>
 </div>
 
@@ -30,43 +27,19 @@
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
       <td mat-cell *matCellDef="let element" class="symbol-cell">
-        <img [src]="element.logoLink" alt="logo" class="round-image" />
-        {{element.symbol}} ({{element.coinCategory}})
+        <img [src]="'assets/logo/' + element.logo" alt="logo" class="round-image" />
+        {{element.symbol}}
       </td>
     </ng-container>
 
-    <!-- KEY LEVEL NAME -->
-    <ng-container matColumnDef="keyLevelName">
+    <!-- CATEGORY -->
+    <ng-container matColumnDef="category">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Key Level Name
+        Category
       </th>
-      <td mat-cell *matCellDef="let element"> <b>{{element.keyLevelName}}</b> </td>
+      <td mat-cell *matCellDef="let element"> <b>{{element.category}}</b> </td>
     </ng-container>
 
-    <!-- ACTION -->
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Action
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-    </ng-container>
-
-    <!-- PRICE -->
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Price
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
-    </ng-container>
-
-    <!-- IS ACTIVE -->
-    <ng-container matColumnDef="isActive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Active </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon *ngIf="element.isActive == true">check</mat-icon>
-        <mat-icon *ngIf="element.isActive == false">close</mat-icon>
-      </td>
-    </ng-container>
 
     <!-- LINKS -->
     <ng-container matColumnDef="links">
@@ -91,15 +64,6 @@
       </td>
     </ng-container>
 
-    <!-- DESCRIPTION -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon (click)="onOpenDescriptionModalDialog(element)" class="clickable-icon">details</mat-icon>
-      </td>
-    </ng-container>
-
     <!-- EDIT -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>
@@ -109,28 +73,13 @@
       </td>
     </ng-container>
 
-    <!-- ARCHIVE -->
-    <ng-container matColumnDef="archive">
+    <!-- DELETE -->
+    <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef>
       </th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon (click)="onMoveToArchive(element)" class="clickable-icon" svgIcon="flare" matTooltip="Move to Archive"
+        <mat-icon (click)="onDelete(element)" class="clickable-icon" svgIcon="delete" matTooltip="Delete Coin"
           [matTooltipPosition]="tooltipPosition"></mat-icon>
-      </td>
-    </ng-container>
-
-
-    <!-- CHECKBOX-->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <!-- Select All Checkbox -->
-        <mat-checkbox [checked]="selection.hasValue() && isAllSelected()" (change)="toggleAll()"
-          [indeterminate]="selection.hasValue()&&!isAllSelected()"></mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <!-- Individual Row Checkbox -->
-        <mat-checkbox (change)="onDataToggled(element)" [checked]="selection.isSelected(element)">
-        </mat-checkbox>
       </td>
     </ng-container>
 

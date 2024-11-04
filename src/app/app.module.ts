@@ -48,6 +48,13 @@ import { WorkComponent } from './work/work.component';
 import { WorkFieldComponent } from './work/work-field/work-field.component';
 import { WorkItemComponent } from './work/work-item/work-item.component';
 import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
+import { CoinComponent } from './coin/coin.component';
+import { CoinTableComponent } from './coin/coin-table/coin-table.component';
+import { EditCoinComponent } from './coin/edit-coin/edit-coin.component';
+import { AddCoinComponent } from './coin/add-coin/add-coin.component';
+import { DeleteItemComponent } from './shared/delete-item/delete-item.component';
+import { CoinProviderComponent } from './coin-provider/coin-provider.component';
+import { CoinProviderTableComponent } from './coin-provider/coin-provider-table/coin-provider-table.component';
 
 echarts.use([
   LegendComponent,
@@ -67,6 +74,8 @@ echarts.registerTheme('macarons', Marcaron);
 @NgModule({
   declarations: [
     AppComponent,
+    CoinProviderComponent,
+    CoinProviderTableComponent,
     NavBarComponent,
     SpinnerComponent,
     AlertsComponent,
@@ -86,6 +95,11 @@ echarts.registerTheme('macarons', Marcaron);
     WorkComponent,
     WorkFieldComponent,
     WorkItemComponent,
+    CoinComponent,
+    CoinTableComponent,
+    EditCoinComponent,
+    AddCoinComponent,
+    DeleteItemComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

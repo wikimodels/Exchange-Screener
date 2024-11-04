@@ -4,20 +4,26 @@ import { AlertsComponent } from './alerts/alerts.component';
 import {
   ALERTS_AT_WORK,
   ARCHIVED_ALERTS,
+  COIN,
+  COIN_PROVIDER,
   TRIGGERED_ALERTS,
   WORK,
 } from 'src/consts/url-consts';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
 import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
 import { WorkComponent } from './work/work.component';
+import { CoinComponent } from './coin/coin.component';
+import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 
 const routes: Routes = [
   // Other routes for your application
   //{ path: 'about', component: AboutComponent }, // Example route
   { path: ALERTS_AT_WORK, component: AlertsComponent },
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },
+  { path: COIN_PROVIDER, component: CoinProviderComponent },
   { path: ARCHIVED_ALERTS, component: ArchivedAlertsComponent },
   { path: WORK, component: WorkComponent },
+  { path: COIN, component: CoinComponent },
   { path: '**', redirectTo: '' }, // Wildcard route for unmatched paths (optional)
 ];
 

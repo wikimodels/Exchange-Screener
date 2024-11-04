@@ -3,7 +3,9 @@ import { env } from 'environment/environment';
 export const ALERTS_AT_WORK = 'alerts-at-work';
 export const TRIGGERED_ALERTS = 'triggered-alerts';
 export const ARCHIVED_ALERTS = 'archived-alerts';
+export const COIN_PROVIDER = 'coin-provider';
 export const WORK = 'work';
+export const COIN = 'coin';
 
 //URLS
 const baseURL = env.baseURL;
@@ -57,4 +59,16 @@ export const BYBIT_WS_URLS = {
   bybitWsStartUrl: `${baseURL}/ws/bybit/start`,
   bybitWsCloseUrl: `${baseURL}/ws/bybit/close`,
   bybitWsStatusUrl: `${baseURL}/ws/bybit/status`,
+};
+
+export const COINS_PROVIDER_URLS = {
+  coinsProviderUrl: `${baseURL}/coins-provider`,
+  coinsProviderRelocateToCoinsUrl: `${baseURL}/coins-provider/relocate-to-coins`,
+  coinsProviderDeleteManyUrl: `${baseURL}/coins-provider/delete/many`,
+  blackListUrl: `${baseURL}/black-list`,
+  blackListAddOneUrl: `${baseURL}/black-list/add/one`,
+  blackListRemoveOne: `${baseURL}/black-list/remove/one`,
+  blackListRemoveMany: `${baseURL}/black-list/remove/many`,
+  coingeckoMissingUrl: `${baseURL}/coins-provider/coin-gecko/missing`,
+  santimentMissingUrl: `${baseURL}/coins-provider/santiment/missing`,
 };

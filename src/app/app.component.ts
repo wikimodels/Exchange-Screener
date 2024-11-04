@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     this.registerIcons();
   }
+
   ngOnInit(): void {
     this.dataSubscription1 = this.coinsService
       .getAllCoins()
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('Working Coins fetched: ', data.length);
       });
   }
+
   ngOnDestroy(): void {
     if (this.dataSubscription1) {
       this.dataSubscription1.unsubscribe();

@@ -13,10 +13,10 @@
   </div>
 
   <div>
-    <h1>Alerts at Work</h1>
+    <h1>Coins Provider</h1>
   </div>
   <div>
-    <button mat-raised-button (click)="onAddAlert()" style="margin-right: 20px; height: 45px;">Add Alert</button>
+    <button mat-raised-button style="margin-right: 20px; height: 45px;">Add Alert</button>
     <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
       style="height: 45px;">Delete
       Selected</button>
@@ -30,8 +30,9 @@
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
       <td mat-cell *matCellDef="let element" class="symbol-cell">
-        <img [src]="element.logoLink" alt="logo" class="round-image" />
-        {{element.symbol}} ({{element.coinCategory}})
+        <img [src]="element.image_url ? element.image_url : 'assets/img/noname.png'" alt="logo" class="round-image" />
+
+        {{element.symbol}} ({{element.category}})
       </td>
     </ng-container>
 
@@ -114,7 +115,7 @@
       <th mat-header-cell *matHeaderCellDef>
       </th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon (click)="onMoveToArchive(element)" class="clickable-icon" svgIcon="flare" matTooltip="Move to Archive"
+        <mat-icon (click)="onMoveToCoins(element)" class="clickable-icon" svgIcon="flare" matTooltip="Move to Archive"
           [matTooltipPosition]="tooltipPosition"></mat-icon>
       </td>
     </ng-container>

@@ -37,6 +37,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* ------------------------*/
 /* TRIGGERED ALERTS TABLE  */
 /*-------------------------*/
+.coin-table .mat-mdc-row:nth-child(even) {
+  background-color: #faf8f2!important;
+}
+
+.coin-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.coin-table .mat-mdc-header-row {
+  background-color: #f7f181 !important;
+  height: 45px;
+}
+.coin-table .mat-mdc-row:hover {
+  background-color: #f5f4f2 !important; /* Replace with your desired color */
+  cursor: pointer; /* Optional: Add pointer cursor on hover */
+}
+
+
+/* ------------------------*/
+/* TRIGGERED ALERTS TABLE  */
+/*-------------------------*/
 .triggered-alerts-table .mat-mdc-row:nth-child(even) {
   background-color: #faf8f2!important;
 }
@@ -97,9 +118,74 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
+/* ----------------------*/
+/* COINS TABLE */
+/*---------------------- */
+.coins-table .mat-mdc-row:nth-child(even) {
+  background-color: #e4f7df!important;
+}
+
+.coins-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.coins-table .mat-mdc-header-row {
+  background-color: #cbdff5 !important;
+  height: 45px;
+}
+
+.coins-table .mat-mdc-row:hover {
+  background-color: #f5f4f2 !important; /* Replace with your desired color */
+  cursor: pointer; /* Optional: Add pointer cursor on hover */
+}
+
+/* ----------------------*/
+/* COIN-PROVIDER TABLE */
+/*---------------------- */
+.coin-provider-table .mat-mdc-row:nth-child(even) {
+  background-color: #e4f7df!important;
+}
+
+.coin-provider-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.coin-provider-table .mat-mdc-header-row {
+  background-color: #cbdff5 !important;
+  height: 45px;
+}
+
+.coin-provider-table .mat-mdc-row:hover {
+  background-color: #f5f4f2 !important; /* Replace with your desired color */
+  cursor: pointer; /* Optional: Add pointer cursor on hover */
+}
+
+/* ----------------------*/
+/* BLACK LIST TABLE */
+/*---------------------- */
+.black-list-table .mat-mdc-row:nth-child(even) {
+  background-color: #e4f7df!important;
+}
+
+.black-list-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.black-list-table .mat-mdc-header-row {
+  background-color: #cbdff5 !important;
+  height: 45px;
+}
+
+.black-list-table .mat-mdc-row:hover {
+  background-color: #f5f4f2 !important; /* Replace with your desired color */
+  cursor: pointer; /* Optional: Add pointer cursor on hover */
+}
+
+
 .mat-mdc-input-element{
   height: 15px !important;
 }
+
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

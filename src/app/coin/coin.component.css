@@ -1,0 +1,6 @@
+
+.container{
+  width: 98%;                /* Set the width to 97% */
+  min-width: 98%;            /* Ensure the width is at least 97% */
+  margin: 3em auto;
+}
