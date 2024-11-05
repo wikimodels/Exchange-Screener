@@ -15,7 +15,16 @@
   <div>
     <h1>Coins Provider</h1>
   </div>
+
+
   <div style="display: flex; flex-direction: row; gap: 10px">
+    <!-- REFRESHMENT PROCEDURE -->
+    <button mat-raised-button (click)="onRunRefreshmentProcedure()" style="height: 45px;"
+      matTooltip="Run Refreshment Procedure" matTooltipPosition="above">
+      <mat-icon class="rotate" style="margin-left: 5px;" [ngClass]="{ 'rotate': isRotating }">sync</mat-icon>
+    </button>
+
+    <!-- MOVE TO COIN COLLECTION -->
     <button mat-raised-button [disabled]="deleteDisabled" (click)="onMoveSelectedToCoinColl()" style="height: 45px;"
       matTooltip="Move to Coin Collection" matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;">receipt_long</mat-icon>

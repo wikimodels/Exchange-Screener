@@ -64,6 +64,7 @@ export const BYBIT_WS_URLS = {
 
 export const COINS_PROVIDER_URLS = {
   coinsProviderUrl: `${baseURL}/coins-provider`,
+  coinsProviderRunRefreshmentProcedureUrl: `${baseURL}/coins-provider/procedure/run`,
   coinsProviderRelocateToCoinsUrl: `${baseURL}/coins-provider/relocate-to-coins`,
   coinsProviderDeleteManyUrl: `${baseURL}/coins-provider/delete/many`,
   blackListUrl: `${baseURL}/black-list`,

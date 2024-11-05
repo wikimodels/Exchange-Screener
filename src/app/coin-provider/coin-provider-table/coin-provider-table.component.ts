@@ -30,6 +30,7 @@ export class CoinProviderTableComponent implements OnInit {
   dataSource!: any;
   deleteDisabled = true;
   filterValue = '';
+  isRotating = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -91,6 +92,15 @@ export class CoinProviderTableComponent implements OnInit {
     this.deleteDisabled = true;
   }
 
+  onRunRefreshmentProcedure() {
+    this.isRotating = true;
+    this.coinProviderService
+      .runRefreshmentProcedure()
+      .subscribe((data: { finish: boolean }) => {
+        console.log(data);
+        this.isRotating = false;
+      });
+  }
   onMoveSelectedToCoinColl() {
     const objs = this.selection.selected;
     console.log('SELECTED COINS --> ', objs);

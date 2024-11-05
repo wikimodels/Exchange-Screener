@@ -11,7 +11,6 @@ import {
   of,
 } from 'rxjs';
 import { Coin } from 'models/shared/coin';
-import { WORKING_COINS_URLS } from 'src/consts/url-consts';
 import { SnackbarService } from '../snackbar.service';
 
 @Injectable({ providedIn: 'root' })
@@ -42,6 +41,15 @@ export class CoinsProviderService {
   }
 
   //---------------------------------------------
+  // ✴️ COINS PROVIDER
+  //---------------------------------------------
+  private refreshmentProcedureSubject: BehaviorSubject<{ finish: boolean }> =
+    new BehaviorSubject<{ finish: boolean }>({ finish: false });
+
+  public refreshmentProcedure$ =
+    this.refreshmentProcedureSubject.asObservable(); //
+
+  //---------------------------------------------
   // ✅ GET ALL WORKING COINS
   //---------------------------------------------
   getAllCoins(): Observable<any> {
@@ -50,6 +58,25 @@ export class CoinsProviderService {
       .pipe(
         tap((data: Coin[]) => {
           this.coinsProviderSubject.next(data);
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  //---------------------------------------------
+  // ✅ GET ALL WORKING COINS
+  //---------------------------------------------
+  runRefreshmentProcedure(): Observable<any> {
+    return this.http
+      .get<any>(
+        COINS_PROVIDER_URLS.coinsProviderRunRefreshmentProcedureUrl,
+        this.httpOptions
+      )
+      .pipe(
+        tap((data: { finish: boolean }) => {
+          const msg = 'Procedure finished';
+          this.snackbarService.showSnackBar(msg, '');
+          this.refreshmentProcedureSubject.next(data);
         }),
         catchError(this.handleError)
       );

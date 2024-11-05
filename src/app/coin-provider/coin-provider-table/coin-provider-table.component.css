@@ -90,3 +90,17 @@ tr.element-row:not(.expanded-row):active {
   font-size: 12px; /* Adjust the icon size */
   margin-right: 5px;
 }
+
+.rotate {
+  animation: rotate 1.5s linear infinite;
+
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
