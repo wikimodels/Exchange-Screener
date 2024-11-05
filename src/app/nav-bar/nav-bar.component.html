@@ -1,5 +1,6 @@
 <mat-toolbar class="container">
-  <app-menu></app-menu>
+  <app-alert-menu></app-alert-menu>
+   <app-coin-menu></app-coin-menu>
   <span></span>
   <button mat-icon-button (click)="onAddAlert()">
     <mat-icon svgIcon="alarm" style="cursor: pointer;"></mat-icon>
@@ -13,5 +14,8 @@
   </button>
   <button mat-icon-button (click)="onGoToCoinProvider()">
     <mat-icon style="cursor: pointer;">price_check</mat-icon>
+  </button>
+  <button mat-icon-button (click)="onGoToCoinBlackList()">
+    <mat-icon style="cursor: pointer;" svgIcon="mintmark"></mat-icon>
   </button>
 </mat-toolbar>

@@ -1,0 +1,9 @@
+<button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon>Coins</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="onGoToCoin()"> <mat-icon>paid</mat-icon>
+    <span>Coin</span></button>
+  <button mat-menu-item (click)="onGoToCoinProvider()"> <mat-icon>price_check</mat-icon>
+    <span>Coin Provider</span></button>
+  <button mat-menu-item (click)="onGoToCoinBlackList()"> <mat-icon svgIcon="mintmark"></mat-icon>
+    <span>Coin Black List</span></button>
+</mat-menu>

@@ -57,7 +57,7 @@ export class BlackListCoinsService {
   //-------------------------------------
   // ✅ ADD COIN TO BLACK LIST
   //--------------------------------------
-  addCoinToBlackList(data: Coin[]): Observable<any> {
+  addCoinToBlackList(data: Coin): Observable<any> {
     return this.http
       .post<Coin>(
         COINS_PROVIDER_URLS.blackListAddOneUrl,
@@ -81,7 +81,34 @@ export class BlackListCoinsService {
   }
 
   //-------------------------------------
-  // ✅ DELETE COIN FROM BLACK LISDT
+  // ✅ ADD COIN TO BLACK LIST
+  //--------------------------------------
+  addCoinArrayToBlackList(data: Coin[]): Observable<any> {
+    return this.http
+      .post<Coin[]>(
+        COINS_PROVIDER_URLS.blackListAddManyUrl,
+        data,
+        this.httpOptions
+      )
+      .pipe(
+        switchMap((data: any) => {
+          console.log(data);
+          const msg = `Inserted: ${data.insertionResult.insertedCount} Deleted: ${data.deletionResult.deletedCount}`;
+          this.snackbarService.showSnackBar(msg, '');
+          return this.http.get<Coin[]>(
+            COINS_PROVIDER_URLS.blackListUrl,
+            this.httpOptions
+          );
+        }),
+        tap((coins: Coin[]) => {
+          this.coinsProviderBlackListSubject.next(coins);
+        }),
+        catchError(this.handleError) // Handle errors for both POST and GET
+      );
+  }
+
+  //-------------------------------------
+  // ✅ DELETE COIN FROM BLACK LIST
   //--------------------------------------
   deleteCoinFromBlackList(coin: Coin) {
     const symbol = coin.symbol;
@@ -118,7 +145,7 @@ export class BlackListCoinsService {
       })
       .pipe(
         switchMap((data: any) => {
-          const msg = `Coins deleted: ${data.deleted}`;
+          const msg = `Coins deleted: ${data.deletedCount}`;
           this.snackbarService.showSnackBar(msg, '');
           return this.http.get<Coin[]>(
             COINS_PROVIDER_URLS.blackListUrl,

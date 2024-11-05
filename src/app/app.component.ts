@@ -56,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'bybit', url: 'assets/icons/bybit.svg' },
       { name: 'tv', url: 'assets/icons/tv.svg' },
       { name: 'binance', url: 'assets/icons/binance-black.svg' },
+      { name: 'mintmark', url: 'assets/icons/mintmark.svg' },
       { name: 'coinglass', url: 'assets/icons/coinglass.svg' },
       { name: 'edit', url: 'assets/icons/edit.svg' },
       { name: 'delete', url: 'assets/icons/delete.svg' },

@@ -5,6 +5,7 @@ import {
   ALERTS_AT_WORK,
   ARCHIVED_ALERTS,
   COIN,
+  COIN_BLACK_LIST,
   COIN_PROVIDER,
   TRIGGERED_ALERTS,
   WORK,
@@ -14,12 +15,14 @@ import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.compo
 import { WorkComponent } from './work/work.component';
 import { CoinComponent } from './coin/coin.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
+import { CoinBlackListComponent } from './coin-black-list/coin-black-list.component';
 
 const routes: Routes = [
   // Other routes for your application
   //{ path: 'about', component: AboutComponent }, // Example route
   { path: ALERTS_AT_WORK, component: AlertsComponent },
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },
+  { path: COIN_BLACK_LIST, component: CoinBlackListComponent },
   { path: COIN_PROVIDER, component: CoinProviderComponent },
   { path: ARCHIVED_ALERTS, component: ArchivedAlertsComponent },
   { path: WORK, component: WorkComponent },

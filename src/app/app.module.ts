@@ -39,7 +39,6 @@ import { TriggeredAlertsTableComponent } from './triggered-alerts/triggered-aler
 import { DescriptionModalComponent } from './shared/description-modal/description-modal.component';
 import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 import { CarouselComponent } from './shared/carousel/carousel.component';
-import { MenuComponent } from './nav-bar/menu/menu.component';
 import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
 import { ValidationSummaryComponent } from './shared/validation-summary/validation-summary.component';
 
@@ -55,6 +54,10 @@ import { AddCoinComponent } from './coin/add-coin/add-coin.component';
 import { DeleteItemComponent } from './shared/delete-item/delete-item.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 import { CoinProviderTableComponent } from './coin-provider/coin-provider-table/coin-provider-table.component';
+import { CoinBlackListComponent } from './coin-black-list/coin-black-list.component';
+import { CoinBlackListTableComponent } from './coin-black-list/coin-black-list-table/coin-black-list-table.component';
+import { AlertMenuComponent } from './nav-bar/alert-menu/alert-menu.component';
+import { CoinMenuComponent } from './nav-bar/coin-menu/coin-menu.component';
 
 echarts.use([
   LegendComponent,
@@ -74,6 +77,8 @@ echarts.registerTheme('macarons', Marcaron);
 @NgModule({
   declarations: [
     AppComponent,
+    CoinBlackListComponent,
+    CoinBlackListTableComponent,
     CoinProviderComponent,
     CoinProviderTableComponent,
     NavBarComponent,
@@ -87,7 +92,8 @@ echarts.registerTheme('macarons', Marcaron);
     DescriptionModalComponent,
     SnackbarComponent,
     CarouselComponent,
-    MenuComponent,
+    AlertMenuComponent,
+    CoinMenuComponent,
     ArchivedAlertsComponent,
     ValidationSummaryComponent,
     EditAlertComponent,

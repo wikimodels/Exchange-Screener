@@ -13,11 +13,11 @@ import { CoinComponent } from 'src/app/coin/coin.component';
 import { BlackListCoinsService } from 'src/service/coins/black-list-coins.service';
 
 @Component({
-  selector: 'app-coin-provider-table',
-  templateUrl: './coin-provider-table.component.html',
-  styleUrls: ['./coin-provider-table.component.css'],
+  selector: 'app-coin-black-list-table',
+  templateUrl: './coin-black-list-table.component.html',
+  styleUrls: ['./coin-black-list-table.component.css'],
 })
-export class CoinProviderTableComponent implements OnInit {
+export class CoinBlackListTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
@@ -38,14 +38,13 @@ export class CoinProviderTableComponent implements OnInit {
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private coinProviderService: CoinsProviderService,
-    private coinBlackListService: BlackListCoinsService,
+    private coinBlackLisdtService: BlackListCoinsService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.coinProviderService.getAllCoins().subscribe();
-    this.coinProviderService.coinsProvider$.subscribe((data) => {
+    this.coinBlackLisdtService.getCoinsBlackList().subscribe();
+    this.coinBlackLisdtService.coinsProviderBlackList$.subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -79,25 +78,15 @@ export class CoinProviderTableComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  onMoveSelectedToBlackList() {
-    const objs = this.selection.selected;
-    console.log('SELECTED COINS --> ', objs);
-    this.coinBlackListService
-      .addCoinArrayToBlackList(objs)
-      .subscribe((data: any) => {
-        this.selection.clear();
-        this.coinProviderService.getAllCoins().subscribe();
-      });
-    this.deleteDisabled = true;
-  }
+  onMoveSelectedToBlackList() {}
 
   onMoveSelectedToCoinColl() {
-    const objs = this.selection.selected;
-    console.log('SELECTED COINS --> ', objs);
-    this.coinProviderService.relocateToCoins(objs).subscribe((data: any) => {
-      this.selection.clear();
-    });
-    this.deleteDisabled = true;
+    // const objs = this.selection.selected;
+    // console.log('SELECTED COINS --> ', objs);
+    // this.coinProviderService.relocateToCoins(objs).subscribe((data: any) => {
+    //   this.selection.clear();
+    // });
+    // this.deleteDisabled = true;
   }
 
   onOpenDescriptionModalDialog(coin: Coin): void {
@@ -112,9 +101,11 @@ export class CoinProviderTableComponent implements OnInit {
 
   onDeleteSelected() {
     const objs = this.selection.selected;
-    this.coinProviderService.deleteCoinArray(objs).subscribe((data: any) => {
-      this.selection.clear();
-    });
+    this.coinBlackLisdtService
+      .deleteCoinArrayFromBlackList(objs)
+      .subscribe((data: any) => {
+        this.selection.clear();
+      });
     this.deleteDisabled = true;
   }
 
@@ -129,7 +120,7 @@ export class CoinProviderTableComponent implements OnInit {
   }
 
   onMoveToCoins(coins: Coin[]) {
-    this.coinProviderService.relocateToCoins(coins).subscribe();
+    //this.coinProviderService.relocateToCoins(coins).subscribe();
   }
 
   clearInput() {

@@ -47,6 +47,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.coinsService.getAllCoins().subscribe();
     this.coinsService.coins$.subscribe((data: Coin[]) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;

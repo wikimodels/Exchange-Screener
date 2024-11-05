@@ -13,7 +13,7 @@
   </div>
 
   <div>
-    <h1>Coins Provider</h1>
+    <h1>Coins Black List</h1>
   </div>
   <div style="display: flex; flex-direction: row; gap: 10px">
     <button mat-raised-button [disabled]="deleteDisabled" (click)="onMoveSelectedToCoinColl()" style="height: 45px;"
@@ -32,7 +32,7 @@
 </div>
 
 <div>
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 coin-provider-table">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 coin-black-list-table">
 
     <!-- SYMBOL -->
     <ng-container matColumnDef="symbol">

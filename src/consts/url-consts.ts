@@ -1,8 +1,9 @@
 import { env } from 'environment/environment';
 //COMPONENTS
-export const ALERTS_AT_WORK = 'alerts-at-work';
 export const TRIGGERED_ALERTS = 'triggered-alerts';
 export const ARCHIVED_ALERTS = 'archived-alerts';
+export const COIN_BLACK_LIST = 'coin-black-list';
+export const ALERTS_AT_WORK = 'alerts-at-work';
 export const COIN_PROVIDER = 'coin-provider';
 export const WORK = 'work';
 export const COIN = 'coin';
@@ -67,6 +68,7 @@ export const COINS_PROVIDER_URLS = {
   coinsProviderDeleteManyUrl: `${baseURL}/coins-provider/delete/many`,
   blackListUrl: `${baseURL}/black-list`,
   blackListAddOneUrl: `${baseURL}/black-list/add/one`,
+  blackListAddManyUrl: `${baseURL}/black-list/add/many`,
   blackListRemoveOne: `${baseURL}/black-list/remove/one`,
   blackListRemoveMany: `${baseURL}/black-list/remove/many`,
   coingeckoMissingUrl: `${baseURL}/coins-provider/coin-gecko/missing`,

@@ -2,7 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NewAlertComponent } from '../alerts/new-alert/new-alert.component';
-import { COIN, COIN_PROVIDER, WORK } from 'src/consts/url-consts';
+import {
+  COIN,
+  COIN_BLACK_LIST,
+  COIN_PROVIDER,
+  WORK,
+} from 'src/consts/url-consts';
 
 @Component({
   selector: 'app-nav-bar',
@@ -25,6 +30,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   onGoToCoinProvider() {
     this.router.navigate([COIN_PROVIDER]);
+  }
+
+  onGoToCoinBlackList() {
+    this.router.navigate([COIN_BLACK_LIST]);
   }
 
   onAddAlert() {

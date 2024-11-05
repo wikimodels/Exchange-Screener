@@ -29,7 +29,7 @@ export class CoinsProviderService {
   ) {}
 
   //---------------------------------------------
-  // ✴️ COINS
+  // ✴️ COINS PROVIDER
   //---------------------------------------------
   private coinsProviderSubject: BehaviorSubject<Coin[]> = new BehaviorSubject<
     Coin[]
@@ -39,43 +39,6 @@ export class CoinsProviderService {
 
   public get Coins(): Coin[] {
     return this.coinsProviderSubject.value;
-  }
-
-  //---------------------------------------------
-  // ✴️ BLACK LIST
-  //---------------------------------------------
-  private coinsProviderBlackListSubject: BehaviorSubject<Coin[]> =
-    new BehaviorSubject<Coin[]>([]);
-
-  public coinsProviderBlackList$ =
-    this.coinsProviderBlackListSubject.asObservable(); //
-
-  public get CoinsBlackList(): Coin[] {
-    return this.coinsProviderBlackListSubject.value;
-  }
-
-  //---------------------------------------------
-  // ✴️ COIN GECKO MISSING
-  //---------------------------------------------
-  private coinGeckoMissingSubject: BehaviorSubject<Coin[]> =
-    new BehaviorSubject<Coin[]>([]);
-
-  public coinGeckoMissing$ = this.coinGeckoMissingSubject.asObservable(); //
-
-  public get CoinGeckoMissing(): Coin[] {
-    return this.coinGeckoMissingSubject.value;
-  }
-
-  //---------------------------------------------
-  // ✴️ SANTIMENT MISSING
-  //---------------------------------------------
-  private santimentMissingSubject: BehaviorSubject<Coin[]> =
-    new BehaviorSubject<Coin[]>([]);
-
-  public santimentMissing$ = this.santimentMissingSubject.asObservable(); //
-
-  public get santimentMissing(): Coin[] {
-    return this.santimentMissingSubject.value;
   }
 
   //---------------------------------------------
@@ -97,14 +60,15 @@ export class CoinsProviderService {
   //--------------------------------------
   relocateToCoins(data: Coin[]): Observable<any> {
     return this.http
-      .post<Coin>(
+      .post<Coin[]>(
         COINS_PROVIDER_URLS.coinsProviderRelocateToCoinsUrl,
         data,
         this.httpOptions
       )
       .pipe(
         switchMap((data: any) => {
-          const msg = `Coins successfully moved`;
+          console.log(data);
+          const msg = `Inserted: ${data.insertionResult.insertedCount} Deleted ${data.deletionResult.deletedCount}`;
           this.snackbarService.showSnackBar(msg, '');
           return this.http.get<Coin[]>(
             COINS_PROVIDER_URLS.coinsProviderUrl,
@@ -112,6 +76,7 @@ export class CoinsProviderService {
           );
         }),
         tap((coins: Coin[]) => {
+          console.log('COINS REFRESH ---> done', coins.length);
           this.coinsProviderSubject.next(coins);
         }),
         catchError(this.handleError) // Handle errors for both POST and GET
@@ -130,7 +95,7 @@ export class CoinsProviderService {
       })
       .pipe(
         switchMap((data: any) => {
-          const msg = `Coins deleted: ${data.deleted}`;
+          const msg = `Coins deleted: ${data.deletedCount}`;
           this.snackbarService.showSnackBar(msg, '');
           return this.http.get<Coin[]>(
             COINS_PROVIDER_URLS.coinsProviderUrl,
@@ -144,125 +109,6 @@ export class CoinsProviderService {
       );
   }
 
-  //-------------------------------
-  // ✅ GET BLACK LIST
-  //-------------------------------
-  getCoinsBlackList(): Observable<any> {
-    return this.http
-      .get<Coin[]>(COINS_PROVIDER_URLS.blackListUrl, this.httpOptions)
-      .pipe(
-        tap((data: Coin[]) => {
-          this.coinsProviderBlackListSubject.next(data);
-        }),
-        catchError(this.handleError)
-      );
-  }
-
-  //-------------------------------------
-  // ✅ ADD COIN TO BLACK LIST
-  //--------------------------------------
-  addCoinToBlackList(data: Coin[]): Observable<any> {
-    return this.http
-      .post<Coin>(
-        COINS_PROVIDER_URLS.blackListAddOneUrl,
-        data,
-        this.httpOptions
-      )
-      .pipe(
-        switchMap((data: any) => {
-          const msg = `Coins successfully added`;
-          this.snackbarService.showSnackBar(msg, '');
-          return this.http.get<Coin[]>(
-            COINS_PROVIDER_URLS.blackListUrl,
-            this.httpOptions
-          );
-        }),
-        tap((coins: Coin[]) => {
-          this.coinsProviderBlackListSubject.next(coins);
-        }),
-        catchError(this.handleError) // Handle errors for both POST and GET
-      );
-  }
-
-  //-------------------------------------
-  // ✅ DELETE COIN FROM BLACK LISDT
-  //--------------------------------------
-  deleteCoinFromBlackList(coin: Coin) {
-    const symbol = coin.symbol;
-    return this.http
-      .delete(COINS_PROVIDER_URLS.blackListRemoveOne, {
-        body: symbol,
-        ...this.httpOptions,
-      })
-      .pipe(
-        switchMap((data: any) => {
-          const msg = `Coins deleted: ${data.deleted}`;
-          this.snackbarService.showSnackBar(msg, '');
-          return this.http.get<Coin[]>(
-            COINS_PROVIDER_URLS.blackListUrl,
-            this.httpOptions
-          );
-        }),
-        tap((updatedCoins: Coin[]) => {
-          this.coinsProviderBlackListSubject.next(updatedCoins);
-        }),
-        catchError(this.handleError)
-      );
-  }
-
-  //-------------------------------------
-  // ✅ DELETE COIN ARRAY FROM BLACK LISDT
-  //--------------------------------------
-  deleteCoinArrayFromBlackList(coins: Coin[]) {
-    const symbols = coins.map((c) => c.symbol);
-    return this.http
-      .delete(COINS_PROVIDER_URLS.blackListRemoveMany, {
-        body: symbols,
-        ...this.httpOptions,
-      })
-      .pipe(
-        switchMap((data: any) => {
-          const msg = `Coins deleted: ${data.deleted}`;
-          this.snackbarService.showSnackBar(msg, '');
-          return this.http.get<Coin[]>(
-            COINS_PROVIDER_URLS.blackListUrl,
-            this.httpOptions
-          );
-        }),
-        tap((updatedCoins: Coin[]) => {
-          this.coinsProviderBlackListSubject.next(updatedCoins);
-        }),
-        catchError(this.handleError)
-      );
-  }
-
-  //---------------------------------------------
-  // ✅ GET COIN GECKO MISSING COINS
-  //---------------------------------------------
-  getCoinGeckoMissing(): Observable<any> {
-    return this.http
-      .get<Coin[]>(COINS_PROVIDER_URLS.coingeckoMissingUrl, this.httpOptions)
-      .pipe(
-        tap((data: Coin[]) => {
-          this.coinGeckoMissingSubject.next(data);
-        }),
-        catchError(this.handleError)
-      );
-  }
-
-  //---------------------------------------------
-  // ✅ GET COIN GECKO MISSING COINS
-  //---------------------------------------------
-  getSantimentMissing(): Observable<any> {
-    return this.http
-      .get<Coin[]>(COINS_PROVIDER_URLS.santimentMissingUrl, this.httpOptions)
-      .pipe(
-        tap((data: Coin[]) => {
-          this.santimentMissingSubject.next(data);
-        }),
-        catchError(this.handleError)
-      );
-  }
   //---------------------------------------------
   // ✅ ERROR HANDLING
   //---------------------------------------------

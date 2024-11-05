@@ -7,11 +7,11 @@ import {
 } from 'src/consts/url-consts';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  selector: 'app-alert-menu',
+  templateUrl: './alert-menu.component.html',
+  styleUrls: ['./alert-menu.component.css'],
 })
-export class MenuComponent implements OnInit {
+export class AlertMenuComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
