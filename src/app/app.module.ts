@@ -59,6 +59,8 @@ import { CoinBlackListTableComponent } from './coin-black-list/coin-black-list-t
 import { AlertMenuComponent } from './nav-bar/alert-menu/alert-menu.component';
 import { CoinMenuComponent } from './nav-bar/coin-menu/coin-menu.component';
 import { CoinTableComponent } from './coin/coin-table/coin-table.component';
+import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
+import { CoinSorterTableComponent } from './coin-sorter/coin-sorter-table/coin-sorter-table.component';
 
 echarts.use([
   LegendComponent,
@@ -78,6 +80,8 @@ echarts.registerTheme('macarons', Marcaron);
 @NgModule({
   declarations: [
     AppComponent,
+    CoinSorterComponent,
+    CoinSorterTableComponent,
     CoinBlackListComponent,
     CoinBlackListTableComponent,
     CoinProviderComponent,

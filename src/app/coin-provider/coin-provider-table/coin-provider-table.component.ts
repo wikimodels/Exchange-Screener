@@ -30,7 +30,7 @@ export class CoinProviderTableComponent implements OnInit {
   ];
 
   dataSource!: any;
-  deleteDisabled = true;
+  buttonsDisabled = true;
   filterValue = '';
   isRotating = false;
 
@@ -65,16 +65,16 @@ export class CoinProviderTableComponent implements OnInit {
 
   onDataToggled(data: any) {
     this.selection.toggle(data);
-    this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
+    this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
   // Toggle "Select All" checkbox
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      this.deleteDisabled = true;
+      this.buttonsDisabled = true;
     } else {
       this.selection.select(...this.dataSource.data);
-      this.deleteDisabled = false;
+      this.buttonsDisabled = false;
     }
   }
   // Check if all rows are selected
@@ -84,8 +84,8 @@ export class CoinProviderTableComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  onMoveSelectedToBlackList() {
-    const coins = this.selection.selected;
+  onMoveSelectedToBlackListTable() {
+    const coins = this.selection.selected as Coin[];
 
     this.coinsService.moveMany(
       CoinsCollections.CoinProvider,
@@ -94,8 +94,31 @@ export class CoinProviderTableComponent implements OnInit {
     );
 
     this.selection.clear();
+    this.buttonsDisabled = true;
+  }
 
-    this.deleteDisabled = true;
+  onMoveSelectedToCoinTable() {
+    const coins = this.selection.selected as Coin[];
+    this.coinsService.moveMany(
+      CoinsCollections.CoinProvider,
+      CoinsCollections.CoinRepo,
+      coins
+    );
+    this.selection.clear();
+
+    this.buttonsDisabled = true;
+  }
+
+  onMoveSelectedToSorterTable() {
+    const coins = this.selection.selected as Coin[];
+    this.coinsService.moveMany(
+      CoinsCollections.CoinProvider,
+      CoinsCollections.CoinSorter,
+      coins
+    );
+    this.selection.clear();
+
+    this.buttonsDisabled = true;
   }
 
   onRunRefreshmentProcedure() {
@@ -106,18 +129,6 @@ export class CoinProviderTableComponent implements OnInit {
         this.coinsService.getAllCoins(CoinsCollections.CoinProvider);
         this.isRotating = false;
       });
-  }
-
-  onMoveSelectedToCoinColl() {
-    const coins = this.selection.selected;
-    this.coinsService.moveMany(
-      CoinsCollections.CoinProvider,
-      CoinsCollections.CoinRepo,
-      coins
-    );
-    this.selection.clear();
-
-    this.deleteDisabled = true;
   }
 
   onOpenDescriptionModalDialog(coin: Coin): void {
@@ -135,7 +146,7 @@ export class CoinProviderTableComponent implements OnInit {
     const symbols = coins.map((c) => c.symbol);
     this.coinsService.deleteMany(CoinsCollections.CoinProvider, symbols);
     this.selection.clear();
-    this.deleteDisabled = true;
+    this.buttonsDisabled = true;
   }
 
   onEdit(coin: Coin) {

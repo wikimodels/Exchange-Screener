@@ -13,20 +13,29 @@
   </div>
 
   <div>
-    <h1>Coins</h1>
+    <h1>Coin Sorter</h1>
   </div>
 
 
   <div style="display: flex; flex-direction: row; gap: 10px">
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToSorterTable()" color="primary"
-      style="height: 45px;" matTooltip="Move to Sorter Table" matTooltipPosition="above">
-      <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
+
+    <!-- CREATE LONG LIST -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onCreateTvLists()" color="primary"
+      style="height: 45px;" matTooltip="Create TV Lists" matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="long-list"></mat-icon>
     </button>
+
+    <!-- MOVE SELECTION TO COIN TABLE -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToCoinTable()" color="primary"
+      style="height: 45px;" matTooltip="Move to Sorter Table" matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="send-from"></mat-icon>
+    </button>
+
+    <!-- MOVE SELECTION TO BLACK LIST TABLE -->
     <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToBlackListTable()"
       style="height: 45px;" matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
       <mat-icon style="margin-left: 5px;" svgIcon="black-list"></mat-icon>
     </button>
-
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { Coin } from 'models/coin/coin';
 import { SnackbarService } from '../snackbar.service';
 import { COINS_URLS } from 'src/consts/url-consts';
@@ -10,6 +10,7 @@ import {
   ModifyResult,
   MoveResult,
 } from 'models/mongodb/operations';
+import { SnackbarType } from 'models/shared/snackbar-type';
 
 @Injectable({ providedIn: 'root' })
 export class CoinsGenericService {
@@ -55,16 +56,9 @@ export class CoinsGenericService {
 
     this.http.get<Coin[]>(COINS_URLS.coinsUrl, options).subscribe({
       next: (coins: Coin[]) => {
-        // Handle the response when the request is successful
-        console.log('Coins fetched:', coins);
-        this.setCoins(collectionName, coins); // Update the local coin data store
-        this.snackbarService.showSnackBar('Coins fetched successfully!', '');
+        this.setCoins(collectionName, coins);
       },
-      error: (error) => {
-        // Handle error
-        const msg = `Error fetching coins: ${error.message}`;
-        this.snackbarService.showSnackBar(msg, '');
-      },
+      error: (error) => this.handleError(error),
     });
   }
 
@@ -77,16 +71,13 @@ export class CoinsGenericService {
     const options = { ...this.httpOptions, params };
 
     this.http
-      .post<InsertResult>(`${COINS_URLS.coinsUrl}`, coin, options)
+      .post<InsertResult>(`${COINS_URLS.coinsAddOneUrl}`, coin, options)
       .subscribe({
         next: (response: InsertResult) => {
           const msg = `Document inserted ${response.insertedCount}`;
           this.snackbarService.showSnackBar(msg, '');
         },
-        error: (error) => {
-          const msg = `Shit happened inserted ${error}`;
-          this.snackbarService.showSnackBar(msg, '');
-        },
+        error: (error) => this.handleError(error),
       });
   }
 
@@ -112,10 +103,7 @@ export class CoinsGenericService {
           const msg = `Documents deleted ${response.deletedCount}`;
           this.snackbarService.showSnackBar(msg, '');
         },
-        error: (error) => {
-          const msg = `Shit happened while deleting ${error}`;
-          this.snackbarService.showSnackBar(msg, '');
-        },
+        error: (error) => this.handleError(error),
       });
   }
 
@@ -139,10 +127,7 @@ export class CoinsGenericService {
           const msg = `Documents modified ${response.modifiedCount}`;
           this.snackbarService.showSnackBar(msg, '');
         },
-        error: (error) => {
-          const msg = `Shit happened while inserting ${error}`;
-          this.snackbarService.showSnackBar(msg, '');
-        },
+        error: (error) => this.handleError(error),
       });
   }
 
@@ -180,10 +165,7 @@ export class CoinsGenericService {
           const msg = `Documents inserted: ${response.insertCount}, deleted: ${response.deleteCount}`;
           this.snackbarService.showSnackBar(msg, '');
         },
-        error: (error) => {
-          const msg = `Shit happened while inserting ${error}`;
-          this.snackbarService.showSnackBar(msg, '');
-        },
+        error: this.handleError,
       });
   }
 
@@ -195,5 +177,15 @@ export class CoinsGenericService {
       }
     }
     return httpParams;
+  }
+
+  //---------------------------------------------
+  // ✅ ERROR HANDLING
+  //---------------------------------------------
+  private handleError(error: Error): Observable<never> {
+    console.error('An error occurred:', error);
+    const msg = 'ERROR: ' + error.message;
+    this.snackbarService.showSnackBar(msg, '', 8000, SnackbarType.Error);
+    return throwError(() => new Error('Something went wrong! ', error));
   }
 }

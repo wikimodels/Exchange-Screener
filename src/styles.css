@@ -18,13 +18,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* SNACKBAR CSS FOR ANGULAR 16 */
 .warning-snackbar {
-  --mdc-snackbar-container-color: orange;
+  --mdc-snackbar-container-color: #0000b3;
   --mat-mdc-snack-bar-button-color: white;
 }
 
 /* SNACKBAR CSS FOR ANGULAR 16 */
 .error-snackbar {
-  --mdc-snackbar-container-color: red;
+  --mdc-snackbar-container-color: rgb(168, 31, 31);
   --mat-mdc-snack-bar-button-color: white;
 }
 
@@ -178,6 +178,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .coin-black-list-table .mat-mdc-row:hover {
+  background-color: #f5f4f2 !important; /* Replace with your desired color */
+  cursor: pointer; /* Optional: Add pointer cursor on hover */
+}
+
+/* ----------------------*/
+/* SORTER TABLE */
+/*---------------------- */
+.sorter-table .mat-mdc-row:nth-child(even) {
+  background-color: #e4f7df!important;
+}
+
+.sorter-table .mat-mdc-row {
+  height: 35px!important;
+}
+
+.sorter-table .mat-mdc-header-row {
+  background-color: #070708 !important;
+  color: white;
+  height: 45px;
+}
+
+.sorter-table .mat-mdc-row:hover {
   background-color: #f5f4f2 !important; /* Replace with your desired color */
   cursor: pointer; /* Optional: Add pointer cursor on hover */
 }

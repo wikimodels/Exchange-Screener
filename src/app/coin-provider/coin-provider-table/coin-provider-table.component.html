@@ -18,25 +18,29 @@
 
 
   <div style="display: flex; flex-direction: row; gap: 10px">
+    <!-- MOVE TO SORTER TABLE  -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToSorterTable()" color="primary"
+      style="height: 45px;" matTooltip="Move to Sorter Table" matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="send-from"></mat-icon>
+    </button>
     <!-- REFRESHMENT PROCEDURE -->
     <button mat-raised-button (click)="onRunRefreshmentProcedure()" style="height: 45px;"
       matTooltip="Run Refreshment Procedure" matTooltipPosition="above">
       <mat-icon class="rotate" style="margin-left: 5px;" [ngClass]="{ 'rotate': isRotating }">sync</mat-icon>
     </button>
 
-    <!-- MOVE TO COIN COLLECTION -->
-    <button mat-raised-button [disabled]="deleteDisabled" (click)="onMoveSelectedToCoinColl()" style="height: 45px;"
-      matTooltip="Move to Coin Collection" matTooltipPosition="above">
-      <mat-icon style="margin-left: 5px;">receipt_long</mat-icon>
+    <!-- MOVE TO COIN TABLE -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToCoinTable()" color="primary"
+      style="height: 45px;" matTooltip="Move to Coin Table" matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
     </button>
-    <button mat-raised-button [disabled]="deleteDisabled" (click)="onMoveSelectedToBlackList()" style="height: 45px;"
-      matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
-      <mat-icon style="margin-left: 5px;">list_warning</mat-icon>
+
+    <!-- MOVE TO BLACK LIST TABLE -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToBlackListTable()"
+      style="height: 45px;" matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
+      <mat-icon style="margin-left: 5px;" svgIcon="black-list"></mat-icon>
     </button>
-    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
-      style="height: 45px;" matTooltip="Delete" matTooltipPosition="above">
-      <mat-icon style="margin-left: 5px;">delete</mat-icon>
-    </button>
+
   </div>
 </div>
 

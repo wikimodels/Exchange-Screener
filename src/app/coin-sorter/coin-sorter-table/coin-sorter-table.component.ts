@@ -14,11 +14,11 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 
 @Component({
-  selector: 'app-coin-table',
-  templateUrl: './coin-table.component.html',
-  styleUrls: ['./coin-table.component.css'],
+  selector: 'app-coin-sorter-table',
+  templateUrl: './coin-sorter-table.component.html',
+  styleUrls: ['./coin-sorter-table.component.css'],
 })
-export class CoinTableComponent implements OnInit {
+export class CoinSorterTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
@@ -40,13 +40,13 @@ export class CoinTableComponent implements OnInit {
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private coinService: CoinsGenericService,
+    private coinsService: CoinsGenericService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.coinService.getAllCoins(CoinsCollections.CoinRepo);
-    this.coinService.coins$(CoinsCollections.CoinRepo).subscribe((data) => {
+    this.coinsService.getAllCoins(CoinsCollections.CoinSorter);
+    this.coinsService.coins$(CoinsCollections.CoinSorter).subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -81,13 +81,27 @@ export class CoinTableComponent implements OnInit {
   }
 
   onMoveSelectedToBlackListTable() {
-    const coins = this.selection.selected;
-    this.coinService.moveMany(
-      CoinsCollections.CoinRepo,
+    const coins = this.selection.selected as Coin[];
+
+    this.coinsService.moveMany(
+      CoinsCollections.CoinProvider,
       CoinsCollections.CoinBlackList,
       coins
     );
+
     this.selection.clear();
+    this.buttonsDisabled = true;
+  }
+
+  onMoveSelectedToCoinTable() {
+    const coins = this.selection.selected as Coin[];
+    this.coinsService.moveMany(
+      CoinsCollections.CoinSorter,
+      CoinsCollections.CoinRepo,
+      coins
+    );
+    this.selection.clear();
+
     this.buttonsDisabled = true;
   }
 
@@ -101,13 +115,10 @@ export class CoinTableComponent implements OnInit {
     });
   }
 
-  onMoveSelectedToSorterTable() {
+  onDeleteSelected() {
     const coins = this.selection.selected as Coin[];
-    this.coinService.moveMany(
-      CoinsCollections.CoinRepo,
-      CoinsCollections.CoinSorter,
-      coins
-    );
+    const symbols = coins.map((c) => c.symbol);
+    this.coinsService.deleteMany(CoinsCollections.CoinRepo, symbols);
     this.selection.clear();
     this.buttonsDisabled = true;
   }
@@ -122,6 +133,7 @@ export class CoinTableComponent implements OnInit {
     });
   }
 
+  onCreateTvLists() {}
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();

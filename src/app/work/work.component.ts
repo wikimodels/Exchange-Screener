@@ -34,6 +34,7 @@ export class WorkComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.coinsService.getAllCoins(CoinsCollections.CoinRepo);
     this.coinsSub = this.coinsService
       .coins$(CoinsCollections.CoinRepo)
       .subscribe((data: Coin[]) => {
@@ -65,7 +66,7 @@ export class WorkComponent implements OnInit, OnDestroy {
     }
   }
 
-  addWorkingSymbol() {
+  onMoveToWorkingCoinsTable() {
     if (this.form?.valid) {
       const symbol = this.form.get('symbol')?.value;
       const coin = this.coins.find((c) => c.symbol == symbol);
@@ -74,7 +75,6 @@ export class WorkComponent implements OnInit, OnDestroy {
         (c) => coin?.symbol == c.symbol
       );
       if (coin && !alreadyAdded) {
-        this.workingCoins.push(coin);
         this.coinsService.addOne(CoinsCollections.CoinAtWork, coin);
       }
       if (coin && alreadyAdded) {

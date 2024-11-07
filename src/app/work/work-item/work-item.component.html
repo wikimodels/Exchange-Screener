@@ -1,7 +1,8 @@
 <mat-card class="coin-card">
   <mat-card-header style="display: flex; align-items: baseline; justify-content: space-between;">
     <div>
-      <img [src]="'assets/logo/' + coin.logo" alt="" class="logo">
+      <img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" class="logo" />
+
       <strong>{{coin.symbol}}({{coin.category}})</strong>
     </div>
     <div style="margin-bottom: 10px;"> <!-- Individual Row Checkbox -->
@@ -16,11 +17,11 @@
   <mat-card-actions>
 
     <!-- BINANCE -->
-    <a *ngIf="coin.exchBiLink" [href]="coin.exchBiLink" target="_blank">
+    <a *ngIf="coin.binanceExch" [href]="coin.binanceExch" target="_blank">
       <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
     </a>
     <!-- BYBIT -->
-    <a *ngIf="coin.exchByLink" [href]="coin.exchByLink" target="_blank">
+    <a *ngIf="coin.bybitExch" [href]="coin.bybitExch" target="_blank">
       <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
     </a>
   </mat-card-actions>

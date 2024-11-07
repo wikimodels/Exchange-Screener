@@ -6,6 +6,7 @@ import {
   COIN,
   COIN_BLACK_LIST,
   COIN_PROVIDER,
+  COIN_SORTER,
   TRIGGERED_ALERTS,
 } from 'src/consts/url-consts';
 
@@ -25,6 +26,10 @@ export class CoinMenuComponent implements OnInit {
 
   onGoToCoinProvider() {
     this.router.navigate([COIN_PROVIDER]);
+  }
+
+  onGoToCoinSorter() {
+    this.router.navigate([COIN_SORTER]);
   }
 
   onGoToCoinBlackList() {

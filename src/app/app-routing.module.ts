@@ -7,6 +7,7 @@ import {
   COIN,
   COIN_BLACK_LIST,
   COIN_PROVIDER,
+  COIN_SORTER,
   TRIGGERED_ALERTS,
   WORK,
 } from 'src/consts/url-consts';
@@ -16,6 +17,7 @@ import { WorkComponent } from './work/work.component';
 import { CoinComponent } from './coin/coin.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 import { CoinBlackListComponent } from './coin-black-list/coin-black-list.component';
+import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
 
 const routes: Routes = [
   // Other routes for your application
@@ -24,6 +26,7 @@ const routes: Routes = [
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },
   { path: COIN_BLACK_LIST, component: CoinBlackListComponent },
   { path: COIN_PROVIDER, component: CoinProviderComponent },
+  { path: COIN_SORTER, component: CoinSorterComponent },
   { path: ARCHIVED_ALERTS, component: ArchivedAlertsComponent },
   { path: WORK, component: WorkComponent },
   { path: COIN, component: CoinComponent },

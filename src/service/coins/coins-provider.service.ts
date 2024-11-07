@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError, tap, BehaviorSubject } from 'rxjs';
 import { SnackbarService } from '../snackbar.service';
 import { COINS_URLS } from 'src/consts/url-consts';
+import { SnackbarType } from 'models/shared/snackbar-type';
 
 @Injectable({ providedIn: 'root' })
 export class CoinsProviderService {
@@ -24,9 +25,14 @@ export class CoinsProviderService {
       .pipe(
         tap((data: { finish: boolean }) => {
           const msg = 'Procedure finished';
-          this.snackbarService.showSnackBar(msg, '');
+          this.snackbarService.showSnackBar(
+            msg,
+            '',
+            4000,
+            SnackbarType.Warning
+          );
         }),
-        catchError(this.handleError)
+        catchError((error) => this.handleError(error))
       );
   }
 

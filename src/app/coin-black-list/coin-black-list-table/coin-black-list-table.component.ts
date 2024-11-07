@@ -29,7 +29,7 @@ export class CoinBlackListTableComponent implements OnInit {
   ];
 
   dataSource!: any;
-  deleteDisabled = true;
+  buttonsDisabled = true;
   filterValue = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -62,16 +62,16 @@ export class CoinBlackListTableComponent implements OnInit {
 
   onDataToggled(data: any) {
     this.selection.toggle(data);
-    this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
+    this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
-  // Toggle "Select All" checkbox
+
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      this.deleteDisabled = true;
+      this.buttonsDisabled = true;
     } else {
       this.selection.select(...this.dataSource.data);
-      this.deleteDisabled = false;
+      this.buttonsDisabled = false;
     }
   }
   // Check if all rows are selected
@@ -89,7 +89,7 @@ export class CoinBlackListTableComponent implements OnInit {
     // this.coinProviderService.relocateToCoins(objs).subscribe((data: any) => {
     //   this.selection.clear();
     // });
-    // this.deleteDisabled = true;
+    // this.buttonsDisabled = true;
   }
 
   onOpenDescriptionModalDialog(coin: Coin): void {
@@ -105,10 +105,9 @@ export class CoinBlackListTableComponent implements OnInit {
   onDeleteSelected() {
     const coins = this.selection.selected as Coin[];
     const symbols = coins.map((c) => c.symbol);
-
     this.coinsService.deleteMany(CoinsCollections.CoinBlackList, symbols);
     this.selection.clear();
-    this.deleteDisabled = true;
+    this.buttonsDisabled = true;
   }
 
   onEdit(coin: Coin) {
@@ -121,8 +120,15 @@ export class CoinBlackListTableComponent implements OnInit {
     });
   }
 
-  onMoveToCoins(coins: Coin[]) {
-    //this.coinProviderService.relocateToCoins(coins).subscribe();
+  onMoveSelectedToCoinTable() {
+    const coins = this.selection.selected as Coin[];
+    this.coinsService.moveMany(
+      CoinsCollections.CoinBlackList,
+      CoinsCollections.CoinRepo,
+      coins
+    );
+    this.selection.clear();
+    this.buttonsDisabled = true;
   }
 
   clearInput() {
