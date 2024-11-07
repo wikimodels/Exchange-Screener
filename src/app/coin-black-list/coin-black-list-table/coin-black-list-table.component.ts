@@ -22,8 +22,8 @@ export class CoinBlackListTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
-    'coinGeckoMissing',
-    'santimentMissing',
+    'coinGecko',
+    'santiment',
     'links',
     'select',
   ];
@@ -79,17 +79,6 @@ export class CoinBlackListTableComponent implements OnInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length; // Use dataSource.data.length
     return numSelected === numRows;
-  }
-
-  onMoveSelectedToBlackList() {}
-
-  onMoveSelectedToCoinColl() {
-    // const objs = this.selection.selected;
-    // console.log('SELECTED COINS --> ', objs);
-    // this.coinProviderService.relocateToCoins(objs).subscribe((data: any) => {
-    //   this.selection.clear();
-    // });
-    // this.buttonsDisabled = true;
   }
 
   onOpenDescriptionModalDialog(coin: Coin): void {

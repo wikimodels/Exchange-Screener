@@ -1,0 +1,22 @@
+<div class="modal-content">
+
+  <!-- Lefft Half -->
+  <div class="modal-half">
+    <div class="header"><img src="assets/icons/bybit.svg" alt="Left Logo" class="logo">Bybit</div>
+    <div class="body">
+      <!-- Right Body Content -->
+      <code (click)="downloadCodeAsTxt('Bybit')">{{data.bybitList}}</code>
+    </div>
+  </div>
+
+  <!-- Right Half -->
+  <div class="modal-half">
+    <div class="header"><img src="assets/icons/binance-black.svg" alt="Left Logo" class="logo">Binance</div>
+    <div class="body">
+      <!-- Left Body Content -->
+      <code (click)="downloadCodeAsTxt('Binance')">{{data.binanceList}}</code>
+    </div>
+  </div>
+
+
+</div>

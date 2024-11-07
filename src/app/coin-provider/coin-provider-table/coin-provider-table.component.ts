@@ -23,8 +23,8 @@ export class CoinProviderTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
-    'coinGeckoMissing',
-    'santimentMissing',
+    'coinGecko',
+    'santiment',
     'links',
     'select',
   ];
@@ -67,7 +67,7 @@ export class CoinProviderTableComponent implements OnInit {
     this.selection.toggle(data);
     this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
-  // Toggle "Select All" checkbox
+
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -77,10 +77,10 @@ export class CoinProviderTableComponent implements OnInit {
       this.buttonsDisabled = false;
     }
   }
-  // Check if all rows are selected
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length; // Use dataSource.data.length
+    const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 

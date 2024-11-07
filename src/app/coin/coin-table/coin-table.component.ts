@@ -22,8 +22,8 @@ export class CoinTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
-    'coinGeckoMissing',
-    'santimentMissing',
+    'coinGecko',
+    'santiment',
     'links',
     'select',
   ];

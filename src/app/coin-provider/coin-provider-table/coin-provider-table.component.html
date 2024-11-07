@@ -65,25 +65,25 @@
       <td mat-cell *matCellDef="let element"> <b>{{element.category}}</b> </td>
     </ng-container>
 
-    <!-- COINGECKO MISSING -->
-    <ng-container matColumnDef="coinGeckoMissing">
+    <!-- COINGECKO -->
+    <ng-container matColumnDef="coinGecko">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        CoinGecko Missing
+        CoinGecko
       </th>
       <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.coinGeckoMissing">
+        <ng-container *ngIf="!element.coinGeckoMissing">
           <mat-icon>check</mat-icon>
         </ng-container>
       </td>
     </ng-container>
 
-    <!-- COINGECKO MISSING -->
-    <ng-container matColumnDef="santimentMissing">
+    <!-- SANTIMENT -->
+    <ng-container matColumnDef="santiment">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Santiment Missing
+        Santiment
       </th>
       <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="element.santimentMissing">
+        <ng-container *ngIf="!element.santimentMissing">
           <mat-icon>check</mat-icon>
         </ng-container>
       </td>

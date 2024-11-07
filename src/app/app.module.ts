@@ -61,6 +61,7 @@ import { CoinMenuComponent } from './nav-bar/coin-menu/coin-menu.component';
 import { CoinTableComponent } from './coin/coin-table/coin-table.component';
 import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
 import { CoinSorterTableComponent } from './coin-sorter/coin-sorter-table/coin-sorter-table.component';
+import { TvListComponent } from './shared/tv-list/tv-list.component';
 
 echarts.use([
   LegendComponent,
@@ -111,6 +112,7 @@ echarts.registerTheme('macarons', Marcaron);
     EditCoinComponent,
     AddCoinComponent,
     DeleteItemComponent,
+    TvListComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

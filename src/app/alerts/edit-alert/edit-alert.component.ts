@@ -17,8 +17,8 @@ export class EditAlertComponent {
   constructor(
     private fb: FormBuilder,
     private coinsService: CoinsGenericService,
-    public dialogRef: MatDialogRef<EditAlertComponent>,
     private alertService: AlertsService,
+    public dialogRef: MatDialogRef<EditAlertComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AlertObj,
     private _ngZone: NgZone
   ) {}

@@ -1,0 +1,44 @@
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-half {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #ccc; /* Optional separator */
+}
+
+.modal-half:last-child {
+  border-right: none;
+}
+
+.header {
+  display: flex;
+  align-items: center; /* Align logo and text vertically */
+  justify-content: flex-start; /* Align logo and text horizontally */
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  gap: 3px; /* Space between the logo and text */
+}
+.body {
+  font-size: 1em;
+  line-height: 1.5;
+}
+.logo {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  margin-right: 8px; /* Space between logo and text */
+}
+
+.body code {
+  cursor: pointer;
+  white-space: pre-wrap; /* Enables word wrap */
+  word-wrap: break-word; /* Breaks long words if necessary */
+  font-family: monospace; /* Optional: Ensures code font styling */
+  font-size: 0.9em; /* Optional: Adjust font size */
+}

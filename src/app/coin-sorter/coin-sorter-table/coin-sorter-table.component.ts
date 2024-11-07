@@ -12,6 +12,7 @@ import { Coin } from 'models/coin/coin';
 import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
+import { TvListComponent } from 'src/app/shared/tv-list/tv-list.component';
 
 @Component({
   selector: 'app-coin-sorter-table',
@@ -22,8 +23,8 @@ export class CoinSorterTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
-    'coinGeckoMissing',
-    'santimentMissing',
+    'coinGecko',
+    'santiment',
     'links',
     'select',
   ];
@@ -31,6 +32,8 @@ export class CoinSorterTableComponent implements OnInit {
   dataSource!: any;
   buttonsDisabled = true;
   filterValue = '';
+  bybitCoinsList = '';
+  binanceCoinsList = '';
   isRotating = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -115,14 +118,6 @@ export class CoinSorterTableComponent implements OnInit {
     });
   }
 
-  onDeleteSelected() {
-    const coins = this.selection.selected as Coin[];
-    const symbols = coins.map((c) => c.symbol);
-    this.coinsService.deleteMany(CoinsCollections.CoinRepo, symbols);
-    this.selection.clear();
-    this.buttonsDisabled = true;
-  }
-
   onEdit(coin: Coin) {
     this.modelDialog.open(CoinComponent, {
       data: coin,
@@ -133,7 +128,31 @@ export class CoinSorterTableComponent implements OnInit {
     });
   }
 
-  onCreateTvLists() {}
+  onCreateTvLists() {
+    const coins = this.selection.selected as Coin[];
+    this.bybitCoinsList = coins
+      .filter((c) => c.coinExchange === 'by' || c.coinExchange === 'biby')
+      .map((c) => `BYBIT:${c.symbol}USDT`)
+      .join(',');
+
+    // Filter and map Binance coins
+    this.binanceCoinsList = coins
+      .filter((c) => c.coinExchange === 'bi')
+      .map((c) => `BINANCE:${c.symbol}USDT`)
+      .join(',');
+
+    this.modelDialog.open(TvListComponent, {
+      data: {
+        bybitList: this.bybitCoinsList,
+        binaniceList: this.binanceCoinsList,
+      },
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
+      width: '100vw',
+      height: '100vh',
+    });
+  }
+
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
