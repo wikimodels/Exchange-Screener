@@ -12,6 +12,7 @@ import { Coin } from 'models/coin/coin';
 import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
+import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 
 @Component({
   selector: 'app-coin-table',
@@ -25,6 +26,7 @@ export class CoinTableComponent implements OnInit {
     'coinGecko',
     'santiment',
     'links',
+    'edit',
     'select',
   ];
 
@@ -113,7 +115,7 @@ export class CoinTableComponent implements OnInit {
   }
 
   onEdit(coin: Coin) {
-    this.modelDialog.open(CoinComponent, {
+    this.modelDialog.open(EditCoinComponent, {
       data: coin,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,

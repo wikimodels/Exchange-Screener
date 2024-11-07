@@ -47,10 +47,7 @@ import { WorkComponent } from './work/work.component';
 import { WorkFieldComponent } from './work/work-field/work-field.component';
 import { WorkItemComponent } from './work/work-item/work-item.component';
 import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
-import { CoinComponent } from './coin/coin.component';
-
-import { EditCoinComponent } from './coin/edit-coin/edit-coin.component';
-import { AddCoinComponent } from './coin/add-coin/add-coin.component';
+import { CoinComponent } from './coin/coin.component'; 
 import { DeleteItemComponent } from './shared/delete-item/delete-item.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 import { CoinProviderTableComponent } from './coin-provider/coin-provider-table/coin-provider-table.component';
@@ -62,6 +59,7 @@ import { CoinTableComponent } from './coin/coin-table/coin-table.component';
 import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
 import { CoinSorterTableComponent } from './coin-sorter/coin-sorter-table/coin-sorter-table.component';
 import { TvListComponent } from './shared/tv-list/tv-list.component';
+import {EditCoinComponent} from './shared/edit-coin/edit-coin.component'
 
 echarts.use([
   LegendComponent,
@@ -80,39 +78,38 @@ echarts.registerTheme('macarons', Marcaron);
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CoinSorterComponent,
-    CoinSorterTableComponent,
-    CoinBlackListComponent,
+    TriggeredAlertsTableComponent,
     CoinBlackListTableComponent,
-    CoinProviderComponent,
+    ValidationSummaryComponent,
     CoinProviderTableComponent,
-    NavBarComponent,
+    DescriptionModalComponent,
+    CoinSorterTableComponent,
+    TriggeredAlertsComponent,
+    ArchivedAlertsComponent,
+    CoinBlackListComponent,
+    ArchivedTableComponent,
+    CoinProviderComponent,
+    AlertsTableComponent,
+    DeleteItemComponent,
+    CoinSorterComponent,
+    ImageModalComponent,
+    AlertMenuComponent,
+    EditAlertComponent,
+    WorkFieldComponent,
+    CoinTableComponent,    
+    SnackbarComponent,
+    WorkItemComponent,
+    CarouselComponent,
+    CoinMenuComponent,
+    EditCoinComponent,
+    NewAlertComponent,
     SpinnerComponent,
     AlertsComponent,
-    AlertsTableComponent,
-    ImageModalComponent,
-    NewAlertComponent,
-    TriggeredAlertsComponent,
-    TriggeredAlertsTableComponent,
-    DescriptionModalComponent,
-    SnackbarComponent,
-    CarouselComponent,
-    AlertMenuComponent,
-    CoinMenuComponent,
-    ArchivedAlertsComponent,
-    ValidationSummaryComponent,
-    EditAlertComponent,
-    ArchivedTableComponent,
-    WorkComponent,
-    WorkFieldComponent,
-    WorkItemComponent,
-    CoinComponent,
-    CoinTableComponent,
-    EditCoinComponent,
-    AddCoinComponent,
-    DeleteItemComponent,
     TvListComponent,
+    NavBarComponent,
+    WorkComponent,
+    CoinComponent,
+    AppComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),
