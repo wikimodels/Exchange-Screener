@@ -7,7 +7,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { SymbolNameValidator } from 'src/functions/validators/symbol-name.validator';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
-import { CoinsService } from 'src/service/coins/coins.service';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
 
 @Component({
   selector: 'app-new-alert',
@@ -22,7 +23,7 @@ export class NewAlertComponent implements OnInit {
   validationMessages: { [key: string]: string[] } = {};
   constructor(
     private fb: FormBuilder,
-    private coinsService: CoinsService,
+    private coinsService: CoinsGenericService,
     private keyLevelNameService: KeyLevelNamesService,
     public dialogRef: MatDialogRef<NewAlertComponent>,
     private alertService: AlertsService,
@@ -32,7 +33,9 @@ export class NewAlertComponent implements OnInit {
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   ngOnInit(): void {
-    this.symbols = this.coinsService.Coins.map((c) => c.symbol);
+    this.symbols = this.coinsService
+      .getCoins(CoinsCollections.CoinRepo)
+      .map((c) => c.symbol);
     this.form = this.fb.group({
       symbol: [
         '',

@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Coin } from 'models/shared/coin';
 import { Subscription } from 'rxjs';
-import { CoinsService } from 'src/service/coins/coins.service';
-import { WorkingCoinsService } from 'src/service/coins/working-coins.service';
 
 @Component({
   selector: 'app-root',
@@ -16,25 +13,12 @@ export class AppComponent implements OnInit, OnDestroy {
   private dataSubscription2: Subscription | null = null;
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer,
-    private coinsService: CoinsService,
-    private workingCoinsService: WorkingCoinsService
+    private domSanitizer: DomSanitizer
   ) {
     this.registerIcons();
   }
 
-  ngOnInit(): void {
-    this.dataSubscription1 = this.coinsService
-      .getAllCoins()
-      .subscribe((data: Coin[]) => {
-        console.log('Coins fetched: ', data.length);
-      });
-    this.dataSubscription2 = this.workingCoinsService
-      .getAllWorkingCoins()
-      .subscribe((data: Coin[]) => {
-        console.log('Working Coins fetched: ', data.length);
-      });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     if (this.dataSubscription1) {

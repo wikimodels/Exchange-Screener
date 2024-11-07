@@ -5,7 +5,8 @@ import { AlertsService } from 'src/service/alerts/alerts.service';
 import { AlertObj } from 'models/alerts/alert-obj';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
-import { CoinsService } from 'src/service/coins/coins.service';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
 
 @Component({
   selector: 'app-edit-alert',
@@ -15,7 +16,7 @@ import { CoinsService } from 'src/service/coins/coins.service';
 export class EditAlertComponent {
   constructor(
     private fb: FormBuilder,
-    private coinsService: CoinsService,
+    private coinsService: CoinsGenericService,
     public dialogRef: MatDialogRef<EditAlertComponent>,
     private alertService: AlertsService,
     @Inject(MAT_DIALOG_DATA) public data: AlertObj,
@@ -29,7 +30,9 @@ export class EditAlertComponent {
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   ngOnInit(): void {
-    this.symbols = this.coinsService.Coins.map((c) => c.symbol);
+    this.symbols = this.coinsService
+      .getCoins(CoinsCollections.CoinRepo)
+      .map((c) => c.symbol);
     this.form = this.fb.group({
       symbol: [{ value: '', disabled: true }],
       isActive: [''],

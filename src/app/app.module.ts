@@ -48,7 +48,7 @@ import { WorkFieldComponent } from './work/work-field/work-field.component';
 import { WorkItemComponent } from './work/work-item/work-item.component';
 import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
 import { CoinComponent } from './coin/coin.component';
-import { CoinTableComponent } from './coin/coin-table/coin-table.component';
+
 import { EditCoinComponent } from './coin/edit-coin/edit-coin.component';
 import { AddCoinComponent } from './coin/add-coin/add-coin.component';
 import { DeleteItemComponent } from './shared/delete-item/delete-item.component';
@@ -58,6 +58,7 @@ import { CoinBlackListComponent } from './coin-black-list/coin-black-list.compon
 import { CoinBlackListTableComponent } from './coin-black-list/coin-black-list-table/coin-black-list-table.component';
 import { AlertMenuComponent } from './nav-bar/alert-menu/alert-menu.component';
 import { CoinMenuComponent } from './nav-bar/coin-menu/coin-menu.component';
+import { CoinTableComponent } from './coin/coin-table/coin-table.component';
 
 echarts.use([
   LegendComponent,

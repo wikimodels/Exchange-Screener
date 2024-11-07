@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoinTableComponent } from './coin-table.component';
+import { AlertsTableComponent } from './coin-provider-table.component';
 
-describe('CoinTableComponent', () => {
-  let component: CoinTableComponent;
-  let fixture: ComponentFixture<CoinTableComponent>;
+describe('AlertsTableComponent', () => {
+  let component: AlertsTableComponent;
+  let fixture: ComponentFixture<AlertsTableComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CoinTableComponent]
+      declarations: [AlertsTableComponent],
     });
-    fixture = TestBed.createComponent(CoinTableComponent);
+    fixture = TestBed.createComponent(AlertsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

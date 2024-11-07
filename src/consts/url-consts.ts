@@ -36,18 +36,13 @@ export const TRIGGERED_ALERTS_URLS = {
   triggeredAlertUpdateAlertUrl: `${baseURL}/triggered/update/alert`,
 };
 
-export const WORKING_COINS_URLS = {
-  workingCoinsUrl: `${baseURL}/coins/work`,
-  workingCoinsAddUrl: `${baseURL}/coins/work/add`,
-  workingCoinsDeleteAllUrl: `${baseURL}/coins/work/delete/all`,
-  workingCoinsDeleteBatchUrl: `${baseURL}/coins/work/delete/batch`,
-};
-
 export const COINS_URLS = {
   coinsUrl: `${baseURL}/coins`,
-  coinsAddUrl: `${baseURL}/coins/add`,
-  coinsDeleteOneUrl: `${baseURL}/coins/delete/one`,
+  coinsAddOneUrl: `${baseURL}/coins/add/one`,
+  coinsDeleteManyUrl: `${baseURL}/coins/delete/many`,
   coinsUpdateOneUrl: `${baseURL}/coins/update/one`,
+  coinsMoveManyUrl: `${baseURL}/coins/move/many`,
+  coinsRunRefreshmentUrl: `${baseURL}/coins/refreshment-procedure/run`,
 };
 
 export const BINACE_WS_URLS = {
@@ -60,18 +55,4 @@ export const BYBIT_WS_URLS = {
   bybitWsStartUrl: `${baseURL}/ws/bybit/start`,
   bybitWsCloseUrl: `${baseURL}/ws/bybit/close`,
   bybitWsStatusUrl: `${baseURL}/ws/bybit/status`,
-};
-
-export const COINS_PROVIDER_URLS = {
-  coinsProviderUrl: `${baseURL}/coins-provider`,
-  coinsProviderRunRefreshmentProcedureUrl: `${baseURL}/coins-provider/procedure/run`,
-  coinsProviderRelocateToCoinsUrl: `${baseURL}/coins-provider/relocate-to-coins`,
-  coinsProviderDeleteManyUrl: `${baseURL}/coins-provider/delete/many`,
-  blackListUrl: `${baseURL}/black-list`,
-  blackListAddOneUrl: `${baseURL}/black-list/add/one`,
-  blackListAddManyUrl: `${baseURL}/black-list/add/many`,
-  blackListRemoveOne: `${baseURL}/black-list/remove/one`,
-  blackListRemoveMany: `${baseURL}/black-list/remove/many`,
-  coingeckoMissingUrl: `${baseURL}/coins-provider/coin-gecko/missing`,
-  santimentMissingUrl: `${baseURL}/coins-provider/santiment/missing`,
 };

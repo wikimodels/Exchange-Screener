@@ -7,10 +7,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { CoinsProviderService } from 'src/service/coins/coins-provider.service';
-import { Coin } from 'models/shared/coin';
+
+import { Coin } from 'models/coin/coin';
 import { CoinComponent } from 'src/app/coin/coin.component';
-import { BlackListCoinsService } from 'src/service/coins/black-list-coins.service';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
+import { CoinsProviderService } from 'src/service/coins/coins-provider.service';
 
 @Component({
   selector: 'app-coin-provider-table',
@@ -39,18 +41,20 @@ export class CoinProviderTableComponent implements OnInit {
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private coinProviderService: CoinsProviderService,
-    private coinBlackListService: BlackListCoinsService,
+    private coinsService: CoinsGenericService,
+    private coinsProviderService: CoinsProviderService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.coinProviderService.getAllCoins().subscribe();
-    this.coinProviderService.coinsProvider$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.coinsService.getAllCoins(CoinsCollections.CoinProvider);
+    this.coinsService
+      .coins$(CoinsCollections.CoinProvider)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   // Filter function
@@ -81,32 +85,38 @@ export class CoinProviderTableComponent implements OnInit {
   }
 
   onMoveSelectedToBlackList() {
-    const objs = this.selection.selected;
-    console.log('SELECTED COINS --> ', objs);
-    this.coinBlackListService
-      .addCoinArrayToBlackList(objs)
-      .subscribe((data: any) => {
-        this.selection.clear();
-        this.coinProviderService.getAllCoins().subscribe();
-      });
+    const coins = this.selection.selected;
+
+    this.coinsService.moveMany(
+      CoinsCollections.CoinProvider,
+      CoinsCollections.CoinBlackList,
+      coins
+    );
+
+    this.selection.clear();
+
     this.deleteDisabled = true;
   }
 
   onRunRefreshmentProcedure() {
     this.isRotating = true;
-    this.coinProviderService
+    this.coinsProviderService
       .runRefreshmentProcedure()
       .subscribe((data: { finish: boolean }) => {
-        console.log(data);
+        this.coinsService.getAllCoins(CoinsCollections.CoinProvider);
         this.isRotating = false;
       });
   }
+
   onMoveSelectedToCoinColl() {
-    const objs = this.selection.selected;
-    console.log('SELECTED COINS --> ', objs);
-    this.coinProviderService.relocateToCoins(objs).subscribe((data: any) => {
-      this.selection.clear();
-    });
+    const coins = this.selection.selected;
+    this.coinsService.moveMany(
+      CoinsCollections.CoinProvider,
+      CoinsCollections.CoinRepo,
+      coins
+    );
+    this.selection.clear();
+
     this.deleteDisabled = true;
   }
 
@@ -121,10 +131,10 @@ export class CoinProviderTableComponent implements OnInit {
   }
 
   onDeleteSelected() {
-    const objs = this.selection.selected;
-    this.coinProviderService.deleteCoinArray(objs).subscribe((data: any) => {
-      this.selection.clear();
-    });
+    const coins = this.selection.selected as Coin[];
+    const symbols = coins.map((c) => c.symbol);
+    this.coinsService.deleteMany(CoinsCollections.CoinProvider, symbols);
+    this.selection.clear();
     this.deleteDisabled = true;
   }
 
@@ -139,7 +149,7 @@ export class CoinProviderTableComponent implements OnInit {
   }
 
   onMoveToCoins(coins: Coin[]) {
-    this.coinProviderService.relocateToCoins(coins).subscribe();
+    //this.coinProviderService.relocateToCoins(coins).subscribe();
   }
 
   clearInput() {

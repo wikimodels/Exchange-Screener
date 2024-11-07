@@ -7,10 +7,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
 import { TooltipPosition } from '@angular/material/tooltip';
-import { CoinsProviderService } from 'src/service/coins/coins-provider.service';
-import { Coin } from 'models/shared/coin';
+
+import { Coin } from 'models/coin/coin';
 import { CoinComponent } from 'src/app/coin/coin.component';
-import { BlackListCoinsService } from 'src/service/coins/black-list-coins.service';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
 
 @Component({
   selector: 'app-coin-black-list-table',
@@ -38,17 +39,19 @@ export class CoinBlackListTableComponent implements OnInit {
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private coinBlackLisdtService: BlackListCoinsService,
+    private coinsService: CoinsGenericService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.coinBlackLisdtService.getCoinsBlackList().subscribe();
-    this.coinBlackLisdtService.coinsProviderBlackList$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.coinsService.getAllCoins(CoinsCollections.CoinBlackList);
+    this.coinsService
+      .coins$(CoinsCollections.CoinBlackList)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   // Filter function
@@ -100,12 +103,11 @@ export class CoinBlackListTableComponent implements OnInit {
   }
 
   onDeleteSelected() {
-    const objs = this.selection.selected;
-    this.coinBlackLisdtService
-      .deleteCoinArrayFromBlackList(objs)
-      .subscribe((data: any) => {
-        this.selection.clear();
-      });
+    const coins = this.selection.selected as Coin[];
+    const symbols = coins.map((c) => c.symbol);
+
+    this.coinsService.deleteMany(CoinsCollections.CoinBlackList, symbols);
+    this.selection.clear();
     this.deleteDisabled = true;
   }
 

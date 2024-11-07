@@ -3,19 +3,17 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { Observable, map } from 'rxjs';
-import { CoinsService } from 'src/service/coins/coins.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
+import { Observable, map, of } from 'rxjs';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 
 export class SymbolNameValidator {
-  static createValidator(service: CoinsService): AsyncValidatorFn {
+  static createValidator(coinsService: CoinsGenericService): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return service.checkSymbolNameExists(control.value).pipe(
-        map((result) => {
-          const hasError =
-            result === true ? null : { SymbolNameNotExists: true };
-          return hasError;
-        })
-      );
+      const coins = coinsService.getCoins(CoinsCollections.CoinRepo);
+      const symbol = coins.find((c) => c.symbol == control.value);
+      const hasError = symbol ? null : { SymbolNameNotExists: true };
+      return of(hasError);
     };
   }
 }

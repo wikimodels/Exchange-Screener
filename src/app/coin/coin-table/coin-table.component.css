@@ -57,7 +57,7 @@ tr.element-row:not(.expanded-row):active {
 .symbol-cell {
   display: flex;
   align-items: center;
-  margin-top: 7px;
+  margin-top: 14px;
    /* Vertically aligns items in the center */
 }
 .clickable-icon {
@@ -89,4 +89,18 @@ tr.element-row:not(.expanded-row):active {
   padding: 0;    /* Adjust padding */
   font-size: 12px; /* Adjust the icon size */
   margin-right: 5px;
+}
+
+.rotate {
+  animation: rotate 1.5s linear infinite;
+
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }

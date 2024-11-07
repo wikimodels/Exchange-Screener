@@ -1,54 +1,52 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { TooltipPosition } from '@angular/material/tooltip';
-import { AlertObj } from 'models/alerts/alert-obj';
-import { EditAlertComponent } from 'src/app/alerts/edit-alert/edit-alert.component';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
-import { AlertsService } from 'src/service/alerts/alerts.service';
-import { CoinsService } from 'src/service/coins/coins.service';
-import { Subscription } from 'rxjs';
-import { AddCoinComponent } from '../add-coin/add-coin.component';
-import { Coin } from 'models/shared/coin';
-import { EditCoinComponent } from '../edit-coin/edit-coin.component';
-import { DeleteItemComponent } from 'src/app/shared/delete-item/delete-item.component';
+import { TooltipPosition } from '@angular/material/tooltip';
+
+import { Coin } from 'models/coin/coin';
+import { CoinComponent } from 'src/app/coin/coin.component';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
 
 @Component({
   selector: 'app-coin-table',
   templateUrl: './coin-table.component.html',
   styleUrls: ['./coin-table.component.css'],
 })
-export class CoinTableComponent implements OnInit, OnDestroy {
+export class CoinTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
     'category',
+    'coinGeckoMissing',
+    'santimentMissing',
     'links',
-    'edit',
-    'delete',
+    'select',
   ];
 
-  sub!: Subscription;
   dataSource!: any;
   deleteDisabled = true;
   filterValue = '';
+  isRotating = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
   tooltipPosition: TooltipPosition = 'above';
 
+  selection = new SelectionModel<any>(true, []);
   constructor(
-    private coinsService: CoinsService,
-    private modelDialog: MatDialog,
-    private fb: FormBuilder
+    private coinService: CoinsGenericService,
+    private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.coinsService.getAllCoins().subscribe();
-    this.coinsService.coins$.subscribe((data: Coin[]) => {
+    this.coinService.getAllCoins(CoinsCollections.CoinRepo);
+    this.coinService.coins$(CoinsCollections.CoinRepo).subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -61,9 +59,59 @@ export class CoinTableComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onOpenDescriptionModalDialog(alertObj: AlertObj): void {
+  onDataToggled(data: any) {
+    this.selection.toggle(data);
+    this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
+  }
+  // Toggle "Select All" checkbox
+  toggleAll() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      this.deleteDisabled = true;
+    } else {
+      this.selection.select(...this.dataSource.data);
+      this.deleteDisabled = false;
+    }
+  }
+  // Check if all rows are selected
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length; // Use dataSource.data.length
+    return numSelected === numRows;
+  }
+
+  onMoveSelectedToBlackList() {
+    const coins = this.selection.selected;
+    this.coinService.moveMany(
+      CoinsCollections.CoinRepo,
+      CoinsCollections.CoinBlackList,
+      coins
+    );
+    this.selection.clear();
+    this.deleteDisabled = true;
+  }
+
+  onRunRefreshmentProcedure() {
+    // this.isRotating = true;
+    // this.coinProviderService
+    //   .runRefreshmentProcedure()
+    //   .subscribe((data: { finish: boolean }) => {
+    //     console.log(data);
+    //     this.isRotating = false;
+    //   });
+  }
+  onMoveSelectedToCoinColl() {
+    // const objs = this.selection.selected;
+    // console.log('SELECTED COINS --> ', objs);
+    // this.coinProviderService.relocateToCoins(objs).subscribe((data: any) => {
+    //   this.selection.clear();
+    // });
+    // this.deleteDisabled = true;
+  }
+
+  onOpenDescriptionModalDialog(coin: Coin): void {
     this.modelDialog.open(DescriptionModalComponent, {
-      data: alertObj,
+      data: coin,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '100vw',
@@ -71,27 +119,16 @@ export class CoinTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  onAdd() {
-    this.modelDialog.open(AddCoinComponent, {
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
-      width: '95vw',
-      height: '100vh',
-    });
+  onDeleteSelected() {
+    const coins = this.selection.selected as Coin[];
+    const symbols = coins.map((c) => c.symbol);
+    this.coinService.deleteMany(CoinsCollections.CoinRepo, symbols);
+    this.selection.clear();
+    this.deleteDisabled = true;
   }
 
   onEdit(coin: Coin) {
-    this.modelDialog.open(EditCoinComponent, {
-      data: coin,
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
-      width: '95vw',
-      height: '100vh',
-    });
-  }
-
-  onDelete(coin: Coin) {
-    this.modelDialog.open(DeleteItemComponent, {
+    this.modelDialog.open(CoinComponent, {
       data: coin,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
@@ -103,11 +140,5 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
-  }
-
-  ngOnDestroy(): void {
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
   }
 }

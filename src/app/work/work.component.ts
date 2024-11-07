@@ -1,11 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Coin } from 'models/shared/coin';
+import { Coin } from 'models/coin/coin';
+import { CoinsCollections } from 'models/coin/coins-collections';
 import { SnackbarType } from 'models/shared/snackbar-type';
 import { Subscription } from 'rxjs';
-import { CoinsService } from 'src/service/coins/coins.service';
-import { WorkingCoinsService } from 'src/service/coins/working-coins.service';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+
 import { SnackbarService } from 'src/service/snackbar.service';
 import { WorkSelectionService } from 'src/service/work.selection.service';
 
@@ -26,25 +27,26 @@ export class WorkComponent implements OnInit, OnDestroy {
   private openedWindows: Window[] = [];
 
   constructor(
-    private workingCoinsService: WorkingCoinsService,
-    private coinsService: CoinsService,
+    private coinsService: CoinsGenericService,
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
     public selectionService: WorkSelectionService<any>
   ) {}
 
   ngOnInit(): void {
-    this.coinsSub = this.coinsService.coins$.subscribe((data: Coin[]) => {
-      this.coins = data;
-      this.symbols = data.map((d) => d.symbol);
-    });
+    this.coinsSub = this.coinsService
+      .coins$(CoinsCollections.CoinRepo)
+      .subscribe((data: Coin[]) => {
+        this.coins = data;
+        this.symbols = data.map((d) => d.symbol);
+      });
 
-    this.workingCoinsSub = this.workingCoinsService.workingCoins$.subscribe(
-      (data: Coin[]) => {
+    this.workingCoinsSub = this.coinsService
+      .coins$(CoinsCollections.CoinAtWork)
+      .subscribe((data: Coin[]) => {
         this.workingCoins = data;
         this.selectionService.clear();
-      }
-    );
+      });
 
     this.form = this.fb.group({
       symbol: [''],
@@ -73,7 +75,7 @@ export class WorkComponent implements OnInit, OnDestroy {
       );
       if (coin && !alreadyAdded) {
         this.workingCoins.push(coin);
-        this.workingCoinsService.addWorkingCoins(this.workingCoins).subscribe();
+        this.coinsService.addOne(CoinsCollections.CoinAtWork, coin);
       }
       if (coin && alreadyAdded) {
         this.snackbarService.showSnackBar(
@@ -141,9 +143,9 @@ export class WorkComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.workingCoinsService
-      .deleteWorkingCoinsBatch(this.selectionService.selectedValues())
-      .subscribe();
+    const coins = this.selectionService.selectedValues() as Coin[];
+    const symbols = coins.map((c) => c.symbol);
+    this.coinsService.deleteMany(CoinsCollections.CoinAtWork, symbols);
   }
 
   ngOnDestroy(): void {

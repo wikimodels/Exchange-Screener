@@ -15,19 +15,30 @@
   <div>
     <h1>Coins</h1>
   </div>
-  <div>
-    <button mat-raised-button (click)="onAdd()" style="margin-right: 20px; height: 45px;">Add Coin</button>
+
+
+  <div style="display: flex; flex-direction: row; gap: 10px">
+
+    <button mat-raised-button [disabled]="deleteDisabled" (click)="onMoveSelectedToBlackList()" style="height: 45px;"
+      matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
+      <mat-icon style="margin-left: 5px;">list_warning</mat-icon>
+    </button>
+    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
+      style="height: 45px;" matTooltip="Delete" matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;">delete</mat-icon>
+    </button>
   </div>
 </div>
 
 <div>
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 alerts-at-work-table">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 coin-table">
 
     <!-- SYMBOL -->
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
       <td mat-cell *matCellDef="let element" class="symbol-cell">
-        <img [src]="'assets/logo/' + element.logo" alt="logo" class="round-image" />
+        <img [src]="element.image_url ? element.image_url : 'assets/img/noname.png'" alt="logo" class="round-image" />
+
         {{element.symbol}}
       </td>
     </ng-container>
@@ -40,6 +51,29 @@
       <td mat-cell *matCellDef="let element"> <b>{{element.category}}</b> </td>
     </ng-container>
 
+    <!-- COINGECKO MISSING -->
+    <ng-container matColumnDef="coinGeckoMissing">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        CoinGecko Missing
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.coinGeckoMissing">
+          <mat-icon>check</mat-icon>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- COINGECKO MISSING -->
+    <ng-container matColumnDef="santimentMissing">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Santiment Missing
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="element.santimentMissing">
+          <mat-icon>check</mat-icon>
+        </ng-container>
+      </td>
+    </ng-container>
 
     <!-- LINKS -->
     <ng-container matColumnDef="links">
@@ -54,13 +88,22 @@
           <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
         </a>
         <!-- BINANCE -->
-        <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank">
+        <a *ngIf="element.binanceExch" [href]="element.binanceExch" target="_blank">
           <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
         </a>
         <!-- BYBIT -->
-        <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank">
+        <a *ngIf="element.bybitExch" [href]="element.bybitExch" target="_blank">
           <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
         </a>
+      </td>
+    </ng-container>
+
+    <!-- DESCRIPTION -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon (click)="onOpenDescriptionModalDialog(element)" class="clickable-icon">details</mat-icon>
       </td>
     </ng-container>
 
@@ -73,13 +116,28 @@
       </td>
     </ng-container>
 
-    <!-- DELETE -->
-    <ng-container matColumnDef="delete">
+    <!-- ARCHIVE -->
+    <ng-container matColumnDef="archive">
       <th mat-header-cell *matHeaderCellDef>
       </th>
       <td mat-cell *matCellDef="let element">
-        <mat-icon (click)="onDelete(element)" class="clickable-icon" svgIcon="delete" matTooltip="Delete Coin"
+        <mat-icon class="clickable-icon" svgIcon="flare" matTooltip="Move to Archive"
           [matTooltipPosition]="tooltipPosition"></mat-icon>
+      </td>
+    </ng-container>
+
+
+    <!-- CHECKBOX-->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <!-- Select All Checkbox -->
+        <mat-checkbox [checked]="selection.hasValue() && isAllSelected()" (change)="toggleAll()"
+          [indeterminate]="selection.hasValue()&&!isAllSelected()"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <!-- Individual Row Checkbox -->
+        <mat-checkbox (change)="onDataToggled(element)" [checked]="selection.isSelected(element)">
+        </mat-checkbox>
       </td>
     </ng-container>
 
