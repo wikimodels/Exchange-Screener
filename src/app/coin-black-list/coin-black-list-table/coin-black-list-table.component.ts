@@ -24,6 +24,7 @@ export class CoinBlackListTableComponent implements OnInit {
     'category',
     'coinGecko',
     'santiment',
+    'status',
     'links',
     'select',
   ];

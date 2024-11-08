@@ -9,10 +9,10 @@ import { DescriptionModalComponent } from 'src/app/shared/description-modal/desc
 import { TooltipPosition } from '@angular/material/tooltip';
 
 import { Coin } from 'models/coin/coin';
-import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { TvListComponent } from 'src/app/shared/tv-list/tv-list.component';
+import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 
 @Component({
   selector: 'app-coin-sorter-table',
@@ -25,6 +25,7 @@ export class CoinSorterTableComponent implements OnInit {
     'category',
     'coinGecko',
     'santiment',
+    'status',
     'links',
     'select',
   ];
@@ -119,8 +120,8 @@ export class CoinSorterTableComponent implements OnInit {
   }
 
   onEdit(coin: Coin) {
-    this.modelDialog.open(CoinComponent, {
-      data: coin,
+    this.modelDialog.open(EditCoinComponent, {
+      data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',

@@ -9,7 +9,6 @@ import { DescriptionModalComponent } from 'src/app/shared/description-modal/desc
 import { TooltipPosition } from '@angular/material/tooltip';
 
 import { Coin } from 'models/coin/coin';
-import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
@@ -25,6 +24,7 @@ export class CoinTableComponent implements OnInit {
     'category',
     'coinGecko',
     'santiment',
+    'status',
     'links',
     'edit',
     'select',
@@ -115,8 +115,9 @@ export class CoinTableComponent implements OnInit {
   }
 
   onEdit(coin: Coin) {
+    console.log('CoinTable ---> ', coin);
     this.modelDialog.open(EditCoinComponent, {
-      data: coin,
+      data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',

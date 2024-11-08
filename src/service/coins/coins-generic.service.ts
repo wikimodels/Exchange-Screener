@@ -121,7 +121,11 @@ export class CoinsGenericService {
     const options = { ...this.httpOptions, params };
 
     this.http
-      .put<ModifyResult>(`${COINS_URLS.coinsUpdateOneUrl}`, options)
+      .put<ModifyResult>(
+        `${COINS_URLS.coinsUpdateOneUrl}`,
+        updatedData,
+        options
+      )
       .subscribe({
         next: (response: ModifyResult) => {
           const msg = `Documents modified ${response.modifiedCount}`;

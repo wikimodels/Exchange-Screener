@@ -56,6 +56,12 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'flare', url: 'assets/icons/flare.svg' },
       { name: '_arrow_forward', url: 'assets/icons/arrow-forward.svg' },
       { name: '_arrow_back', url: 'assets/icons/arrow-back.svg' },
+      { name: 'twitter', url: 'assets/icons/twitter.svg' },
+      { name: 'reddit', url: 'assets/icons/reddit.svg' },
+      { name: 'telegram', url: 'assets/icons/telegram.svg' },
+      { name: 'github', url: 'assets/icons/github.svg' },
+      { name: 'facebook', url: 'assets/icons/facebook.svg' },
+      { name: 'cmc', url: 'assets/icons/cmp.svg' },
       // Add more icons here
     ];
 

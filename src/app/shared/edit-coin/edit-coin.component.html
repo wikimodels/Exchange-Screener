@@ -1,1 +1,56 @@
-<p>edit-coin works!</p>
+<div class="coin-container">
+  <!-- Header Section -->
+  <div class="header">
+    <img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" class="coin-image" />
+    <h2>{{ coin.symbol }}</h2>
+    <span class="coin-category">{{ coin.category }}</span>
+  </div>
+
+  <!-- Properties Section (Two Columns) -->
+  <div class="properties">
+    <div class="column">
+      <div class="property" *ngFor="let prop of leftColumnProperties">
+        <span class="label">
+          <img *ngIf="prop.logo" [src]="'assets/icons/' + prop.logo" alt="{{ prop.label }}" class="icon" />
+          {{ prop.label }}:
+        </span>
+        <span class="value">{{ prop.value }}</span>
+      </div>
+      <div class="property">
+        <mat-form-field appearance="outline" class="status-dropdown">
+          <mat-select [(ngModel)]="coin.status" placeholder="Select Status">
+            <mat-option *ngFor="let option of statusOptions" [value]="option">
+              {{ option | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="property" *ngFor="let prop of rightColumnProperties">
+        <span class="label">
+          <img *ngIf="prop.logo" [src]="'assets/icons/' + prop.logo" alt="{{ prop.label }}" class="icon" />
+          {{ prop.label }}:
+        </span>
+        <span class="value">{{ prop.value }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <a *ngIf="coin.tvLink" [href]="coin.tvLink" target="_blank">
+      <img class="round-image" src="assets/icons/tv.svg" alt="TradingView" />
+    </a>
+    <a *ngIf="coin.cgLink" [href]="coin.cgLink" target="_blank">
+      <img class="round-image" src="assets/icons/coinglass.svg" alt="CoinGlass" />
+    </a>
+    <a *ngIf="coin.bybitExch" [href]="coin.bybitExch" target="_blank">
+      <img class="round-image" src="assets/icons/bybit.svg" alt="Bybit Exchange" />
+    </a>
+    <a *ngIf="coin.binanceExch" [href]="coin.binanceExch" target="_blank">
+      <img class="round-image" src="assets/icons/binance-black.svg" alt="Binance Exchange" />
+    </a>
+  </div>
+</div>
