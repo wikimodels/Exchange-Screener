@@ -61,7 +61,7 @@ export class NewAlertComponent implements OnInit, OnDestroy {
           Validators.pattern('^-?\\d*(\\.\\d+)?$'),
         ]),
       ],
-      isTv: [false],
+      isActive: [true],
       action: ['', Validators.required],
       description: ['', Validators.required],
       tvImgUrls: this.fb.array([this.createImageUrlControl()]),
@@ -151,7 +151,8 @@ export class NewAlertComponent implements OnInit, OnDestroy {
       alert.alertName = this.form.get('alertName')?.value;
       alert.action = this.form.get('action')?.value;
       alert.price = this.form.get('price')?.value;
-      alert.isTv = this.form.get('isTv')?.value;
+      alert.isActive = this.form.get('isActive')?.value;
+      alert.isTv = false;
       alert.binanceExch = coin?.binanceExch;
       alert.bybitExch = coin?.bybitExch;
       alert.tvLink = coin?.tvLink;
@@ -161,7 +162,6 @@ export class NewAlertComponent implements OnInit, OnDestroy {
       alert.status = coin?.status as Status;
       alert.coinExchange = coin?.coinExchange;
       alert.image_url = coin?.image_url;
-      alert.isActive = true;
       alert.creationTime = new Date().getTime();
       console.log(alert);
       console.log('COIN ---> ', coin);

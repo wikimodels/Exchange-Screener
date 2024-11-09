@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Alert } from 'models/alerts/alert';
 import { AlertsCollections } from 'models/alerts/alerts-collections';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
+import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
 import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class ArchivedTableComponent {
     'action',
     'links',
     'description',
+    'edit',
     'select',
   ];
 
@@ -36,7 +38,7 @@ export class ArchivedTableComponent {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private alertsService: AlertsGenericService,
-    private modelDialog: MatDialog
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -78,7 +80,7 @@ export class ArchivedTableComponent {
   }
 
   onOpenDescriptionModalDialog(alert: Alert): void {
-    this.modelDialog.open(DescriptionModalComponent, {
+    this.matDialog.open(DescriptionModalComponent, {
       data: alert,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
@@ -92,6 +94,16 @@ export class ArchivedTableComponent {
     const ids = alerts.map((a) => a.id);
     this.alertsService.deleteMany(AlertsCollections.ArchivedAlerts, ids);
     this.deleteDisabled = true;
+  }
+
+  onEdit(alert: Alert) {
+    this.matDialog.open(EditAlertComponent, {
+      data: { collectionName: AlertsCollections.ArchivedAlerts, alert: alert },
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
+      width: '95vw',
+      height: '100vh',
+    });
   }
 
   clearInput() {

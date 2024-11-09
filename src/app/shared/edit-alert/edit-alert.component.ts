@@ -14,9 +14,11 @@ import { Alert } from 'models/alerts/alert';
   styleUrls: ['./edit-alert.component.css'],
 })
 export class EditAlertComponent {
+  logoUrl = 'assets/img/noname.png';
+  displayedSymbol!: string;
+
   constructor(
     private fb: FormBuilder,
-    private coinsService: CoinsGenericService,
     private alertService: AlertsGenericService,
     public dialogRef: MatDialogRef<EditAlertComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -25,15 +27,16 @@ export class EditAlertComponent {
   ) {}
 
   form!: FormGroup | null;
-  symbols!: string[] | null;
+
   filteredSymbols!: string[] | null;
   validationMessages: { [key: string]: string[] } = {};
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   ngOnInit(): void {
-    this.symbols = this.coinsService
-      .getCoins(CoinsCollections.CoinRepo)
-      .map((c) => c.symbol);
+    this.logoUrl = this.data.alert?.image_url
+      ? this.data.alert?.image_url
+      : this.logoUrl;
+    this.displayedSymbol = this.data.alert.symbol + ' ALERT EDIT';
     this.form = this.fb.group({
       symbol: [{ value: '', disabled: true }],
       isActive: [''],

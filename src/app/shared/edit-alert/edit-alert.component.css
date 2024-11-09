@@ -7,8 +7,12 @@
 
  .header{
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  margin-right: 150px;
  }
 
  .button-panel{
@@ -38,4 +42,9 @@
   overflow: auto; /* Ensures the scrollbars are added if the content exceeds the area */
 }
 
-
+.coin-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+}
