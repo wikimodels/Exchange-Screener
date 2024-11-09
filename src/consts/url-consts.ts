@@ -15,26 +15,10 @@ export const coinsUrl = `${baseURL}get-all-coins`;
 
 export const ALERTS_URLS = {
   alertsUrl: `${baseURL}/alerts`,
-  alertsCreateBatchUrl: `${baseURL}/alerts/create/batch`,
-  alertsCreateOneUrl: `${baseURL}/alerts/create/one`,
-  alertsUpdateUrl: `${baseURL}/alerts/update`,
-  alertsBatchDelete: `${baseURL}/alerts/batch-delete`,
-  archiveAlert: `${baseURL}/alerts/archive`,
-  alertsDeleteAllUrl: `${baseURL}/alerts/delete/all`,
-  alertsDeleteBatchUrl: `${baseURL}/alerts/delete/batch`,
-};
-
-export const ARCHIVED_ALERTS_URLS = {
-  archivedAlertsUrl: `${baseURL}/archive/alerts`,
-  archivedAlertsDeleteBatchUrl: `${baseURL}/archive/delete/batch`,
-  archivedAlertsDeleteAllUrl: `${baseURL}/archive/delete/all`,
-  archivedAlertsUpdateOneUrl: `${baseURL}/archive/update/one`,
-};
-
-export const TRIGGERED_ALERTS_URLS = {
-  triggeredAlertsUrl: `${baseURL}/triggered/alerts`,
-  triggeredAlertsDeleteBatchUrl: `${baseURL}/triggered/delete/batch`,
-  triggeredAlertUpdateAlertUrl: `${baseURL}/triggered/update/alert`,
+  alertsAddOneUrl: `${baseURL}/alerts/add/one`,
+  alertsDeleteManyUrl: `${baseURL}/alerts/delete/many`,
+  alertsUpdateOneUrl: `${baseURL}/alerts/update/one`,
+  alertsMoveManyUrl: `${baseURL}/alerts/move/many`,
 };
 
 export const COINS_URLS = {

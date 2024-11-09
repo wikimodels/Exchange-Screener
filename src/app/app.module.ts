@@ -46,8 +46,8 @@ import { ArchivedTableComponent } from './archived-alerts/archived-table/archive
 import { WorkComponent } from './work/work.component';
 import { WorkFieldComponent } from './work/work-field/work-field.component';
 import { WorkItemComponent } from './work/work-item/work-item.component';
-import { EditAlertComponent } from './alerts/edit-alert/edit-alert.component';
-import { CoinComponent } from './coin/coin.component'; 
+
+import { CoinComponent } from './coin/coin.component';
 import { DeleteItemComponent } from './shared/delete-item/delete-item.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 import { CoinProviderTableComponent } from './coin-provider/coin-provider-table/coin-provider-table.component';
@@ -59,7 +59,8 @@ import { CoinTableComponent } from './coin/coin-table/coin-table.component';
 import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
 import { CoinSorterTableComponent } from './coin-sorter/coin-sorter-table/coin-sorter-table.component';
 import { TvListComponent } from './shared/tv-list/tv-list.component';
-import {EditCoinComponent} from './shared/edit-coin/edit-coin.component'
+import { EditCoinComponent } from './shared/edit-coin/edit-coin.component';
+import { EditAlertComponent } from './shared/edit-alert/edit-alert.component';
 
 echarts.use([
   LegendComponent,
@@ -96,7 +97,7 @@ echarts.registerTheme('macarons', Marcaron);
     AlertMenuComponent,
     EditAlertComponent,
     WorkFieldComponent,
-    CoinTableComponent,    
+    CoinTableComponent,
     SnackbarComponent,
     WorkItemComponent,
     CarouselComponent,

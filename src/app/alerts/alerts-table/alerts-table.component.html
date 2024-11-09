@@ -15,11 +15,25 @@
   <div>
     <h1>Alerts at Work</h1>
   </div>
-  <div>
-    <button mat-raised-button (click)="onAddAlert()" style="margin-right: 20px; height: 45px;">Add Alert</button>
-    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
-      style="height: 45px;">Delete
-      Selected</button>
+  <div style="display: flex; flex-direction: row; gap: 10px">
+
+    <!-- ADD ALERT  -->
+    <button mat-raised-button (click)="onAddAlert()" color="primary" style="height: 45px;" matTooltip="Add new Alert"
+      matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="add"></mat-icon>
+    </button>
+
+    <!-- MOVE ALERT TO ARCHIVE -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveToArchive()" style="height: 45px;"
+      matTooltip="Move to Archive" matTooltipPosition="above" color="accent">
+      <mat-icon style="margin-left: 5px;" svgIcon="black-list"></mat-icon>
+    </button>
+
+    <!-- DELETE ALERTS -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" style="height: 45px;"
+      matTooltip="Delete" matTooltipPosition="above" color="warn">
+      <mat-icon style="margin-left: 5px;" svgIcon="delete"></mat-icon>
+    </button>
   </div>
 </div>
 
@@ -30,15 +44,15 @@
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
       <td mat-cell *matCellDef="let element" class="symbol-cell">
-        <img [src]="element.logoLink" alt="logo" class="round-image" />
-        {{element.symbol}} ({{element.coinCategory}})
+        <img [src]="element.image_url ? element.image_url : 'assets/img/noname.png'" alt="logo" class="round-image" />
+        {{element.symbol}} ({{element.category}})
       </td>
     </ng-container>
 
-    <!-- KEY LEVEL NAME -->
+    <!-- Alert Name -->
     <ng-container matColumnDef="keyLevelName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Key Level Name
+        Alert Name
       </th>
       <td mat-cell *matCellDef="let element"> <b>{{element.keyLevelName}}</b> </td>
     </ng-container>
@@ -81,11 +95,11 @@
           <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
         </a>
         <!-- BINANCE -->
-        <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank">
+        <a *ngIf="element.binanceExch" [href]="element.binanceExch" target="_blank">
           <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
         </a>
         <!-- BYBIT -->
-        <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank">
+        <a *ngIf="element.bybitExch" [href]="element.bybitExch" target="_blank">
           <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
         </a>
       </td>
@@ -108,17 +122,6 @@
         <mat-icon (click)="onEdit(element)" class="clickable-icon" svgIcon="edit"></mat-icon>
       </td>
     </ng-container>
-
-    <!-- ARCHIVE -->
-    <ng-container matColumnDef="archive">
-      <th mat-header-cell *matHeaderCellDef>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon (click)="onMoveToArchive(element)" class="clickable-icon" svgIcon="flare" matTooltip="Move to Archive"
-          [matTooltipPosition]="tooltipPosition"></mat-icon>
-      </td>
-    </ng-container>
-
 
     <!-- CHECKBOX-->
     <ng-container matColumnDef="select">

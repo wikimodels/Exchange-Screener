@@ -7,9 +7,7 @@ import {
   transition,
   state,
 } from '@angular/animations';
-import { env } from 'environment/environment';
-import { AlertObj } from 'models/alerts/alert-obj';
-import { ImageModalComponent } from 'src/app/alerts/image-modal/image-modal.component';
+import { Alert } from 'models/alerts/alert';
 
 @Component({
   selector: 'app-description-modal',
@@ -38,7 +36,7 @@ import { ImageModalComponent } from 'src/app/alerts/image-modal/image-modal.comp
 })
 export class DescriptionModalComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: AlertObj,
+    @Inject(MAT_DIALOG_DATA) public data: Alert,
     public dialogRef: MatDialogRef<DescriptionModalComponent>
   ) {}
   imageLoaded: boolean = false; // Tracks if the actual image has

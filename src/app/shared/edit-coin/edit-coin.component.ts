@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'models/coin/coin';
 import { Status } from 'models/coin/status';
-import { EditAlertComponent } from 'src/app/alerts/edit-alert/edit-alert.component';
+
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 
 @Component({

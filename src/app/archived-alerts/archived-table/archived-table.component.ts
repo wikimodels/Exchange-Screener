@@ -5,9 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { AlertObj } from 'models/alerts/alert-obj';
+import { Alert } from 'models/alerts/alert';
+import { AlertsCollections } from 'models/alerts/alerts-collections';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
-import { ArchivedAlertsService } from 'src/service/alerts/archived-alerts.service';
+import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
 
 @Component({
   selector: 'app-archived-table',
@@ -17,7 +18,7 @@ import { ArchivedAlertsService } from 'src/service/alerts/archived-alerts.servic
 export class ArchivedTableComponent {
   displayedColumns: string[] = [
     'symbol',
-    'keyLevelName',
+    'alertName',
     'action',
     'links',
     'description',
@@ -34,17 +35,18 @@ export class ArchivedTableComponent {
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private archivedAlertsService: ArchivedAlertsService,
+    private alertsService: AlertsGenericService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.archivedAlertsService.getAllArchivedAlerts().subscribe((data) => {});
-    this.archivedAlertsService.alertsArchived$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.alertsService
+      .alerts$(AlertsCollections.ArchivedAlerts)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   // Filter function
@@ -75,9 +77,9 @@ export class ArchivedTableComponent {
     return numSelected === numRows;
   }
 
-  onOpenDescriptionModalDialog(alertObj: AlertObj): void {
+  onOpenDescriptionModalDialog(alert: Alert): void {
     this.modelDialog.open(DescriptionModalComponent, {
-      data: alertObj,
+      data: alert,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '100vw',
@@ -86,12 +88,9 @@ export class ArchivedTableComponent {
   }
 
   onDeleteSelected() {
-    const objs = this.selection.selected;
-    this.archivedAlertsService
-      .deleteArchivedAlertsBatch(objs)
-      .subscribe((data: any) => {
-        this.selection.clear();
-      });
+    const alerts = this.selection.selected as Alert[];
+    const ids = alerts.map((a) => a.id);
+    this.alertsService.deleteMany(AlertsCollections.ArchivedAlerts, ids);
     this.deleteDisabled = true;
   }
 

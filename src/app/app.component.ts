@@ -1,7 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AlertsCollections } from 'models/alerts/alerts-collections';
+import { CoinsCollections } from 'models/coin/coins-collections';
 import { Subscription } from 'rxjs';
+import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +17,19 @@ export class AppComponent implements OnInit, OnDestroy {
   private dataSubscription2: Subscription | null = null;
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private alertsService: AlertsGenericService,
+    private coinsService: CoinsGenericService
   ) {
     this.registerIcons();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.alertsService.getAllAlerts(AlertsCollections.WorkingAlerts);
+    this.alertsService.getAllAlerts(AlertsCollections.ArchivedAlerts);
+    this.alertsService.getAllAlerts(AlertsCollections.TriggeredAlerts);
+    this.coinsService.getAllCoins(CoinsCollections.CoinRepo);
+  }
 
   ngOnDestroy(): void {
     if (this.dataSubscription1) {
@@ -62,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'github', url: 'assets/icons/github.svg' },
       { name: 'facebook', url: 'assets/icons/facebook.svg' },
       { name: 'cmc', url: 'assets/icons/cmp.svg' },
+      { name: 'add', url: 'assets/icons/add.svg' },
       // Add more icons here
     ];
 

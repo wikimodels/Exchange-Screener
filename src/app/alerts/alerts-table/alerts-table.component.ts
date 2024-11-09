@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertObj } from 'models/alerts/alert-obj';
-import { AlertsService } from 'src/service/alerts/alerts.service';
+
 import { NewAlertComponent } from '../new-alert/new-alert.component';
-import { EditAlertComponent } from '../edit-alert/edit-alert.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,6 +9,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
 import { TooltipPosition } from '@angular/material/tooltip';
+import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
+import { AlertsCollections } from 'models/alerts/alerts-collections';
+import { Alert } from 'models/alerts/alert';
+import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
 
 @Component({
   selector: 'app-alerts-table',
@@ -27,14 +29,13 @@ export class AlertsTableComponent implements OnInit {
     'isActive',
     'description',
     'edit',
-    'archive',
     'select',
   ];
 
   dataSource!: any;
-  deleteDisabled = true;
+  buttonsDisabled = true;
   filterValue = '';
-
+  collectionName = AlertsCollections.WorkingAlerts;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
@@ -42,17 +43,18 @@ export class AlertsTableComponent implements OnInit {
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private alertsService: AlertsService,
+    private alertsService: AlertsGenericService,
     private modelDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.alertsService.getAllAlerts().subscribe((data) => {});
-    this.alertsService.alerts$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.alertsService
+      .alerts$(AlertsCollections.WorkingAlerts)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   // Filter function
@@ -63,16 +65,16 @@ export class AlertsTableComponent implements OnInit {
 
   onDataToggled(data: any) {
     this.selection.toggle(data);
-    this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
+    this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
   // Toggle "Select All" checkbox
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      this.deleteDisabled = true;
+      this.buttonsDisabled = true;
     } else {
       this.selection.select(...this.dataSource.data);
-      this.deleteDisabled = false;
+      this.buttonsDisabled = false;
     }
   }
   // Check if all rows are selected
@@ -91,9 +93,9 @@ export class AlertsTableComponent implements OnInit {
     });
   }
 
-  onOpenDescriptionModalDialog(alertObj: AlertObj): void {
+  onOpenDescriptionModalDialog(alert: Alert): void {
     this.modelDialog.open(DescriptionModalComponent, {
-      data: alertObj,
+      data: alert,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '100vw',
@@ -102,16 +104,17 @@ export class AlertsTableComponent implements OnInit {
   }
 
   onDeleteSelected() {
-    const objs = this.selection.selected;
-    this.alertsService.deleteAlertsBatch(objs).subscribe((data: any) => {
-      this.selection.clear();
-    });
-    this.deleteDisabled = true;
+    const alerts = this.selection.selected as Alert[];
+    const ids = alerts.map((a) => a.id);
+    this.alertsService.deleteMany(AlertsCollections.WorkingAlerts, ids);
+    this.selection.clear();
+    this.buttonsDisabled = true;
   }
 
-  onEdit(alertObj: AlertObj) {
+  onEdit(alert: Alert) {
+    console.log('ALERTS TBL ---> ', alert);
     this.modelDialog.open(EditAlertComponent, {
-      data: alertObj,
+      data: { collectionName: this.collectionName, alert: alert },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',
@@ -119,8 +122,15 @@ export class AlertsTableComponent implements OnInit {
     });
   }
 
-  onMoveToArchive(alertObj: AlertObj) {
-    this.alertsService.moveAlertToArchive(alertObj).subscribe();
+  onMoveToArchive() {
+    const alerts = this.selection.selected as Alert[];
+    this.alertsService.moveMany(
+      AlertsCollections.WorkingAlerts,
+      AlertsCollections.ArchivedAlerts,
+      alerts
+    );
+    this.selection.clear();
+    this.buttonsDisabled = true;
   }
 
   clearInput() {

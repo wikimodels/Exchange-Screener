@@ -1,14 +1,18 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { KeyLevelNamesService } from 'src/service/key-level-names.service';
-import { KeyLevelNameValidator } from 'src/functions/validators/key-level-name.validator';
-import { AlertsService } from 'src/service/alerts/alerts.service';
+import { AlertNameValidator } from 'src/functions/validators/alert-name.validator';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SymbolNameValidator } from 'src/functions/validators/symbol-name.validator';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
+import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
+import { AlertsCollections } from 'models/alerts/alerts-collections';
+import { Coin } from 'models/coin/coin';
+import { Alert } from 'models/alerts/alert';
+import { Exchange } from 'models/shared/exchange';
+import { Status } from 'models/coin/status';
 
 @Component({
   selector: 'app-new-alert',
@@ -16,26 +20,25 @@ import { CoinsCollections } from 'models/coin/coins-collections';
   styleUrls: ['./new-alert.component.css'],
   providers: [],
 })
-export class NewAlertComponent implements OnInit {
-  form!: FormGroup | null;
-  symbols!: string[] | null;
-  filteredSymbols!: string[] | null;
+export class NewAlertComponent implements OnInit, OnDestroy {
   validationMessages: { [key: string]: string[] } = {};
-  constructor(
-    private fb: FormBuilder,
-    private coinsService: CoinsGenericService,
-    private keyLevelNameService: KeyLevelNamesService,
-    public dialogRef: MatDialogRef<NewAlertComponent>,
-    private alertService: AlertsService,
-    private _ngZone: NgZone
-  ) {}
+  filteredSymbols!: string[];
+  sub!: Subscription;
+  symbols!: string[];
+  form!: FormGroup;
+  coins!: Coin[];
+  logoUrl = 'assets/img/noname.png';
+  displayedSymol = 'New Alert';
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   ngOnInit(): void {
-    this.symbols = this.coinsService
-      .getCoins(CoinsCollections.CoinRepo)
-      .map((c) => c.symbol);
+    this.sub = this.coinsService
+      .coins$(CoinsCollections.CoinRepo)
+      .subscribe((coins: Coin[]) => {
+        this.coins = coins;
+        this.symbols = coins.map((c) => c.symbol);
+      });
     this.form = this.fb.group({
       symbol: [
         '',
@@ -44,11 +47,11 @@ export class NewAlertComponent implements OnInit {
           SymbolNameValidator.createValidator(this.coinsService),
         ]),
       ],
-      keyLevelName: [
+      alertName: [
         '',
         Validators.compose([Validators.required]),
         Validators.composeAsync([
-          KeyLevelNameValidator.createValidator(this.keyLevelNameService),
+          AlertNameValidator.createValidator(this.alertsService),
         ]),
       ],
       price: [
@@ -61,9 +64,25 @@ export class NewAlertComponent implements OnInit {
       isTv: [false],
       action: ['', Validators.required],
       description: ['', Validators.required],
-      imgUrls: this.fb.array([this.createImageUrlControl()]),
+      tvImgUrls: this.fb.array([this.createImageUrlControl()]),
+    });
+
+    this.form.get('symbol')?.valueChanges.subscribe((value: string) => {
+      const coins = this.coins.find((c) => c.symbol == value);
+      this.logoUrl = coins?.image_url ? coins?.image_url : this.logoUrl;
+      this.displayedSymol = coins?.symbol
+        ? coins?.symbol + ' ALERT'
+        : this.displayedSymol;
     });
   }
+
+  constructor(
+    private fb: FormBuilder,
+    private coinsService: CoinsGenericService,
+    public dialogRef: MatDialogRef<NewAlertComponent>,
+    private alertsService: AlertsGenericService,
+    private _ngZone: NgZone
+  ) {}
 
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
@@ -101,7 +120,7 @@ export class NewAlertComponent implements OnInit {
   }
 
   get imgUrls() {
-    return this.form?.get('imgUrls') as FormArray;
+    return this.form?.get('tvImgUrls') as FormArray;
   }
 
   addLink() {
@@ -125,12 +144,39 @@ export class NewAlertComponent implements OnInit {
     });
 
     if (this.form?.valid) {
-      this.alertService.createAlert(this.form.value).subscribe();
+      const alert: Alert = this.form.value;
+      const coin = this.coins.find((c) => c.symbol == alert.symbol);
+      alert.description = this.form.get('description')?.value;
+      alert.tvImgUrls = this.form.get('tvImgUrls')?.value;
+      alert.alertName = this.form.get('alertName')?.value;
+      alert.action = this.form.get('action')?.value;
+      alert.price = this.form.get('price')?.value;
+      alert.isTv = this.form.get('isTv')?.value;
+      alert.binanceExch = coin?.binanceExch;
+      alert.bybitExch = coin?.bybitExch;
+      alert.tvLink = coin?.tvLink;
+      alert.cgLink = coin?.cgLink;
+      alert.category = coin?.category;
+      alert.exchange = coin?.exchange as Exchange;
+      alert.status = coin?.status as Status;
+      alert.coinExchange = coin?.coinExchange;
+      alert.image_url = coin?.image_url;
+      alert.isActive = true;
+      alert.creationTime = new Date().getTime();
+      console.log(alert);
+      console.log('COIN ---> ', coin);
+      this.alertsService.addOne(AlertsCollections.WorkingAlerts, alert);
       this.dialogRef.close();
     }
   }
 
   cancel() {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

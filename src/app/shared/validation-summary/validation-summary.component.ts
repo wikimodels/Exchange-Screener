@@ -58,8 +58,8 @@ export class ValidationSummaryComponent implements OnInit, OnDestroy {
 
   generateErrorMessages(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((controlName) => {
-      if (controlName == 'imageLinks') {
-        const array = formGroup.controls['imageLinks'] as FormArray;
+      if (controlName == 'tvImgUrls') {
+        const array = formGroup.controls['tvImgUrls'] as FormArray;
 
         array.controls.forEach((c, index) => {
           if (c.errors?.['pattern'] && c.touched) {
@@ -90,7 +90,7 @@ export class ValidationSummaryComponent implements OnInit, OnDestroy {
         this.errors.push(`Symbol doesn't exist in the list`);
       }
 
-      if (control.touched && errors['keyLevelNameExists']) {
+      if (control.touched && errors['AlertNameExists']) {
         this.errors.push(`Such Key Level Name already exists`);
       }
     });
@@ -98,8 +98,8 @@ export class ValidationSummaryComponent implements OnInit, OnDestroy {
 
   getReadableControlName(controlName: string) {
     switch (controlName) {
-      case 'keyLevelName':
-        return 'Key Level Name';
+      case 'alertName':
+        return 'Alert Name';
       case 'price':
         return 'Price';
       case 'symbol':

@@ -1,12 +1,12 @@
 import { Component, Inject, NgZone, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AlertsService } from 'src/service/alerts/alerts.service';
-import { AlertObj } from 'models/alerts/alert-obj';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
+import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
+import { Alert } from 'models/alerts/alert';
 
 @Component({
   selector: 'app-edit-alert',
@@ -17,9 +17,10 @@ export class EditAlertComponent {
   constructor(
     private fb: FormBuilder,
     private coinsService: CoinsGenericService,
-    private alertService: AlertsService,
+    private alertService: AlertsGenericService,
     public dialogRef: MatDialogRef<EditAlertComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AlertObj,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { collectionName: string; alert: Alert },
     private _ngZone: NgZone
   ) {}
 
@@ -46,18 +47,20 @@ export class EditAlertComponent {
   }
 
   populateForm() {
+    console.log('EDIT-ALERT TBL ---> ', this.data.alert);
+
     this.imageLinks.clear();
     this.form?.setValue({
-      symbol: this.data.symbol,
-      isActive: this.data.isActive,
-      action: this.data.action,
-      keyLevelName: this.data.keyLevelName,
-      price: this.data.price,
-      description: this.data.description,
+      symbol: this.data.alert.symbol,
+      isActive: this.data.alert.isActive,
+      action: this.data.alert.action,
+      keyLevelName: this.data.alert.alertName,
+      price: this.data.alert.price,
+      description: this.data.alert.description,
       imageLinks: [], // Add the missing form control
     });
     // Populate the FormArray for imageLinks
-    this.data.imgUrls?.forEach((url: string) => {
+    this.data.alert.tvImgUrls?.forEach((url: string) => {
       this.imageLinks.push(this.fb.control(url)); // Add each URL as a FormControl
     });
   }
@@ -101,10 +104,12 @@ export class EditAlertComponent {
     this.form?.markAsDirty();
     this.form?.updateValueAndValidity();
     if (this.form?.valid) {
-      this.data.description = this.form.get('description')?.value;
-      this.data.imgUrls = this.imageLinks.value;
-      this.data.isActive = this.form.get('isActive')?.value;
-      this.alertService.updateAlert(this.data).subscribe();
+      this.data.alert.description = this.form.get('description')?.value;
+      this.data.alert.tvImgUrls = this.imageLinks.value;
+      this.data.alert.isActive = this.form.get('isActive')?.value;
+
+      this.alertService.updateOne(this.data.collectionName, this.data.alert);
+
       this.dialogRef.close();
     }
   }

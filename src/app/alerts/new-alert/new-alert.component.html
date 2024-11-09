@@ -1,6 +1,9 @@
 <div class="container">
+
+  <!-- Header Section -->
   <div class="header">
-    <h2>Create New Alert</h2>
+    <img [src]="logoUrl" alt="logo" class="coin-image" />
+    <h2>{{displayedSymol}}</h2>
   </div>
 
   <div class="form-container">
@@ -26,13 +29,13 @@
               </mat-error> -->
             </mat-form-field>
 
-            <!-- Key level Name -->
+            <!-- Alert Name -->
             <mat-form-field appearance="fill" class="form">
-              <mat-label>Key Level Name</mat-label>
-              <input matInput type="string" formControlName="keyLevelName" tabindex="-1" />
-              <!-- <mat-error *ngIf="form.get('keyLevelName')?.errors?.['keyLevelNameExists']">
-                This Key Level Name already exists
-              </mat-error> -->
+              <mat-label>Alert Name</mat-label>
+              <input matInput type="string" formControlName="alertName" tabindex="-1" />
+              <mat-error *ngIf="form.get('alertName')?.errors?.['alertNameTaken']">
+                This Alert Name already taken
+              </mat-error>
             </mat-form-field>
 
             <!-- Action -->
@@ -74,7 +77,7 @@
           </mat-form-field>
 
           <!-- Image Links -->
-          <div formArrayName="imgUrls">
+          <div formArrayName="tvImgUrls">
             <div *ngFor="let link of imgUrls.controls; let i = index">
               <div>
                 <mat-form-field appearance="fill" class="form">

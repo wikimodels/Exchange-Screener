@@ -5,11 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { AlertObj } from 'models/alerts/alert-obj';
-
 import { DescriptionModalComponent } from '../../shared/description-modal/description-modal.component';
-import { EditAlertComponent } from 'src/app/alerts/edit-alert/edit-alert.component';
-import { TriggeredAlertsService } from 'src/service/alerts/triggered-alerts.service';
+
+import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
+import { AlertsCollections } from 'models/alerts/alerts-collections';
+import { Alert } from 'models/alerts/alert';
+import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
 
 /**
  * @title Table with sorting
@@ -40,23 +41,24 @@ export class TriggeredAlertsTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
-  selection = new SelectionModel<any>(true, []); // Allows multiple selections
+  selection = new SelectionModel<any>(true, []);
   constructor(
-    private triggeredAlertsService: TriggeredAlertsService,
+    private alertsService: AlertsGenericService,
     private matDialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.triggeredAlertsService.getAllTriggeredAlerts().subscribe((data) => {});
-    this.triggeredAlertsService.alertsTriggered$.subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.alertsService
+      .alerts$(AlertsCollections.TriggeredAlerts)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   refreshDataTable() {
-    this.triggeredAlertsService.getAllTriggeredAlerts().subscribe((data) => {});
+    this.alertsService.getAlerts(AlertsCollections.TriggeredAlerts);
     this.isRotating = true;
     setTimeout(() => {
       this.isRotating = false;
@@ -83,16 +85,16 @@ export class TriggeredAlertsTableComponent implements OnInit {
       this.deleteDisabled = false;
     }
   }
-  // Check if all rows are selected
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length; // Use dataSource.data.length
     return numSelected === numRows;
   }
 
-  onOpenDescriptionModalDialog(obj: AlertObj): void {
+  onOpenDescriptionModalDialog(alert: Alert): void {
     this.matDialog.open(DescriptionModalComponent, {
-      data: obj,
+      data: alert,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '100vw',
@@ -100,9 +102,9 @@ export class TriggeredAlertsTableComponent implements OnInit {
     });
   }
 
-  onEdit(alertObj: AlertObj) {
+  onEdit(alert: Alert) {
     this.matDialog.open(EditAlertComponent, {
-      data: alertObj,
+      data: { collectionName: AlertsCollections.TriggeredAlerts, alert: alert },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',
@@ -111,12 +113,10 @@ export class TriggeredAlertsTableComponent implements OnInit {
   }
 
   onDeleteSelected() {
-    const objs = this.selection.selected;
-    this.triggeredAlertsService
-      .deleteTriggeredAlertsButch(objs)
-      .subscribe((data: any) => {
-        this.selection.clear();
-      });
+    const alerts = this.selection.selected as Alert[];
+    const ids = alerts.map((a) => a.id);
+    this.alertsService.deleteMany(AlertsCollections.TriggeredAlerts, ids);
+    this.selection.clear();
     this.deleteDisabled = true;
   }
 

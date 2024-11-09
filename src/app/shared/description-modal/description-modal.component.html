@@ -2,10 +2,11 @@
   <div class="card">
     <div class="card-symbol">
       <div>
-        <img [src]="data.logoLink" [alt]="data.symbol" class="round-image" (load)="onImageLoad()" />
+        <img [src]="data.image_url ? data.image_url : 'assets/img/noname.png'" [alt]="data.symbol" class="round-image"
+          (load)="onImageLoad()" />
       </div>
       <div>
-        <h1 style="margin-top: 10px;">{{data.symbol}} ({{data.coinCategory}})</h1>
+        <h1 style="margin-top: 10px;">{{data.symbol}} ({{data.category}})</h1>
       </div>
     </div>
     <div class="vertical-line"></div>
@@ -15,7 +16,7 @@
   </div>
 
   <div style="width: 90%;">
-    <app-carousel [images]="data.imgUrls"></app-carousel>
+    <app-carousel [images]="data.tvImgUrls"></app-carousel>
   </div>
 
 </div>
