@@ -6,12 +6,17 @@ export const COIN_BLACK_LIST = 'coin-black-list';
 export const ALERTS_AT_WORK = 'alerts-at-work';
 export const COIN_PROVIDER = 'coin-provider';
 export const COIN_SORTER = 'coin-sorter';
+export const SANTIMENT = 'santiment';
 export const WORK = 'work';
 export const COIN = 'coin';
 
 //URLS
 const baseURL = env.baseURL;
 export const coinsUrl = `${baseURL}get-all-coins`;
+
+export const SANTIMENT_URLS = {
+  alertsUrl: `${baseURL}/santiment/echarts`,
+};
 
 export const ALERTS_URLS = {
   alertsUrl: `${baseURL}/alerts`,

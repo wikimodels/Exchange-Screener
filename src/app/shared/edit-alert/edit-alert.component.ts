@@ -3,8 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs';
-import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
-import { CoinsCollections } from 'models/coin/coins-collections';
 import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
 import { Alert } from 'models/alerts/alert';
 

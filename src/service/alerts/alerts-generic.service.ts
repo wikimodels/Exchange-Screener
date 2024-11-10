@@ -45,8 +45,8 @@ export class AlertsGenericService {
   }
 
   public setAlerts(collectionName: string, Alerts: Alert[]): void {
-    const AlertCollection = this.getOrCreateCollection(collectionName);
-    AlertCollection.next(Alerts);
+    const alertCollection = this.getOrCreateCollection(collectionName);
+    alertCollection.next(Alerts);
   }
 
   public getAlerts(collectionName: string): Alert[] {
@@ -58,23 +58,23 @@ export class AlertsGenericService {
     const options = { ...this.httpOptions, params };
 
     this.http.get<Alert[]>(ALERTS_URLS.alertsUrl, options).subscribe({
-      next: (Alerts: Alert[]) => {
-        this.setAlerts(collectionName, Alerts);
+      next: (alerts: Alert[]) => {
+        this.setAlerts(collectionName, alerts);
       },
       error: (error) => this.handleError(error),
     });
   }
 
-  public addOne(collectionName: string, Alert: Alert): void {
+  public addOne(collectionName: string, alert: Alert): void {
     const currentAlerts = this.getAlerts(collectionName);
-    this.setAlerts(collectionName, [...currentAlerts, Alert]);
+    this.setAlerts(collectionName, [...currentAlerts, alert]);
 
     // HTTP request to add a Alert with query parameters
     const params = this.createHttpParams({ collectionName });
     const options = { ...this.httpOptions, params };
 
     this.http
-      .post<InsertResult>(`${ALERTS_URLS.alertsAddOneUrl}`, Alert, options)
+      .post<InsertResult>(`${ALERTS_URLS.alertsAddOneUrl}`, alert, options)
       .subscribe({
         next: (response: InsertResult) => {
           const msg = `Document inserted ${response.insertedCount}`;

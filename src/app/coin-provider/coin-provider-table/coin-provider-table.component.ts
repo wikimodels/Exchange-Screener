@@ -14,6 +14,8 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { CoinsProviderService } from 'src/service/coins/coins-provider.service';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
+import { SANTIMENT } from 'src/consts/url-consts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coin-provider-table',
@@ -45,7 +47,8 @@ export class CoinProviderTableComponent implements OnInit {
   constructor(
     private coinsService: CoinsGenericService,
     private coinsProviderService: CoinsProviderService,
-    private modelDialog: MatDialog
+    private modelDialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -161,8 +164,16 @@ export class CoinProviderTableComponent implements OnInit {
     });
   }
 
-  onMoveToCoins(coins: Coin[]) {
-    //this.coinProviderService.relocateToCoins(coins).subscribe();
+  onSantimentClick(coin: Coin) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        SANTIMENT,
+        coin.symbol,
+        coin.slug,
+        coin.image_url,
+      ])
+    );
+    window.open(url, '_blank');
   }
 
   clearInput() {

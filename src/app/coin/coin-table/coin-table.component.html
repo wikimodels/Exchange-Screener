@@ -74,7 +74,7 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="!element.santimentMissing">
-          <mat-icon>check</mat-icon>
+          <mat-icon style="cursor: pointer;" (click)="onSantimentClick(element)">check</mat-icon>
         </ng-container>
       </td>
     </ng-container>

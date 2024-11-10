@@ -12,6 +12,8 @@ import { Coin } from 'models/coin/coin';
 import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
+import { SANTIMENT } from 'src/consts/url-consts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coin-black-list-table',
@@ -41,7 +43,8 @@ export class CoinBlackListTableComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private coinsService: CoinsGenericService,
-    private modelDialog: MatDialog
+    private modelDialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -119,6 +122,18 @@ export class CoinBlackListTableComponent implements OnInit {
     );
     this.selection.clear();
     this.buttonsDisabled = true;
+  }
+
+  onSantimentClick(coin: Coin) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        SANTIMENT,
+        coin.symbol,
+        coin.slug,
+        coin.image_url,
+      ])
+    );
+    window.open(url, '_blank');
   }
 
   clearInput() {

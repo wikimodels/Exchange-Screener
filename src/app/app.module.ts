@@ -61,6 +61,8 @@ import { CoinSorterTableComponent } from './coin-sorter/coin-sorter-table/coin-s
 import { TvListComponent } from './shared/tv-list/tv-list.component';
 import { EditCoinComponent } from './shared/edit-coin/edit-coin.component';
 import { EditAlertComponent } from './shared/edit-alert/edit-alert.component';
+import { SantimentComponent } from './santiment/santiment.component';
+import { SantimentChartComponent } from './santiment/santiment-chart/santiment-chart.component';
 
 echarts.use([
   LegendComponent,
@@ -111,6 +113,8 @@ echarts.registerTheme('macarons', Marcaron);
     WorkComponent,
     CoinComponent,
     AppComponent,
+    SantimentComponent,
+    SantimentChartComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),
