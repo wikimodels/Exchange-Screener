@@ -81,6 +81,25 @@ export class CoinsGenericService {
       });
   }
 
+  public addMany(collectionName: string, coins: Coin[]): void {
+    const currentCoins = this.getCoins(collectionName);
+    this.setCoins(collectionName, [...currentCoins, ...coins]);
+
+    // HTTP request to add a coin with query parameters
+    const params = this.createHttpParams({ collectionName });
+    const options = { ...this.httpOptions, params };
+
+    this.http
+      .post<InsertResult>(`${COINS_URLS.coinsAddManyUrl}`, coins, options)
+      .subscribe({
+        next: (response: InsertResult) => {
+          const msg = `Document inserted ${response.insertedCount}`;
+          this.snackbarService.showSnackBar(msg, '');
+        },
+        error: (error) => this.handleError(error),
+      });
+  }
+
   public deleteMany(collectionName: string, symbols: string[]): void {
     const currentCoins = this.getCoins(collectionName);
     const remainingCoins = currentCoins.filter(

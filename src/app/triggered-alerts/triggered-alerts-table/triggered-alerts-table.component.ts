@@ -11,6 +11,10 @@ import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service'
 import { AlertsCollections } from 'models/alerts/alerts-collections';
 import { Alert } from 'models/alerts/alert';
 import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
+import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
+import { CoinsCollections } from 'models/coin/coins-collections';
+import { SnackbarService } from 'src/service/snackbar.service';
+import { SnackbarType } from 'models/shared/snackbar-type';
 
 /**
  * @title Table with sorting
@@ -24,18 +28,18 @@ import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.compone
 export class TriggeredAlertsTableComponent implements OnInit {
   displayedColumns: string[] = [
     'symbol',
-    'keyLevelName',
+    'alertName',
     'action',
     'activationTimeStr',
     'links',
-    'edit',
     'description',
+    'edit',
     'select',
   ];
 
   filterValue = '';
   dataSource!: any;
-  deleteDisabled = true;
+  buttonsDisabled = true;
   isRotating = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,7 +48,9 @@ export class TriggeredAlertsTableComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private alertsService: AlertsGenericService,
-    private matDialog: MatDialog
+    private coinsService: CoinsGenericService,
+    private matDialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -58,7 +64,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
   }
 
   refreshDataTable() {
-    this.alertsService.getAlerts(AlertsCollections.TriggeredAlerts);
+    this.alertsService.getAllAlerts(AlertsCollections.TriggeredAlerts);
     this.isRotating = true;
     setTimeout(() => {
       this.isRotating = false;
@@ -73,16 +79,16 @@ export class TriggeredAlertsTableComponent implements OnInit {
 
   onDataToggled(data: any) {
     this.selection.toggle(data);
-    this.deleteDisabled = this.selection.selected.length > 0 ? false : true;
+    this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
   // Toggle "Select All" checkbox
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      this.deleteDisabled = true;
+      this.buttonsDisabled = true;
     } else {
       this.selection.select(...this.dataSource.data);
-      this.deleteDisabled = false;
+      this.buttonsDisabled = false;
     }
   }
 
@@ -117,11 +123,54 @@ export class TriggeredAlertsTableComponent implements OnInit {
     const ids = alerts.map((a) => a.id);
     this.alertsService.deleteMany(AlertsCollections.TriggeredAlerts, ids);
     this.selection.clear();
-    this.deleteDisabled = true;
+    this.buttonsDisabled = true;
   }
 
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  onMoveToWorkingCoins() {
+    const selectedAlerts = this.selection.selected as Alert[];
+    const selectedSymbols = selectedAlerts.map((a) => a.symbol);
+
+    // Get all coins from the CoinRepo collection
+    const coins = this.coinsService.getCoins(CoinsCollections.CoinRepo);
+
+    // Filter out coins that match the selected symbols
+    let selectedCoins = coins.filter((coin) =>
+      selectedSymbols.includes(coin.symbol)
+    );
+
+    // Get coins that are already in CoinAtWork
+    const coinsAtWork = this.coinsService.getCoins(CoinsCollections.CoinAtWork);
+
+    // Filter out any coins from selectedCoins that are already in CoinAtWork
+    selectedCoins = selectedCoins.filter(
+      (coin) =>
+        !coinsAtWork.some((coinAtWork) => coinAtWork.symbol === coin.symbol)
+    );
+
+    // Remove duplicates in selectedCoins based on the symbol
+    selectedCoins = selectedCoins.filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.symbol === value.symbol)
+    );
+
+    // Check if there are no new coins to add
+    if (selectedCoins.length === 0) {
+      this.snackbarService.showSnackBar(
+        'Some Coins already there',
+        '',
+        3000,
+        SnackbarType.Warning
+      );
+    } else {
+      console.log(selectedCoins);
+      this.coinsService.addMany(CoinsCollections.CoinAtWork, selectedCoins);
+    }
+    this.selection.clear();
+    this.buttonsDisabled = true;
   }
 }

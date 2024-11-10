@@ -15,9 +15,19 @@
     <mat-icon style="cursor: pointer; margin-top: 4px;" class="rotate" (click)="refreshDataTable()"
       [ngClass]="{ 'rotate': isRotating }">sync</mat-icon>
   </div>
-  <div>
-    <button mat-raised-button [disabled]="deleteDisabled" (click)="onDeleteSelected()" color="warn"
-      style="height: 45px;"><mat-icon svgIcon="delete"></mat-icon></button>
+
+  <div style="display: flex; flex-direction: row; gap: 10px">
+    <!-- MOVE COINS TO WORKING COINS TABLE -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveToWorkingCoins()" style="height: 45px;"
+      matTooltip="Add to Working Coins" matTooltipPosition="above" color="primary">
+      <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
+    </button>
+
+    <!-- DELETE ALERTS -->
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" style="height: 45px;"
+      matTooltip="Delete" matTooltipPosition="above" color="warn">
+      <mat-icon style="margin-left: 5px;" svgIcon="delete"></mat-icon>
+    </button>
   </div>
 </div>
 
@@ -29,16 +39,16 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol</th>
       <td mat-cell *matCellDef="let element" class="symbol-cell">
         <img [src]="element.image_url ? element.image_url : 'assets/img/noname.png'" alt="logo" class="round-image" />
-        {{element.symbol}} ({{element.coinCategory}})
+        {{element.symbol}} ({{element.category}})
       </td>
     </ng-container>
 
     <!-- ALERT NAME -->
-    <ng-container matColumnDef="keyLevelName">
+    <ng-container matColumnDef="alertName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         Alert Name
       </th>
-      <td mat-cell *matCellDef="let element"> <b>{{element.keyLevelName}}</b> </td>
+      <td mat-cell *matCellDef="let element"> <b>{{element.alertName}}</b> </td>
     </ng-container>
 
     <!-- ACTION -->
@@ -70,11 +80,11 @@
           <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
         </a>
         <!-- BINANCE -->
-        <a *ngIf="element.exchBiLink" [href]="element.exchBiLink" target="_blank">
+        <a *ngIf="element.binanceExch" [href]="element.binanceExch" target="_blank">
           <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
         </a>
         <!-- BYBIT -->
-        <a *ngIf="element.exchByLink" [href]="element.exchByLink" target="_blank">
+        <a *ngIf="element.bybitExch" [href]="element.bybitExch" target="_blank">
           <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
         </a>
       </td>

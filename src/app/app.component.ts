@@ -29,6 +29,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.alertsService.getAllAlerts(AlertsCollections.ArchivedAlerts);
     this.alertsService.getAllAlerts(AlertsCollections.TriggeredAlerts);
     this.coinsService.getAllCoins(CoinsCollections.CoinRepo);
+    this.coinsService.getAllCoins(CoinsCollections.CoinAtWork);
+    this.coinsService.getAllCoins(CoinsCollections.CoinBlackList);
+    this.coinsService.getAllCoins(CoinsCollections.CoinProvider);
   }
 
   ngOnDestroy(): void {

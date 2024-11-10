@@ -24,6 +24,7 @@ export const ALERTS_URLS = {
 export const COINS_URLS = {
   coinsUrl: `${baseURL}/coins`,
   coinsAddOneUrl: `${baseURL}/coins/add/one`,
+  coinsAddManyUrl: `${baseURL}/coins/add/many`,
   coinsDeleteManyUrl: `${baseURL}/coins/delete/many`,
   coinsUpdateOneUrl: `${baseURL}/coins/update/one`,
   coinsMoveManyUrl: `${baseURL}/coins/move/many`,
