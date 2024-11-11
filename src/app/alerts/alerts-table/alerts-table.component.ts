@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { NewAlertComponent } from '../new-alert/new-alert.component';
@@ -13,13 +13,14 @@ import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service'
 import { AlertsCollections } from 'models/alerts/alerts-collections';
 import { Alert } from 'models/alerts/alert';
 import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-alerts-table',
   templateUrl: './alerts-table.component.html',
   styleUrls: ['./alerts-table.component.css'],
 })
-export class AlertsTableComponent implements OnInit {
+export class AlertsTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
     'keyLevelName',
@@ -31,7 +32,7 @@ export class AlertsTableComponent implements OnInit {
     'edit',
     'select',
   ];
-
+  sub!: Subscription | null;
   dataSource!: any;
   buttonsDisabled = true;
   filterValue = '';
@@ -48,7 +49,7 @@ export class AlertsTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.alertsService
+    this.sub = this.alertsService
       .alerts$(AlertsCollections.WorkingAlerts)
       .subscribe((data) => {
         this.dataSource = new MatTableDataSource(data);
@@ -136,5 +137,11 @@ export class AlertsTableComponent implements OnInit {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

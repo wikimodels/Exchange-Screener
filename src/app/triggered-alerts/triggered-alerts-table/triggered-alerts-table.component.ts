@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -15,6 +15,7 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { SnackbarService } from 'src/service/snackbar.service';
 import { SnackbarType } from 'models/shared/snackbar-type';
+import { Subscription } from 'rxjs';
 
 /**
  * @title Table with sorting
@@ -25,7 +26,7 @@ import { SnackbarType } from 'models/shared/snackbar-type';
   templateUrl: './triggered-alerts-table.component.html',
   styleUrls: ['./triggered-alerts-table.component.css'],
 })
-export class TriggeredAlertsTableComponent implements OnInit {
+export class TriggeredAlertsTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
     'alertName',
@@ -36,7 +37,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
     'edit',
     'select',
   ];
-
+  sub!: Subscription | null;
   filterValue = '';
   dataSource!: any;
   buttonsDisabled = true;
@@ -54,7 +55,7 @@ export class TriggeredAlertsTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.alertsService
+    this.sub = this.alertsService
       .alerts$(AlertsCollections.TriggeredAlerts)
       .subscribe((data) => {
         this.dataSource = new MatTableDataSource(data);
@@ -172,5 +173,11 @@ export class TriggeredAlertsTableComponent implements OnInit {
     }
     this.selection.clear();
     this.buttonsDisabled = true;
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

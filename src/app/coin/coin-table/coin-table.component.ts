@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
@@ -14,13 +14,14 @@ import { CoinsCollections } from 'models/coin/coins-collections';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 import { Router } from '@angular/router';
 import { SANTIMENT } from 'src/consts/url-consts';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-coin-table',
   templateUrl: './coin-table.component.html',
   styleUrls: ['./coin-table.component.css'],
 })
-export class CoinTableComponent implements OnInit {
+export class CoinTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
     'category',
@@ -31,7 +32,7 @@ export class CoinTableComponent implements OnInit {
     'edit',
     'select',
   ];
-
+  sub!: Subscription | null;
   dataSource!: any;
   buttonsDisabled = true;
   filterValue = '';
@@ -51,11 +52,13 @@ export class CoinTableComponent implements OnInit {
 
   ngOnInit() {
     this.coinService.getAllCoins(CoinsCollections.CoinRepo);
-    this.coinService.coins$(CoinsCollections.CoinRepo).subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.sub = this.coinService
+      .coins$(CoinsCollections.CoinRepo)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   // Filter function
@@ -130,12 +133,12 @@ export class CoinTableComponent implements OnInit {
 
   onSantimentClick(coin: Coin) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree(
-        [SANTIMENT, coin.symbol, coin.slug, coin.image_url],
-        {
-          //queryParams: { image_url: coin.image_url },
-        }
-      )
+      this.router.createUrlTree([
+        SANTIMENT,
+        coin.symbol,
+        coin.slug,
+        coin.image_url,
+      ])
     );
     console.log(url);
     window.open(url, '_blank');
@@ -144,5 +147,10 @@ export class CoinTableComponent implements OnInit {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

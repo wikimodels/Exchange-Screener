@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Alert } from 'models/alerts/alert';
 import { AlertsCollections } from 'models/alerts/alerts-collections';
+import { Subscription } from 'rxjs';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
 import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
 import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
@@ -16,7 +17,7 @@ import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service'
   templateUrl: './archived-table.component.html',
   styleUrls: ['./archived-table.component.css'],
 })
-export class ArchivedTableComponent {
+export class ArchivedTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
     'alertName',
@@ -26,7 +27,7 @@ export class ArchivedTableComponent {
     'edit',
     'select',
   ];
-
+  sub!: Subscription | null;
   dataSource!: any;
   deleteDisabled = true;
   filterValue = '';
@@ -42,7 +43,7 @@ export class ArchivedTableComponent {
   ) {}
 
   ngOnInit() {
-    this.alertsService
+    this.sub = this.alertsService
       .alerts$(AlertsCollections.ArchivedAlerts)
       .subscribe((data) => {
         this.dataSource = new MatTableDataSource(data);
@@ -109,5 +110,11 @@ export class ArchivedTableComponent {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

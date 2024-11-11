@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
@@ -16,13 +16,14 @@ import { CoinsProviderService } from 'src/service/coins/coins-provider.service';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 import { SANTIMENT } from 'src/consts/url-consts';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-coin-provider-table',
   templateUrl: './coin-provider-table.component.html',
   styleUrls: ['./coin-provider-table.component.css'],
 })
-export class CoinProviderTableComponent implements OnInit {
+export class CoinProviderTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
     'category',
@@ -32,7 +33,7 @@ export class CoinProviderTableComponent implements OnInit {
     'links',
     'select',
   ];
-
+  sub!: Subscription | null;
   dataSource!: any;
   buttonsDisabled = true;
   filterValue = '';
@@ -179,5 +180,11 @@ export class CoinProviderTableComponent implements OnInit {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }

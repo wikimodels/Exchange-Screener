@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
@@ -13,13 +13,14 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { TvListComponent } from 'src/app/shared/tv-list/tv-list.component';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-coin-sorter-table',
   templateUrl: './coin-sorter-table.component.html',
   styleUrls: ['./coin-sorter-table.component.css'],
 })
-export class CoinSorterTableComponent implements OnInit {
+export class CoinSorterTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
     'category',
@@ -47,14 +48,16 @@ export class CoinSorterTableComponent implements OnInit {
     private coinsService: CoinsGenericService,
     private modelDialog: MatDialog
   ) {}
-
+  sub!: Subscription | null;
   ngOnInit() {
     this.coinsService.getAllCoins(CoinsCollections.CoinSorter);
-    this.coinsService.coins$(CoinsCollections.CoinSorter).subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.sub = this.coinsService
+      .coins$(CoinsCollections.CoinSorter)
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   // Filter function
@@ -157,5 +160,11 @@ export class CoinSorterTableComponent implements OnInit {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }
