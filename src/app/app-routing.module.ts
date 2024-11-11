@@ -24,7 +24,10 @@ import { SantimentComponent } from './santiment/santiment.component';
 const routes: Routes = [
   // Other routes for your application
   //{ path: 'about', component: AboutComponent }, // Example route
-  { path: SANTIMENT + '/:symbol/:slug', component: SantimentComponent },
+  {
+    path: SANTIMENT + '/:symbol/:slug/:image_url',
+    component: SantimentComponent,
+  },
   { path: ALERTS_AT_WORK, component: AlertsComponent },
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },
   { path: COIN_BLACK_LIST, component: CoinBlackListComponent },

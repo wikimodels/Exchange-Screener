@@ -5,6 +5,9 @@
     <h1>{{ symbol }}</h1>
 
   </div>
-  <app-santiment-chart></app-santiment-chart>
-  <h1>{{symbol}}</h1>
+  <div *ngIf="santimentChartsData.length > 0" class="chart-container">
+    <div *ngFor="let chart of santimentChartsData">
+      <app-santiment-chart [chartOptions]="chart"></app-santiment-chart>
+    </div>
+  </div>
 </div>

@@ -16,6 +16,7 @@ import {
   DataZoomInsideComponent,
   DataZoomSliderComponent,
   LegendComponent,
+  ToolboxComponent,
 } from 'echarts/components';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -76,6 +77,7 @@ echarts.use([
   DataZoomComponent,
   DataZoomInsideComponent,
   DataZoomSliderComponent,
+  ToolboxComponent,
 ]);
 echarts.registerTheme('macarons', Marcaron);
 

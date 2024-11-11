@@ -9,7 +9,6 @@ import { DescriptionModalComponent } from 'src/app/shared/description-modal/desc
 import { TooltipPosition } from '@angular/material/tooltip';
 
 import { Coin } from 'models/coin/coin';
-import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { CoinsProviderService } from 'src/service/coins/coins-provider.service';

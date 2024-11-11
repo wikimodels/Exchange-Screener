@@ -17,7 +17,7 @@ export class SantimentComponent implements OnDestroy {
   slug!: string | null;
   subSantiment!: Subscription | null;
   subCoins!: Subscription | null;
-  data!: any | null;
+  santimentChartsData: any[] = [];
   fromDate = new Date().toISOString().split('.')[0];
   toDate = new Date(new Date().setMonth(new Date().getMonth() - 6))
     .toISOString()
@@ -33,9 +33,6 @@ export class SantimentComponent implements OnDestroy {
     this.logoUrl =
       this.route.snapshot.paramMap.get('image_url') || this.logoUrl;
 
-    // this.route.queryParams.subscribe((params) => {
-    //   this.logoUrl = params['image_url'];
-    // });
     this.subCoins = this.coinsService
       .coins$(CoinsCollections.CoinRepo)
       .subscribe((coins: Coin[]) => {
@@ -45,6 +42,7 @@ export class SantimentComponent implements OnDestroy {
           this.logoUrl = coin.image_url ? coin.image_url : this.logoUrl;
         }
       });
+
     this.subSantiment = this.santimentService
       .santiment$(this.symbol)
       .subscribe((data) => {
@@ -56,10 +54,11 @@ export class SantimentComponent implements OnDestroy {
             this.toDate
           );
         }
-        this.data = data;
-        console.log(data);
+        this.santimentChartsData = data;
+        console.log(this.santimentChartsData);
       });
   }
+
   ngOnDestroy(): void {
     if (this.subSantiment) {
       this.subSantiment.unsubscribe();

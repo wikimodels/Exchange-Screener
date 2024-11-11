@@ -52,7 +52,7 @@ export class SantimentGenericService {
     const params = this.createHttpParams({ symbol, slug, fromDate, toDate });
     const options = { ...this.httpOptions, params };
 
-    this.http.get<any[]>(SANTIMENT_URLS.alertsUrl, options).subscribe({
+    this.http.get<any[]>(SANTIMENT_URLS.echartsUrl, options).subscribe({
       next: (data: any[]) => {
         this.setSantiment(symbol, data);
       },

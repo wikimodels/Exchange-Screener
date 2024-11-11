@@ -15,7 +15,7 @@ const baseURL = env.baseURL;
 export const coinsUrl = `${baseURL}get-all-coins`;
 
 export const SANTIMENT_URLS = {
-  alertsUrl: `${baseURL}/santiment/echarts`,
+  echartsUrl: `${baseURL}/santiment/echarts`,
 };
 
 export const ALERTS_URLS = {

@@ -14,6 +14,8 @@ import { CoinsCollections } from 'models/coin/coins-collections';
 import { TvListComponent } from 'src/app/shared/tv-list/tv-list.component';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 import { Subscription } from 'rxjs';
+import { SANTIMENT } from 'src/consts/url-consts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-coin-sorter-table',
@@ -46,9 +48,11 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private coinsService: CoinsGenericService,
-    private modelDialog: MatDialog
+    private modelDialog: MatDialog,
+    private router: Router
   ) {}
   sub!: Subscription | null;
+
   ngOnInit() {
     this.coinsService.getAllCoins(CoinsCollections.CoinSorter);
     this.sub = this.coinsService
@@ -160,6 +164,19 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
   clearInput() {
     this.filterValue = '';
     this.dataSource.filter = this.filterValue.trim().toLowerCase();
+  }
+
+  onSantimentClick(coin: Coin) {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([
+        SANTIMENT,
+        coin.symbol,
+        coin.slug,
+        coin.image_url,
+      ])
+    );
+    console.log(url);
+    window.open(url, '_blank');
   }
 
   ngOnDestroy(): void {
