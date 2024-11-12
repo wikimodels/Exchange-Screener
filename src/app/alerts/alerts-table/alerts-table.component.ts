@@ -23,7 +23,7 @@ import { Subscription } from 'rxjs';
 export class AlertsTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'symbol',
-    'keyLevelName',
+    'alertName',
     'action',
     'price',
     'links',

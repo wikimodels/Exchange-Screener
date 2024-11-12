@@ -38,6 +38,12 @@ export class BinanceWsConnManagerService {
 
     this.http.get<any>(BINACE_WS_URLS.binanceWsStartUrl, options).subscribe({
       next: (data: any) => {
+        this.snackbarService.showSnackBar(
+          'Binance WS Conns started...',
+          '',
+          3000,
+          SnackbarType.Info
+        );
         this.updateWsConnectionsResponse(data);
       },
       error: (error) => this.handleError(error),
@@ -49,6 +55,12 @@ export class BinanceWsConnManagerService {
 
     this.http.get<any>(BINACE_WS_URLS.binanceWsPauseUrl, options).subscribe({
       next: (data: any) => {
+        this.snackbarService.showSnackBar(
+          'Binance WS Conns paused...',
+          '',
+          3000,
+          SnackbarType.Info
+        );
         this.updateWsConnectionsResponse(data);
       },
       error: (error) => this.handleError(error),
@@ -60,6 +72,12 @@ export class BinanceWsConnManagerService {
 
     this.http.get<any>(BINACE_WS_URLS.binanceWsStatusUrl, options).subscribe({
       next: (data: any) => {
+        this.snackbarService.showSnackBar(
+          'Binance WS Conns Status received',
+          '',
+          3000,
+          SnackbarType.Info
+        );
         this.updateWsConnectionsResponse(data);
       },
       error: (error) => this.handleError(error),

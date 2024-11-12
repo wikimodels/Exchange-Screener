@@ -26,6 +26,7 @@ export class WsComponent implements OnInit, OnDestroy {
         console.log(data);
       }
     );
+
     this.bybitSub = this.bybitWsConnManager.bybitWsConnections$.subscribe(
       (data: any) => {
         this.bybitResponse = JSON.stringify(data, null, 2);

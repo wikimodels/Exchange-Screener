@@ -37,6 +37,12 @@ export class BybitWsConnManagerService {
 
     this.http.get<any>(BYBIT_WS_URLS.bybitWsStartUrl, options).subscribe({
       next: (data: any) => {
+        this.snackbarService.showSnackBar(
+          'Bybit WS Conns started...',
+          '',
+          3000,
+          SnackbarType.Info
+        );
         this.updateWsConnectionsResponse(data);
       },
       error: (error) => this.handleError(error),
@@ -48,6 +54,12 @@ export class BybitWsConnManagerService {
 
     this.http.get<any>(BYBIT_WS_URLS.bybitWsPauseUrl, options).subscribe({
       next: (data: any) => {
+        this.snackbarService.showSnackBar(
+          'Bybit WS Conns paused...',
+          '',
+          3000,
+          SnackbarType.Info
+        );
         this.updateWsConnectionsResponse(data);
       },
       error: (error) => this.handleError(error),
@@ -59,6 +71,12 @@ export class BybitWsConnManagerService {
 
     this.http.get<any>(BYBIT_WS_URLS.bybitWsStatusUrl, options).subscribe({
       next: (data: any) => {
+        this.snackbarService.showSnackBar(
+          'Bybit WS Conns Status received',
+          '',
+          3000,
+          SnackbarType.Info
+        );
         this.updateWsConnectionsResponse(data);
       },
       error: (error) => this.handleError(error),

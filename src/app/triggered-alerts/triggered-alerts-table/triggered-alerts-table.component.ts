@@ -57,7 +57,12 @@ export class TriggeredAlertsTableComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.alertsService
       .alerts$(AlertsCollections.TriggeredAlerts)
-      .subscribe((data) => {
+      .subscribe((data: Alert[]) => {
+        data.sort((a, b) => {
+          if (a.activationTime === undefined) return 1; // Place undefined values last
+          if (b.activationTime === undefined) return -1; // Place undefined values last
+          return b.activationTime - a.activationTime; // Sort by activationTime in descending order
+        });
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
