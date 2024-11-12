@@ -9,6 +9,7 @@ export const COIN_SORTER = 'coin-sorter';
 export const SANTIMENT = 'santiment';
 export const WORK = 'work';
 export const COIN = 'coin';
+export const WS = 'ws';
 
 //URLS
 const baseURL = env.baseURL;

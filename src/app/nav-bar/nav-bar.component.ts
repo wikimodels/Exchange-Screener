@@ -7,6 +7,7 @@ import {
   COIN_BLACK_LIST,
   COIN_PROVIDER,
   WORK,
+  WS,
 } from 'src/consts/url-consts';
 
 @Component({
@@ -26,6 +27,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   onGoToCoin() {
     this.router.navigate([COIN]);
+  }
+
+  onGoToWs() {
+    this.router.navigate([WS]);
   }
 
   onGoToCoinProvider() {

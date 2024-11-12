@@ -11,6 +11,7 @@ import {
   SANTIMENT,
   TRIGGERED_ALERTS,
   WORK,
+  WS,
 } from 'src/consts/url-consts';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
 import { ArchivedAlertsComponent } from './archived-alerts/archived-alerts.component';
@@ -20,6 +21,7 @@ import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 import { CoinBlackListComponent } from './coin-black-list/coin-black-list.component';
 import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
 import { SantimentComponent } from './santiment/santiment.component';
+import { WsComponent } from './ws/ws.component';
 
 const routes: Routes = [
   // Other routes for your application
@@ -29,6 +31,7 @@ const routes: Routes = [
     component: SantimentComponent,
   },
   { path: ALERTS_AT_WORK, component: AlertsComponent },
+  { path: WS, component: WsComponent },
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },
   { path: COIN_BLACK_LIST, component: CoinBlackListComponent },
   { path: COIN_PROVIDER, component: CoinProviderComponent },

@@ -64,6 +64,7 @@ import { EditCoinComponent } from './shared/edit-coin/edit-coin.component';
 import { EditAlertComponent } from './shared/edit-alert/edit-alert.component';
 import { SantimentComponent } from './santiment/santiment.component';
 import { SantimentChartComponent } from './santiment/santiment-chart/santiment-chart.component';
+import { WsComponent } from './ws/ws.component';
 
 echarts.use([
   LegendComponent,
@@ -117,6 +118,7 @@ echarts.registerTheme('macarons', Marcaron);
     AppComponent,
     SantimentComponent,
     SantimentChartComponent,
+    WsComponent,
   ],
   imports: [
     NgxEchartsModule.forRoot({ echarts }),

@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="main-header">
+    <div class="title">
+      WEBSOCKETS
+      <img class="icon" src="assets/icons/websocket.svg" alt="websocket">
+    </div>
+  </div>
+  <div class="subheaders">
+    <div class="subheader">
+      <div class="title">
+        <img class="logo" src="assets/icons/binance-black.svg" alt="binance">
+        BINANCE
+      </div>
+    </div>
+    <div class="subheader">
+      <div class="title">
+        <img class="logo" src="assets/icons/bybit.svg" alt="bybit">
+        BYBIT
+      </div>
+    </div>
+  </div>
+  <div class="button-panels">
+    <div class="panel">
+      <div class="buttons-row">
+        <!-- START BINANCE WS  -->
+        <button mat-raised-button color="primary" matTooltip="Start Websockets" matTooltipPosition="above"
+          (click)="onStartBinanceWs()">
+          <mat-icon style="margin-left: 5px;" svgIcon="play"></mat-icon>
+        </button>
+        <!-- STOP BINANCE WEBSOCKETS -->
+        <button mat-raised-button matTooltip="Pause Websockets" matTooltipPosition="above" color="accent"
+          (click)="onPauseBinanceWs()">
+          <mat-icon style="margin-left: 5px;" svgIcon="pause"></mat-icon>
+        </button>
+        <!-- SHOW BINANCE WS WEBSOCKET STATUS -->
+        <button mat-raised-button matTooltip="Websockets Status" matTooltipPosition="above"
+          (click)="onShowBinanceWsStatus()">
+          <mat-icon style="margin-left: 5px;" svgIcon="info"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="buttons-row">
+        <!-- START BYBIT WS  -->
+        <button mat-raised-button color="primary" matTooltip="Start Websockets" matTooltipPosition="above"
+          (click)="onStartBybitWs()">
+          <mat-icon style="margin-left: 5px;" svgIcon="play"></mat-icon>
+        </button>
+        <!-- STOP BYBIT WEBSOCKETS -->
+        <button mat-raised-button matTooltip="Pause Websockets" matTooltipPosition="above" color="accent"
+          (click)="onPauseBybitWs()">
+          <mat-icon style="margin-left: 5px;" svgIcon="pause"></mat-icon>
+        </button>
+        <!-- SHOW BYBIT WS WEBSOCKET STATUS -->
+        <button mat-raised-button matTooltip="Websockets Status" matTooltipPosition="above"
+          (click)="onShowBybitWsStatus()">
+          <mat-icon style="margin-left: 5px;" svgIcon="info"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
