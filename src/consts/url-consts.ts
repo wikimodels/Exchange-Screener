@@ -39,12 +39,12 @@ export const COINS_URLS = {
 
 export const BINACE_WS_URLS = {
   binanceWsStartUrl: `${baseURL}/ws/binance/start`,
-  binanceWsCloseUrl: `${baseURL}/ws/binance/close`,
+  binanceWsPauseUrl: `${baseURL}/ws/binance/pause`,
   binanceWsStatusUrl: `${baseURL}/ws/binance/status`,
 };
 
 export const BYBIT_WS_URLS = {
   bybitWsStartUrl: `${baseURL}/ws/bybit/start`,
-  bybitWsCloseUrl: `${baseURL}/ws/bybit/close`,
+  bybitWsPauseUrl: `${baseURL}/ws/bybit/pause`,
   bybitWsStatusUrl: `${baseURL}/ws/bybit/status`,
 };
