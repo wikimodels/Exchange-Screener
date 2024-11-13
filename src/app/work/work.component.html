@@ -39,29 +39,32 @@
       </button>
 
       <!-- OPEN IN TV BUTTON -->
-      <button mat-raised-button class="panel-button" (click)="onOpenTradingview()">
-        <mat-icon svgIcon="tv"></mat-icon>
-        Open Tradingview
+      <button mat-raised-button class="panel-button" (click)="onOpenTradingview()" matTooltip="Open in TV"
+        matTooltipPosition="above">
+        <mat-icon svgIcon="tv" style="margin-left: 6px;"></mat-icon>
       </button>
 
       <!-- OPEN IN COINGLASS BUTTON -->
-      <button mat-raised-button class="panel-button" (click)="onOpenCoinglass()">
-        <mat-icon svgIcon="coinglass"></mat-icon>
-        Open Coinglass
+      <button mat-raised-button class="panel-button" (click)="onOpenCoinglass()" matTooltip="Open in Coinglass"
+        matTooltipPosition="above">
+        <mat-icon svgIcon="coinglass" style="margin-left: 6px;"></mat-icon>
       </button>
 
       <!-- TV BUTTON -->
-      <button mat-raised-button class="panel-button" (click)="onOpenSingleTradingview()">
+      <button mat-raised-button class="panel-button" (click)="onOpenSingleTradingview()" matTooltip="BTC in TV"
+        matTooltipPosition="above">
         <mat-icon svgIcon="tv-white" style="margin-left: 6px;"></mat-icon>
       </button>
 
       <!-- CLOSE ALL WINDOWS -->
-      <button mat-raised-button class="panel-button" (click)="onCloseAllWindows()">
+      <button mat-raised-button class="panel-button" (click)="onCloseAllWindows()" matTooltip="Close Windows"
+        matTooltipPosition="above">
         <mat-icon svgIcon="close" style="margin-left: 6px;"></mat-icon>
       </button>
 
       <!-- DELETED -->
-      <button mat-raised-button class="panel-button" (click)="onDelete()">
+      <button mat-raised-button class="panel-button" (click)="onDelete()" matTooltip="Delete"
+        matTooltipPosition="above">
         <mat-icon style="margin-left: 6px;" svgIcon="delete-gray"></mat-icon>
       </button>
     </div>
