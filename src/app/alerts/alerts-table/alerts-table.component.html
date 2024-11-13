@@ -18,20 +18,20 @@
   <div style="display: flex; flex-direction: row; gap: 10px">
 
     <!-- ADD ALERT  -->
-    <button mat-raised-button (click)="onAddAlert()" color="primary" style="height: 45px;" matTooltip="Add new Alert"
+    <button mat-raised-button (click)="onAddAlert()" color="primary" matTooltip="Add new Alert"
       matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;" svgIcon="add"></mat-icon>
     </button>
 
     <!-- MOVE ALERT TO ARCHIVE -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveToArchive()" style="height: 45px;"
-      matTooltip="Move to Archive" matTooltipPosition="above" color="accent">
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveToArchive()" matTooltip="Move to Archive"
+      matTooltipPosition="above" color="accent">
       <mat-icon style="margin-left: 5px;" svgIcon="black-list"></mat-icon>
     </button>
 
     <!-- DELETE ALERTS -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" style="height: 45px;"
-      matTooltip="Delete" matTooltipPosition="above" color="warn">
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" matTooltip="Delete"
+      matTooltipPosition="above" color="warn">
       <mat-icon style="margin-left: 5px;" svgIcon="delete"></mat-icon>
     </button>
   </div>

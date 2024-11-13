@@ -18,14 +18,14 @@
 
   <div style="display: flex; flex-direction: row; gap: 10px">
     <!-- MOVE COINS TO WORKING COINS TABLE -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveToWorkingCoins()" style="height: 45px;"
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveToWorkingCoins()"
       matTooltip="Add to Working Coins" matTooltipPosition="above" color="primary">
       <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
     </button>
 
     <!-- DELETE ALERTS -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" style="height: 45px;"
-      matTooltip="Delete" matTooltipPosition="above" color="warn">
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" matTooltip="Delete"
+      matTooltipPosition="above" color="warn">
       <mat-icon style="margin-left: 5px;" svgIcon="delete"></mat-icon>
     </button>
   </div>

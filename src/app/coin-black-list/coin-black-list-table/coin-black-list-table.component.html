@@ -18,12 +18,12 @@
   <div style="display: flex; flex-direction: row; gap: 10px">
     <!-- MOVE TO COIN TABLE -->
     <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToCoinTable()" color="primary"
-      style="height: 45px;" matTooltip="Move to Coin Collection" matTooltipPosition="above">
+      matTooltip="Move to Coin Collection" matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;" svgIcon="send-from"></mat-icon>
     </button>
     <!-- DELETE COIN -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" color="warn"
-      style="height: 45px;" matTooltip="Delete" matTooltipPosition="above">
+    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onDeleteSelected()" color="warn" matTooltip="Delete"
+      matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;" svgIcon="delete"></mat-icon>
     </button>
   </div>

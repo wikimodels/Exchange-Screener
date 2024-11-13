@@ -20,24 +20,24 @@
   <div style="display: flex; flex-direction: row; gap: 10px">
     <!-- MOVE TO SORTER TABLE  -->
     <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToSorterTable()" color="primary"
-      style="height: 45px;" matTooltip="Move to Sorter Table" matTooltipPosition="above">
+      matTooltip="Move to Sorter Table" matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;" svgIcon="send-from"></mat-icon>
     </button>
     <!-- REFRESHMENT PROCEDURE -->
-    <button mat-raised-button (click)="onRunRefreshmentProcedure()" style="height: 45px;"
-      matTooltip="Run Refreshment Procedure" matTooltipPosition="above">
+    <button mat-raised-button (click)="onRunRefreshmentProcedure()" matTooltip="Run Refreshment Procedure"
+      matTooltipPosition="above">
       <mat-icon class="rotate" style="margin-left: 5px;" [ngClass]="{ 'rotate': isRotating }">sync</mat-icon>
     </button>
 
     <!-- MOVE TO COIN TABLE -->
     <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToCoinTable()" color="primary"
-      style="height: 45px;" matTooltip="Move to Coin Table" matTooltipPosition="above">
+      matTooltip="Move to Coin Table" matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
     </button>
 
     <!-- MOVE TO BLACK LIST TABLE -->
     <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToBlackListTable()"
-      style="height: 45px;" matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
+      matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
       <mat-icon style="margin-left: 5px;" svgIcon="black-list"></mat-icon>
     </button>
 
