@@ -1,28 +1,16 @@
-<mat-card class="coin-card">
-  <mat-card-header style="display: flex; align-items: baseline; justify-content: space-between;">
-    <div>
-      <img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" class="logo" />
-
-      <strong>{{coin.symbol}}({{coin.category}})</strong>
-    </div>
-    <div style="margin-bottom: 10px;"> <!-- Individual Row Checkbox -->
-      <mat-checkbox (change)="toggleItem(coin)" [checked]="selectionService.isSelected(coin)">
-
-      </mat-checkbox>
-    </div>
-  </mat-card-header>
-  <mat-card-content>
-
-  </mat-card-content>
-  <mat-card-actions>
-
-    <!-- BINANCE -->
-    <a *ngIf="coin.binanceExch" [href]="coin.binanceExch" target="_blank">
+<div class="card-container mat-elevation-z6">
+  <!-- LOGO -->
+  <div class="logo"><img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" /></div>
+  <!-- SYMBOL -->
+  <div class="symbol-name">{{coin.symbol}}</div>
+  <!-- CHECKBOX -->
+  <div><mat-checkbox (change)="toggleItem(coin)" [checked]="selectionService.isSelected(coin)"></mat-checkbox></div>
+  <!-- BINANCE LINK -->
+  <div *ngIf="coin.binanceExch" class="exchange-link"><a [href]="coin.binanceExch" target="_blank">
       <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
-    </a>
-    <!-- BYBIT -->
-    <a *ngIf="coin.bybitExch" [href]="coin.bybitExch" target="_blank">
+    </a></div>
+  <!-- BYBIT LINK -->
+  <div *ngIf="coin.bybitExch" class="exchange-link"><a [href]="coin.bybitExch" target="_blank">
       <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
-    </a>
-  </mat-card-actions>
-</mat-card>
+    </a></div>
+</div>

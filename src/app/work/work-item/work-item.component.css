@@ -1,28 +1,37 @@
-.coin-card{
-  width: 190px;
-  margin:10px;
+.card-container {
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  padding: 10px;
+  gap: 8px;
+  max-width: fit-content;
+  margin: 4px 4px;
+  cursor: pointer;
 }
 
-.logo {
-  width: 50px; /* Set your desired width */
-  height: 50px; /* Set your desired height */
-  border-radius: 50%; /* This makes the image round */
-  object-fit: cover;
-  margin: auto;
+.card-container .logo img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
 
+.card-container .symbol-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-right: 1px;
+  white-space: nowrap;
 }
-.round-image {
-  width: 23px; /* Set your desired width */
-  height: 23px; /* Set your desired height */
-  border-radius: 50%; /* This makes the image round */
-  object-fit: cover;
-  margin: auto;
 
+.card-container .exchange-link img {
+  margin-top: 5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
 }
-.small-icon-button {
-  width: 33px;   /* Adjust the width */
-  height: 33px;  /* Adjust the height */
-  padding: 0;    /* Adjust padding */
-  border-radius: 50%; /* This makes the image round */
-  object-fit: cover;
-}
+
+
