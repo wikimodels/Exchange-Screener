@@ -14,6 +14,9 @@ export class WorkItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  isSelected(coin: Coin) {
+    return this.selectionService.isSelected(coin);
+  }
   toggleItem(item: Coin): void {
     this.selectionService.toggle(item);
   }

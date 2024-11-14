@@ -224,4 +224,11 @@ input[type=number] {
   appearance: none;            /* Standard property */
 }
 
+.checkbox-wrapper .mdc-checkbox {
+  background-color:   #ffccee ;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
 

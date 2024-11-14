@@ -15,6 +15,7 @@ import { WorkSelectionService } from 'src/service/work.selection.service';
   styleUrls: ['./work.component.css'],
 })
 export class WorkComponent implements OnInit, OnDestroy {
+  count = 0;
   coins!: Coin[];
   workingCoins!: Coin[];
   symbols!: string[];
@@ -45,6 +46,7 @@ export class WorkComponent implements OnInit, OnDestroy {
       .coins$(CoinsCollections.CoinAtWork)
       .subscribe((data: Coin[]) => {
         this.workingCoins = data;
+        this.count = this.workingCoins.length;
         this.selectionService.clear();
       });
 

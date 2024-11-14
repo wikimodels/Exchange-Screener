@@ -1,4 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Coin } from 'models/coin/coin';
 import { CoinsCollections } from 'models/coin/coins-collections';
@@ -29,6 +30,10 @@ export class WorkFieldComponent implements OnInit, OnDestroy {
   }
 
   toggleAll() {}
+
+  onDrop(event: CdkDragDrop<any[]>): void {
+    //moveItemInArray(this.coins, event.previousIndex, event.currentIndex);
+  }
 
   ngOnDestroy(): void {
     if (this.sub) {

@@ -28,9 +28,9 @@
         <mat-icon>add</mat-icon>
       </button>
     </div>
-
+    <h1 style="margin-top: 10px;">Coins at Work <span *ngIf="count >0">({{count}})</span></h1>
     <!-- GROUP-2 -->
-    <div style="display: flex; flex-direction: row; align-items: baseline; gap: 10px;">
+    <div style="display: flex; flex-direction: row; align-items: baseline; gap: 10px; margin-top: 10px;">
       <!-- SELECT CHECKBOX -->
       <button mat-raised-button class="panel-button">
         <mat-checkbox [checked]="selectionService.hasValue() && isAllSelected()" (change)="toggleAll()"

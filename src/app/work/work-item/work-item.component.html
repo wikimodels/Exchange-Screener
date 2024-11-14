@@ -1,16 +1,23 @@
-<div class="card-container mat-elevation-z6">
+<div matRipple class="card-container mat-elevation-z4" (click)="toggleItem(coin)" [class.selected]="isSelected(coin)">
   <!-- LOGO -->
-  <div class="logo"><img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" /></div>
+  <div class="logo">
+    <img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" />
+  </div>
+
   <!-- SYMBOL -->
-  <div class="symbol-name">{{coin.symbol}}</div>
-  <!-- CHECKBOX -->
-  <div><mat-checkbox (change)="toggleItem(coin)" [checked]="selectionService.isSelected(coin)"></mat-checkbox></div>
+  <div class="symbol-name">{{ coin.symbol }}</div>
+
   <!-- BINANCE LINK -->
-  <div *ngIf="coin.binanceExch" class="exchange-link"><a [href]="coin.binanceExch" target="_blank">
+  <div *ngIf="coin.binanceExch" class="exchange-link">
+    <a [href]="coin.binanceExch" target="_blank" (click)="$event.stopPropagation()">
       <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
-    </a></div>
+    </a>
+  </div>
+
   <!-- BYBIT LINK -->
-  <div *ngIf="coin.bybitExch" class="exchange-link"><a [href]="coin.bybitExch" target="_blank">
+  <div *ngIf="coin.bybitExch" class="exchange-link">
+    <a [href]="coin.bybitExch" target="_blank" (click)="$event.stopPropagation()">
       <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
-    </a></div>
+    </a>
+  </div>
 </div>
