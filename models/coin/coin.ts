@@ -39,4 +39,5 @@ export interface Coin {
   coinExchange?: string;
   coinGeckoMissing?: boolean;
   santimentMissing?: boolean;
+  description?: string;
 }

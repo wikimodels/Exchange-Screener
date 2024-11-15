@@ -1,0 +1,13 @@
+<div class="coin-container">
+
+  <!-- Header Section -->
+  <div class="header">
+    <img [src]="coin.image_url ? coin.image_url : 'assets/img/noname.png'" alt="logo" class="coin-image" />
+    <h2>{{ coin.symbol }}</h2>
+    <span class="coin-category">{{ coin.category }}</span>
+  </div>
+  <!-- Description Section -->
+  <div class="description-container">
+    <textarea class="coin-description" [(ngModel)]="coin.description">{{ coin.description }}</textarea>
+  </div>
+</div>

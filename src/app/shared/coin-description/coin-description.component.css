@@ -1,0 +1,124 @@
+/* Main container */
+.coin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.coin-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.coin-category {
+  font-size: 1.4em;
+  color: #777;
+}
+
+/* Properties Section */
+.properties {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.column {
+  flex: 1;
+}
+
+.property {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.footer img {
+  width: 24px;
+  height: 24px;
+}
+
+.label {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.icon {
+  width: 30px; /* Set size for consistency */
+  height: 30px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.value {
+  display: inline-block;
+}
+
+.round-image {
+  width: 35px; /* Set your desired width */
+  height: 35px; /* Set your desired height */
+  border-radius: 50%; /* This makes the image round */
+  object-fit: cover;
+
+}
+
+.description-container {
+  width: 100%;
+  max-width: 1000px; /* Limit the maximum width for larger screens */
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.coin-description {
+  width: 100%;
+  height: 60vh; /* At least half of the screen height */
+  font-size: 1.2rem;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  resize: none; /* Disable resizing */
+  background-color: #f9f9f9;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  overflow-y: auto;
+}
+
+/* Optional: Add a shadow and transition effects for smoother look */
+.coin-description:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

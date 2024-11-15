@@ -16,6 +16,7 @@ import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component'
 import { SANTIMENT } from 'src/consts/url-consts';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
 
 @Component({
   selector: 'app-coin-provider-table',
@@ -30,6 +31,7 @@ export class CoinProviderTableComponent implements OnInit, OnDestroy {
     'santiment',
     'status',
     'links',
+    'description',
     'select',
   ];
   sub!: Subscription | null;
@@ -47,7 +49,7 @@ export class CoinProviderTableComponent implements OnInit, OnDestroy {
   constructor(
     private coinsService: CoinsGenericService,
     private coinsProviderService: CoinsProviderService,
-    private modelDialog: MatDialog,
+    private modalDialog: MatDialog,
     private router: Router
   ) {}
 
@@ -136,11 +138,11 @@ export class CoinProviderTableComponent implements OnInit, OnDestroy {
       });
   }
 
-  onOpenDescriptionModalDialog(coin: Coin): void {
-    this.modelDialog.open(DescriptionModalComponent, {
-      data: coin,
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
+  onOpenCoinDescription(coin: Coin): void {
+    this.modalDialog.open(CoinDescriptionComponent, {
+      data: { coin: coin, collectionName: CoinsCollections.CoinProvider },
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
       width: '100vw',
       height: '100vh',
     });
@@ -155,7 +157,7 @@ export class CoinProviderTableComponent implements OnInit, OnDestroy {
   }
 
   onEdit(coin: Coin) {
-    this.modelDialog.open(EditCoinComponent, {
+    this.modalDialog.open(EditCoinComponent, {
       data: { coin: coin, collectionName: CoinsCollections.CoinProvider },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,

@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   border-radius: 30px;
-  padding: 7px;
+  padding: 4px;
   gap: 4px;
   max-width: fit-content;
   margin: 4px 4px;
@@ -36,5 +36,4 @@
 
  .selected {
   background-color: #e8ebee;
-
 }

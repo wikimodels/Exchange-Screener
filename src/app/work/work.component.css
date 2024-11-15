@@ -15,7 +15,6 @@
 .panel-button {
   display: flex;
   align-items: center;
-
   gap: 1px; /* Adjusts space between icon and text */
   font-size: 16px; /* Adjusts font size of text */
   padding: 8px 16px; /* Adjusts padding if needed */

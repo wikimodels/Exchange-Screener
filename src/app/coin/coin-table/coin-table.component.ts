@@ -15,6 +15,7 @@ import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component'
 import { Router } from '@angular/router';
 import { SANTIMENT } from 'src/consts/url-consts';
 import { Subscription } from 'rxjs';
+import { CoinDescriptionComponent } from '../../shared/coin-description/coin-description.component';
 
 @Component({
   selector: 'app-coin-table',
@@ -29,6 +30,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
     'santiment',
     'status',
     'links',
+    'description',
     'edit',
     'select',
   ];
@@ -46,7 +48,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private coinService: CoinsGenericService,
-    private modelDialog: MatDialog,
+    private modalDialog: MatDialog,
     private router: Router
   ) {}
 
@@ -99,11 +101,11 @@ export class CoinTableComponent implements OnInit, OnDestroy {
     this.buttonsDisabled = true;
   }
 
-  onOpenDescriptionModalDialog(coin: Coin): void {
-    this.modelDialog.open(DescriptionModalComponent, {
-      data: coin,
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
+  onOpenCoinDescription(coin: Coin): void {
+    this.modalDialog.open(CoinDescriptionComponent, {
+      data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
       width: '100vw',
       height: '100vh',
     });
@@ -122,7 +124,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
 
   onEdit(coin: Coin) {
     console.log('CoinTable ---> ', coin);
-    this.modelDialog.open(EditCoinComponent, {
+    this.modalDialog.open(EditCoinComponent, {
       data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,

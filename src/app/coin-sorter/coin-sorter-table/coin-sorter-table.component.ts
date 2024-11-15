@@ -16,6 +16,7 @@ import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component'
 import { Subscription } from 'rxjs';
 import { SANTIMENT } from 'src/consts/url-consts';
 import { Router } from '@angular/router';
+import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
 
 @Component({
   selector: 'app-coin-sorter-table',
@@ -30,6 +31,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     'santiment',
     'status',
     'links',
+    'description',
     'select',
   ];
 
@@ -48,7 +50,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private coinsService: CoinsGenericService,
-    private modelDialog: MatDialog,
+    private modalDialog: MatDialog,
     private router: Router
   ) {}
   sub!: Subscription | null;
@@ -116,18 +118,18 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     this.buttonsDisabled = true;
   }
 
-  onOpenDescriptionModalDialog(coin: Coin): void {
-    this.modelDialog.open(DescriptionModalComponent, {
-      data: coin,
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
+  onOpenCoinDescription(coin: Coin): void {
+    this.modalDialog.open(CoinDescriptionComponent, {
+      data: { coin: coin, collectionName: CoinsCollections.CoinSorter },
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
       width: '100vw',
       height: '100vh',
     });
   }
 
   onEdit(coin: Coin) {
-    this.modelDialog.open(EditCoinComponent, {
+    this.modalDialog.open(EditCoinComponent, {
       data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
@@ -149,7 +151,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
       .map((c) => `BINANCE:${c.symbol}USDT`)
       .join(',');
 
-    this.modelDialog.open(TvListComponent, {
+    this.modalDialog.open(TvListComponent, {
       data: {
         bybitList: this.bybitCoinsList,
         binaniceList: this.binanceCoinsList,

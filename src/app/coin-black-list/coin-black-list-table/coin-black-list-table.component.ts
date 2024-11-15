@@ -15,6 +15,7 @@ import { CoinsCollections } from 'models/coin/coins-collections';
 import { SANTIMENT } from 'src/consts/url-consts';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
 
 @Component({
   selector: 'app-coin-black-list-table',
@@ -29,6 +30,7 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
     'santiment',
     'status',
     'links',
+    'description',
     'select',
   ];
   sub!: Subscription | null;
@@ -44,7 +46,7 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private coinsService: CoinsGenericService,
-    private modelDialog: MatDialog,
+    private modalDialog: MatDialog,
     private router: Router
   ) {}
 
@@ -86,11 +88,11 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
     return numSelected === numRows;
   }
 
-  onOpenDescriptionModalDialog(coin: Coin): void {
-    this.modelDialog.open(DescriptionModalComponent, {
-      data: coin,
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
+  onOpenCoinDescription(coin: Coin): void {
+    this.modalDialog.open(CoinDescriptionComponent, {
+      data: { coin: coin, collectionName: CoinsCollections.CoinBlackList },
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
       width: '100vw',
       height: '100vh',
     });
@@ -105,7 +107,7 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
   }
 
   onEdit(coin: Coin) {
-    this.modelDialog.open(CoinComponent, {
+    this.modalDialog.open(CoinComponent, {
       data: coin,
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
