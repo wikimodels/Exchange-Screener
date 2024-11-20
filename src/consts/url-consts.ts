@@ -6,7 +6,8 @@ export const COIN_BLACK_LIST = 'coin-black-list';
 export const ALERTS_AT_WORK = 'alerts-at-work';
 export const COIN_PROVIDER = 'coin-provider';
 export const COIN_SORTER = 'coin-sorter';
-export const SANTIMENT = 'santiment';
+export const SANTIMENT_CHARTS = 'santiment-charts';
+export const ADMIN = 'admin';
 export const WORK = 'work';
 export const COIN = 'coin';
 export const WS = 'ws';
@@ -17,6 +18,7 @@ export const coinsUrl = `${baseURL}get-all-coins`;
 
 export const SANTIMENT_URLS = {
   echartsUrl: `${baseURL}/santiment/echarts`,
+  dataMissingUrl: `${baseURL}/santiment/coins/data-missing`,
 };
 
 export const ALERTS_URLS = {
@@ -33,6 +35,7 @@ export const COINS_URLS = {
   coinsAddManyUrl: `${baseURL}/coins/add/many`,
   coinsDeleteManyUrl: `${baseURL}/coins/delete/many`,
   coinsUpdateOneUrl: `${baseURL}/coins/update/one`,
+  coinsRepoStatisticsUrl: `${baseURL}/coins/repo/statistics`,
   coinsMoveManyUrl: `${baseURL}/coins/move/many`,
   coinsRunRefreshmentUrl: `${baseURL}/coins/refreshment-procedure/run`,
 };

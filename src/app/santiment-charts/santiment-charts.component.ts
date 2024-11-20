@@ -7,13 +7,13 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { SantimentGenericService } from 'src/service/santiment/santiment-generic.service';
 
 @Component({
-  selector: 'app-santiment',
-  templateUrl: './santiment.component.html',
-  styleUrls: ['./santiment.component.css'],
+  selector: 'app-santiment-charts',
+  templateUrl: './santiment-charts.component.html',
+  styleUrls: ['./santiment-charts.component.css'],
 })
-export class SantimentComponent implements OnDestroy {
+export class SantimentChartsComponent implements OnDestroy {
   logoUrl = 'assets/img/noname.png';
-  symbol!: string | null;
+  symbol = '';
   slug!: string | null;
   subSantiment!: Subscription | null;
   subCoins!: Subscription | null;
@@ -28,10 +28,11 @@ export class SantimentComponent implements OnDestroy {
     private santimentService: SantimentGenericService,
     private coinsService: CoinsGenericService
   ) {
-    this.symbol = this.route.snapshot.paramMap.get('symbol') || '';
-    this.slug = this.route.snapshot.paramMap.get('slug') || '';
-    this.logoUrl =
-      this.route.snapshot.paramMap.get('image_url') || this.logoUrl;
+    // Subscribe to query parameters
+    this.route.queryParams.subscribe((params) => {
+      this.symbol = params['symbol']; // Get 'symbol' query param
+      this.logoUrl = params['image_url'] ? params['image_url'] : this.logoUrl;
+    });
 
     this.subCoins = this.coinsService
       .coins$(CoinsCollections.CoinRepo)
@@ -47,12 +48,7 @@ export class SantimentComponent implements OnDestroy {
       .santiment$(this.symbol)
       .subscribe((data) => {
         if (data.length === 0) {
-          this.santimentService.getHttpSantiment(
-            this.symbol || '',
-            this.slug || '',
-            this.fromDate,
-            this.toDate
-          );
+          this.santimentService.getHttpSantiment(this.symbol);
         }
         this.santimentChartsData = data;
         console.log(this.santimentChartsData);

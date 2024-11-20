@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NewAlertComponent } from '../alerts/new-alert/new-alert.component';
 import {
+  ADMIN,
   COIN,
   COIN_BLACK_LIST,
   COIN_PROVIDER,
@@ -39,6 +40,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   onGoToCoinBlackList() {
     this.router.navigate([COIN_BLACK_LIST]);
+  }
+
+  onGoToAdminPanel() {
+    this.router.navigate([ADMIN]);
   }
 
   onAddAlert() {

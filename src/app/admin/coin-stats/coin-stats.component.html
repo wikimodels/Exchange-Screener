@@ -1,0 +1,8 @@
+<div class="statistics-container">
+  <ng-container *ngIf="statistics; else noData">
+    <pre>{{ statistics | json }}</pre>
+  </ng-container>
+  <ng-template #noData>
+    <p>No data available.</p>
+  </ng-template>
+</div>

@@ -58,7 +58,7 @@ export class EditAlertComponent {
       keyLevelName: this.data.alert.alertName,
       price: this.data.alert.price,
       description: this.data.alert.description,
-      imageLinks: [], // Add the missing form control
+      imageLinks: [], // Add the Available form control
     });
     // Populate the FormArray for imageLinks
     this.data.alert.tvImgUrls?.forEach((url: string) => {

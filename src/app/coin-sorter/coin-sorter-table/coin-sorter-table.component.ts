@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
+
 import { TooltipPosition } from '@angular/material/tooltip';
 
 import { Coin } from 'models/coin/coin';
@@ -14,9 +14,10 @@ import { CoinsCollections } from 'models/coin/coins-collections';
 import { TvListComponent } from 'src/app/shared/tv-list/tv-list.component';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 import { Subscription } from 'rxjs';
-import { SANTIMENT } from 'src/consts/url-consts';
+
 import { Router } from '@angular/router';
 import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
+import { SANTIMENT_CHARTS } from 'src/consts/url-consts';
 
 @Component({
   selector: 'app-coin-sorter-table',
@@ -171,7 +172,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
   onSantimentClick(coin: Coin) {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([
-        SANTIMENT,
+        SANTIMENT_CHARTS,
         coin.symbol,
         coin.slug,
         coin.image_url,

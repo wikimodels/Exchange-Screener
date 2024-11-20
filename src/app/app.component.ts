@@ -59,6 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
       { name: 'tv', url: 'assets/icons/tv.svg' },
       { name: 'binance', url: 'assets/icons/binance-black.svg' },
       { name: 'mintmark', url: 'assets/icons/mintmark.svg' },
+      { name: 'admin', url: 'assets/icons/admin.svg' },
       { name: 'send-to', url: 'assets/icons/send-to.svg' },
       { name: 'black-list', url: 'assets/icons/black-list.svg' },
       { name: 'send-from', url: 'assets/icons/send-from.svg' },

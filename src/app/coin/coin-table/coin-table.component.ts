@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
+
 import { TooltipPosition } from '@angular/material/tooltip';
 
 import { Coin } from 'models/coin/coin';
@@ -13,7 +13,7 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
 import { Router } from '@angular/router';
-import { SANTIMENT } from 'src/consts/url-consts';
+import { SANTIMENT_CHARTS } from 'src/consts/url-consts';
 import { Subscription } from 'rxjs';
 import { CoinDescriptionComponent } from '../../shared/coin-description/coin-description.component';
 
@@ -134,16 +134,23 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   }
 
   onSantimentClick(coin: Coin) {
+    if (!coin || !coin.symbol || !coin.image_url) {
+      console.error('Invalid coin or missing symbol or image_url');
+      return;
+    }
+
+    // Construct the URL with query parameters for symbol and image_url
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        SANTIMENT,
-        coin.symbol,
-        coin.slug,
-        coin.image_url,
-      ])
+      this.router.createUrlTree([SANTIMENT_CHARTS], {
+        queryParams: {
+          symbol: coin.symbol,
+          image_url: coin.image_url,
+        },
+      })
     );
-    console.log(url);
-    window.open(url, '_blank');
+
+    console.log(url); // Log the URL for debugging
+    window.open(url, '_blank'); // Open the URL in a new tab
   }
 
   clearInput() {

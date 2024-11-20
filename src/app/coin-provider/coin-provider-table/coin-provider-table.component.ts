@@ -13,10 +13,10 @@ import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { CoinsProviderService } from 'src/service/coins/coins-provider.service';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
-import { SANTIMENT } from 'src/consts/url-consts';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
+import { SANTIMENT_CHARTS } from 'src/consts/url-consts';
 
 @Component({
   selector: 'app-coin-provider-table',
@@ -169,7 +169,7 @@ export class CoinProviderTableComponent implements OnInit, OnDestroy {
   onSantimentClick(coin: Coin) {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([
-        SANTIMENT,
+        SANTIMENT_CHARTS,
         coin.symbol,
         coin.slug,
         coin.image_url,

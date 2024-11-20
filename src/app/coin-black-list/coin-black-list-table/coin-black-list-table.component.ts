@@ -5,14 +5,14 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
+
 import { TooltipPosition } from '@angular/material/tooltip';
 
 import { Coin } from 'models/coin/coin';
 import { CoinComponent } from 'src/app/coin/coin.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
-import { SANTIMENT } from 'src/consts/url-consts';
+import { SANTIMENT_CHARTS } from 'src/consts/url-consts';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
@@ -130,7 +130,7 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
   onSantimentClick(coin: Coin) {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([
-        SANTIMENT,
+        SANTIMENT_CHARTS,
         coin.symbol,
         coin.slug,
         coin.image_url,

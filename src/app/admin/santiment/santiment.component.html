@@ -1,0 +1,9 @@
+<div class="statistics-container">
+  <ng-container *ngIf="symbols; else noData">
+    <h2>COINS MISSING SANTIMENT DATA</h2>
+    <pre>{{ symbols | json }}</pre>
+  </ng-container>
+  <ng-template #noData>
+    <p>No data available.</p>
+  </ng-template>
+</div>

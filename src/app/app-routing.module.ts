@@ -8,9 +8,10 @@ import {
   COIN_BLACK_LIST,
   COIN_PROVIDER,
   COIN_SORTER,
-  SANTIMENT,
+  SANTIMENT_CHARTS,
   TRIGGERED_ALERTS,
   WORK,
+  ADMIN,
   WS,
 } from 'src/consts/url-consts';
 import { TriggeredAlertsComponent } from './triggered-alerts/triggered-alerts.component';
@@ -20,16 +21,18 @@ import { CoinComponent } from './coin/coin.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
 import { CoinBlackListComponent } from './coin-black-list/coin-black-list.component';
 import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
-import { SantimentComponent } from './santiment/santiment.component';
-import { WsComponent } from './ws/ws.component';
+import { WsComponent } from './admin/ws/ws.component';
+import { AdminComponent } from './admin/admin.component';
+import { SantimentChartsComponent } from './santiment-charts/santiment-charts.component';
 
 const routes: Routes = [
   // Other routes for your application
   //{ path: 'about', component: AboutComponent }, // Example route
   {
-    path: SANTIMENT + '/:symbol/:slug/:image_url',
-    component: SantimentComponent,
+    path: SANTIMENT_CHARTS,
+    component: SantimentChartsComponent,
   },
+  { path: ADMIN, component: AdminComponent },
   { path: ALERTS_AT_WORK, component: AlertsComponent },
   { path: WS, component: WsComponent },
   { path: TRIGGERED_ALERTS, component: TriggeredAlertsComponent },

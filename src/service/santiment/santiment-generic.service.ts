@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError, catchError, tap } from 'rxjs';
 import { SnackbarService } from '../snackbar.service';
 
 import { SnackbarType } from 'models/shared/snackbar-type';
@@ -43,13 +43,28 @@ export class SantimentGenericService {
     return this.getOrCreateCollection(symbol).value;
   }
 
-  public getHttpSantiment(
-    symbol: string,
-    slug: string,
-    fromDate: string,
-    toDate: string
-  ): void {
-    const params = this.createHttpParams({ symbol, slug, fromDate, toDate });
+  public getSantimentDataMissingCoins() {
+    const options = { ...this.httpOptions };
+
+    return this.http.get<any[]>(SANTIMENT_URLS.dataMissingUrl, options).pipe(
+      tap((data) => {
+        this.snackbarService.showSnackBar(
+          'Got Santiment Data',
+          '',
+          3000,
+          SnackbarType.Info
+        );
+        return data;
+      }),
+      catchError((error) => {
+        this.handleError(error); // Handle the error as needed
+        return throwError(() => error); // Re-throw the error for further handling
+      })
+    );
+  }
+
+  public getHttpSantiment(symbol: string): void {
+    const params = this.createHttpParams({ symbol });
     const options = { ...this.httpOptions, params };
 
     this.http.get<any[]>(SANTIMENT_URLS.echartsUrl, options).subscribe({
