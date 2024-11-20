@@ -33,6 +33,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     'status',
     'links',
     'description',
+    'edit',
     'select',
   ];
 
@@ -98,7 +99,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     const coins = this.selection.selected as Coin[];
 
     this.coinsService.moveMany(
-      CoinsCollections.CoinProvider,
+      CoinsCollections.CoinSorter,
       CoinsCollections.CoinBlackList,
       coins
     );
@@ -131,7 +132,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
 
   onEdit(coin: Coin) {
     this.modalDialog.open(EditCoinComponent, {
-      data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
+      data: { coin: coin, collectionName: CoinsCollections.CoinSorter },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',
@@ -143,19 +144,19 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     const coins = this.selection.selected as Coin[];
     this.bybitCoinsList = coins
       .filter((c) => c.coinExchange === 'by' || c.coinExchange === 'biby')
-      .map((c) => `BYBIT:${c.symbol}USDT`)
+      .map((c) => `BYBIT:${c.symbol}`)
       .join(',');
 
     // Filter and map Binance coins
     this.binanceCoinsList = coins
       .filter((c) => c.coinExchange === 'bi')
-      .map((c) => `BINANCE:${c.symbol}USDT`)
+      .map((c) => `BINANCE:${c.symbol}`)
       .join(',');
 
     this.modalDialog.open(TvListComponent, {
       data: {
         bybitList: this.bybitCoinsList,
-        binaniceList: this.binanceCoinsList,
+        binanceList: this.binanceCoinsList,
       },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
@@ -170,16 +171,23 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
   }
 
   onSantimentClick(coin: Coin) {
+    if (!coin || !coin.symbol || !coin.image_url) {
+      console.error('Invalid coin or missing symbol or image_url');
+      return;
+    }
+
+    // Construct the URL with query parameters for symbol and image_url
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        SANTIMENT_CHARTS,
-        coin.symbol,
-        coin.slug,
-        coin.image_url,
-      ])
+      this.router.createUrlTree([SANTIMENT_CHARTS], {
+        queryParams: {
+          symbol: coin.symbol,
+          image_url: coin.image_url,
+        },
+      })
     );
-    console.log(url);
-    window.open(url, '_blank');
+
+    console.log(url); // Log the URL for debugging
+    window.open(url, '_blank'); // Open the URL in a new tab
   }
 
   ngOnDestroy(): void {

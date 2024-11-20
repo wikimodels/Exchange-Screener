@@ -73,7 +73,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
     this.selection.toggle(data);
     this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
-  // Toggle "Select All" checkbox
+
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -83,7 +83,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
       this.buttonsDisabled = false;
     }
   }
-  // Check if all rows are selected
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length; // Use dataSource.data.length

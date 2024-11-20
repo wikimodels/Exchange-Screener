@@ -108,7 +108,7 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
 
   onEdit(coin: Coin) {
     this.modalDialog.open(CoinComponent, {
-      data: coin,
+      data: { coin: coin, collectionName: CoinsCollections.CoinBlackList },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',
@@ -128,15 +128,23 @@ export class CoinBlackListTableComponent implements OnInit, OnDestroy {
   }
 
   onSantimentClick(coin: Coin) {
+    if (!coin || !coin.symbol || !coin.image_url) {
+      console.error('Invalid coin or missing symbol or image_url');
+      return;
+    }
+
+    // Construct the URL with query parameters for symbol and image_url
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([
-        SANTIMENT_CHARTS,
-        coin.symbol,
-        coin.slug,
-        coin.image_url,
-      ])
+      this.router.createUrlTree([SANTIMENT_CHARTS], {
+        queryParams: {
+          symbol: coin.symbol,
+          image_url: coin.image_url,
+        },
+      })
     );
-    window.open(url, '_blank');
+
+    console.log(url); // Log the URL for debugging
+    window.open(url, '_blank'); // Open the URL in a new tab
   }
 
   clearInput() {
