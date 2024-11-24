@@ -25,6 +25,7 @@ import { SANTIMENT_CHARTS } from 'src/consts/url-consts';
 import { Subscription } from 'rxjs';
 import { CoinDescriptionComponent } from '../coin-description/coin-description.component';
 import { CoinUpdateData } from 'models/coin/coin-update-data';
+import { TvListComponent } from '../tv-list/tv-list.component';
 
 @Component({
   selector: 'app-coin-table',
@@ -40,6 +41,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
     coinProvider: boolean;
     coinRepo: boolean;
     coinBlackList: boolean;
+    coinTvList: boolean;
   };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,6 +65,8 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   buttonsDisabled = true;
   filterValue = '';
   isRotating = false;
+  bybitCoinsList = '';
+  binanceCoinsList = '';
   CoinsCollections = CoinsCollections;
 
   searchKeywordFilter = new FormControl();
@@ -134,6 +138,31 @@ export class CoinTableComponent implements OnInit, OnDestroy {
 
     this.selection.clear();
     this.buttonsDisabled = true;
+  }
+
+  onCreateTvLists() {
+    const coins = this.selection.selected as Coin[];
+    this.bybitCoinsList = coins
+      .filter((c) => c.coinExchange === 'by' || c.coinExchange === 'biby')
+      .map((c) => `BYBIT:${c.symbol}.P`)
+      .join(',');
+
+    // Filter and map Binance coins
+    this.binanceCoinsList = coins
+      .filter((c) => c.coinExchange === 'bi')
+      .map((c) => `BINANCE:${c.symbol}.P`)
+      .join(',');
+
+    this.modalDialog.open(TvListComponent, {
+      data: {
+        bybitList: this.bybitCoinsList,
+        binanceList: this.binanceCoinsList,
+      },
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
+      width: '100vw',
+      height: '100vh',
+    });
   }
 
   onEdit(coin: Coin) {

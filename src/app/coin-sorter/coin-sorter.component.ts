@@ -16,5 +16,6 @@ export class CoinSorterComponent {
     coinProvider: true,
     coinRepo: true,
     coinBlackList: true,
+    coinTvList: true,
   };
 }

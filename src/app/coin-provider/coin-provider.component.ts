@@ -16,5 +16,6 @@ export class CoinProviderComponent {
     coinProvider: false,
     coinRepo: true,
     coinBlackList: true,
+    coinTvList: false,
   };
 }

@@ -37,6 +37,13 @@
       </button>
     </div>
 
+    <!-- CREATE LONG LIST -->
+    <div *ngIf="showButtons.coinTvList">
+      <button mat-raised-button [disabled]="buttonsDisabled" (click)="onCreateTvLists()" matTooltip="Create TV Lists"
+        matTooltipPosition="above">
+        <mat-icon style="margin-left: 5px;" svgIcon="long-list"></mat-icon>
+      </button>
+    </div>
 
     <!-- MOVE TO REPO TABLE  -->
     <div *ngIf="showButtons.coinRepo">
