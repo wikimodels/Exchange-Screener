@@ -9,7 +9,7 @@ export const COIN_SORTER = 'coin-sorter';
 export const SANTIMENT_CHARTS = 'santiment-charts';
 export const ADMIN = 'admin';
 export const WORK = 'work';
-export const COIN = 'coin';
+export const COIN_REPO = 'coin-repo';
 export const WS = 'ws';
 
 //URLS
@@ -33,10 +33,12 @@ export const COINS_URLS = {
   coinsUrl: `${baseURL}/coins`,
   coinsAddOneUrl: `${baseURL}/coins/add/one`,
   coinsAddManyUrl: `${baseURL}/coins/add/many`,
-  coinsDeleteManyUrl: `${baseURL}/coins/delete/many`,
-  coinsUpdateOneUrl: `${baseURL}/coins/update/one`,
-  coinsRepoStatisticsUrl: `${baseURL}/coins/repo/statistics`,
   coinsMoveManyUrl: `${baseURL}/coins/move/many`,
+  coinsUpdateOneUrl: `${baseURL}/coins/update/one`,
+  coinsDeleteManyUrl: `${baseURL}/coins/delete/many`,
+  coinsUpdateManyUrl: `${baseURL}/coins/update/many`,
+  coinsRepoStatisticsUrl: `${baseURL}/coins/repo/statistics`,
+  coinsByCollectionNameUrl: `${baseURL}/coins/collection-name`,
   coinsRunRefreshmentUrl: `${baseURL}/coins/refreshment-procedure/run`,
 };
 

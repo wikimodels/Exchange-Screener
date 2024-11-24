@@ -40,4 +40,6 @@ export interface Coin {
   coinGeckoAvailable?: boolean;
   santimentAvailable?: boolean;
   description?: string;
+  collection: string;
+  isAtWork?: boolean;
 }

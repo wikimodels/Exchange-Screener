@@ -33,12 +33,10 @@ export class NewAlertComponent implements OnInit, OnDestroy {
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
 
   ngOnInit(): void {
-    this.sub = this.coinsService
-      .coins$(CoinsCollections.CoinRepo)
-      .subscribe((coins: Coin[]) => {
-        this.coins = coins;
-        this.symbols = coins.map((c) => c.symbol);
-      });
+    this.sub = this.coinsService.coins$.subscribe((coins: Coin[]) => {
+      this.coins = coins;
+      this.symbols = coins.map((c) => c.symbol);
+    });
     this.form = this.fb.group({
       symbol: [
         '',

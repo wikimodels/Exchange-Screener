@@ -16,6 +16,7 @@ import { CoinsCollections } from 'models/coin/coins-collections';
 import { SnackbarService } from 'src/service/snackbar.service';
 import { SnackbarType } from 'models/shared/snackbar-type';
 import { Subscription } from 'rxjs';
+import { CoinUpdateData } from 'models/coin/coin-update-data';
 
 /**
  * @title Table with sorting
@@ -142,7 +143,7 @@ export class TriggeredAlertsTableComponent implements OnInit, OnDestroy {
     const selectedSymbols = selectedAlerts.map((a) => a.symbol);
 
     // Get all coins from the CoinRepo collection
-    const coins = this.coinsService.getCoins(CoinsCollections.CoinRepo);
+    const coins = this.coinsService.getCoins();
 
     // Filter out coins that match the selected symbols
     let selectedCoins = coins.filter((coin) =>
@@ -150,7 +151,7 @@ export class TriggeredAlertsTableComponent implements OnInit, OnDestroy {
     );
 
     // Get coins that are already in CoinAtWork
-    const coinsAtWork = this.coinsService.getCoins(CoinsCollections.CoinAtWork);
+    const coinsAtWork = this.coinsService.getCoins().filter((c) => c.isAtWork);
 
     // Filter out any coins from selectedCoins that are already in CoinAtWork
     selectedCoins = selectedCoins.filter(
@@ -174,7 +175,13 @@ export class TriggeredAlertsTableComponent implements OnInit, OnDestroy {
       );
     } else {
       console.log(selectedCoins);
-      this.coinsService.addMany(CoinsCollections.CoinAtWork, selectedCoins);
+      const updateData: Array<CoinUpdateData> = selectedCoins.map((c) => {
+        return {
+          symbol: c.symbol,
+          propertiesToUpdate: { isAtWork: true },
+        };
+      });
+      this.coinsService.updateMany(updateData, CoinsCollections.CoinRepo);
     }
     this.selection.clear();
     this.buttonsDisabled = true;

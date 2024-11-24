@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'models/coin/coin';
+import { CoinUpdateData } from 'models/coin/coin-update-data';
 import { Status } from 'models/coin/status';
 
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
@@ -108,9 +109,7 @@ export class EditCoinComponent implements OnInit {
     public dialogRef: MatDialogRef<EditCoinComponent>,
     private coinsService: CoinsGenericService,
     @Inject(MAT_DIALOG_DATA) public data: { coin: Coin; collectionName: string }
-  ) {
-    console.log('---> ', this.coin);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.coin = { ...this.data.coin };
@@ -124,10 +123,12 @@ export class EditCoinComponent implements OnInit {
   }
 
   saveChanges() {
-    this.coinsService.updateOne(
-      this.data.collectionName,
-      this.coin.symbol,
-      this.coin
-    );
+    const updateData: CoinUpdateData = {
+      symbol: this.coin.symbol,
+      propertiesToUpdate: {
+        status: this.coin.status,
+      },
+    };
+    this.coinsService.updateOne(updateData);
   }
 }

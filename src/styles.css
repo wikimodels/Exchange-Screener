@@ -121,20 +121,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* ----------------------*/
 /* COINS TABLE */
 /*---------------------- */
-.coins-table .mat-mdc-row:nth-child(even) {
+.coin-repo-table .mat-mdc-row:nth-child(even) {
   background-color: #e4f7df!important;
 }
 
-.coins-table .mat-mdc-row {
+.coin-repo-table .mat-mdc-row {
   height: 35px!important;
 }
 
-.coins-table .mat-mdc-header-row {
+.coin-repo-table .mat-mdc-header-row {
   background-color: #cbdff5 !important;
   height: 45px;
 }
 
-.coins-table .mat-mdc-row:hover {
+.coin-repo-table .mat-mdc-row:hover {
   background-color: #f5f4f2 !important; /* Replace with your desired color */
   cursor: pointer; /* Optional: Add pointer cursor on hover */
 }
@@ -185,21 +185,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* ----------------------*/
 /* SORTER TABLE */
 /*---------------------- */
-.sorter-table .mat-mdc-row:nth-child(even) {
+.coin-sorter-table .mat-mdc-row:nth-child(even) {
   background-color: #e4f7df!important;
 }
 
-.sorter-table .mat-mdc-row {
+.coin-sorter-table .mat-mdc-row {
   height: 35px!important;
 }
 
-.sorter-table .mat-mdc-header-row {
-  background-color: #070708 !important;
+.coin-sorter-table .mat-mdc-header-row {
+  background-color: #1818ca !important;
   color: white;
   height: 45px;
 }
 
-.sorter-table .mat-mdc-row:hover {
+.coin-sorter-table .mat-mdc-row:hover {
   background-color: #f5f4f2 !important; /* Replace with your desired color */
   cursor: pointer; /* Optional: Add pointer cursor on hover */
 }

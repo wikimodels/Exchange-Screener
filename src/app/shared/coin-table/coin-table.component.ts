@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormControl } from '@angular/forms';
@@ -11,20 +19,26 @@ import { TooltipPosition } from '@angular/material/tooltip';
 import { Coin } from 'models/coin/coin';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 import { CoinsCollections } from 'models/coin/coins-collections';
-import { TvListComponent } from 'src/app/shared/tv-list/tv-list.component';
 import { EditCoinComponent } from 'src/app/shared/edit-coin/edit-coin.component';
-import { Subscription } from 'rxjs';
-
 import { Router } from '@angular/router';
-import { CoinDescriptionComponent } from 'src/app/shared/coin-description/coin-description.component';
 import { SANTIMENT_CHARTS } from 'src/consts/url-consts';
+import { Subscription } from 'rxjs';
+import { CoinDescriptionComponent } from '../coin-description/coin-description.component';
+import { CoinUpdateData } from 'models/coin/coin-update-data';
 
 @Component({
-  selector: 'app-coin-sorter-table',
-  templateUrl: './coin-sorter-table.component.html',
-  styleUrls: ['./coin-sorter-table.component.css'],
+  selector: 'app-coin-table',
+  templateUrl: './coin-table.component.html',
+  styleUrls: ['./coin-table.component.css'],
 })
-export class CoinSorterTableComponent implements OnInit, OnDestroy {
+export class CoinTableComponent implements OnInit, OnDestroy {
+  @Input() collectionName!: string;
+  @Input() tableCssClass!: string;
+  @Input() tableHeader!: string;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   displayedColumns: string[] = [
     'symbol',
     'category',
@@ -37,35 +51,35 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     'select',
   ];
 
+  sub!: Subscription | null;
   dataSource!: any;
+  coins!: Coin[];
   buttonsDisabled = true;
   filterValue = '';
-  bybitCoinsList = '';
-  binanceCoinsList = '';
   isRotating = false;
+  CoinsCollections = CoinsCollections;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
   searchKeywordFilter = new FormControl();
   tooltipPosition: TooltipPosition = 'above';
 
   selection = new SelectionModel<any>(true, []);
   constructor(
-    private coinsService: CoinsGenericService,
+    private coinService: CoinsGenericService,
     private modalDialog: MatDialog,
     private router: Router
   ) {}
-  sub!: Subscription | null;
 
   ngOnInit() {
-    this.coinsService.getAllCoins(CoinsCollections.CoinSorter);
-    this.sub = this.coinsService
-      .coins$(CoinsCollections.CoinSorter)
-      .subscribe((data) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+    this.coinService.loadCoins(this.collectionName);
+    // Subscribe to the coins data from the service
+    this.sub = this.coinService.coins$.subscribe((data) => {
+      console.log('Collection Name --> ', this.collectionName);
+      this.coins = data.filter((c) => c.collection === this.collectionName);
+
+      this.dataSource = new MatTableDataSource(this.coins);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   // Filter function
@@ -78,7 +92,7 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
     this.selection.toggle(data);
     this.buttonsDisabled = this.selection.selected.length > 0 ? false : true;
   }
-  // Toggle "Select All" checkbox
+
   toggleAll() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -88,86 +102,43 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
       this.buttonsDisabled = false;
     }
   }
-  // Check if all rows are selected
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length; // Use dataSource.data.length
     return numSelected === numRows;
   }
 
-  onMoveSelectedToBlackListTable() {
-    const coins = this.selection.selected as Coin[];
-
-    this.coinsService.moveMany(
-      CoinsCollections.CoinSorter,
-      CoinsCollections.CoinBlackList,
-      coins
+  onMoveSelectedToCollection(collectionName: CoinsCollections) {
+    const coins = this.selection.selected;
+    const currentCoins = this.coinService.getCoins(); // Assuming you have a getter for the coins BehaviorSubject
+    const updatedCoins = currentCoins.filter(
+      (coin) => !coins.some((selected) => selected.symbol === coin.symbol)
     );
 
-    this.selection.clear();
-    this.buttonsDisabled = true;
-  }
+    this.coinService.setCoins(updatedCoins); // Update the BehaviorSubject with the filtered list
 
-  onMoveSelectedToCoinTable() {
-    const coins = this.selection.selected as Coin[];
-    this.coinsService.moveMany(
-      CoinsCollections.CoinSorter,
-      CoinsCollections.CoinRepo,
-      coins
-    );
-    this.selection.clear();
-
-    this.buttonsDisabled = true;
-  }
-
-  onOpenCoinDescription(coin: Coin): void {
-    this.modalDialog.open(CoinDescriptionComponent, {
-      data: { coin: coin, collectionName: CoinsCollections.CoinSorter },
-      enterAnimationDuration: '250ms',
-      exitAnimationDuration: '250ms',
-      width: '100vw',
-      height: '100vh',
+    const updateData: Array<CoinUpdateData> = coins.map((c) => {
+      return {
+        symbol: c.symbol,
+        propertiesToUpdate: { collection: collectionName },
+      };
     });
+    this.coinService.updateMany(updateData, this.collectionName);
+
+    this.selection.clear();
+    this.buttonsDisabled = true;
   }
 
   onEdit(coin: Coin) {
+    console.log('CoinTable ---> ', coin);
     this.modalDialog.open(EditCoinComponent, {
-      data: { coin: coin, collectionName: CoinsCollections.CoinSorter },
+      data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,
       width: '95vw',
       height: '100vh',
     });
-  }
-
-  onCreateTvLists() {
-    const coins = this.selection.selected as Coin[];
-    this.bybitCoinsList = coins
-      .filter((c) => c.coinExchange === 'by' || c.coinExchange === 'biby')
-      .map((c) => `BYBIT:${c.symbol}`)
-      .join(',');
-
-    // Filter and map Binance coins
-    this.binanceCoinsList = coins
-      .filter((c) => c.coinExchange === 'bi')
-      .map((c) => `BINANCE:${c.symbol}`)
-      .join(',');
-
-    this.modalDialog.open(TvListComponent, {
-      data: {
-        bybitList: this.bybitCoinsList,
-        binanceList: this.binanceCoinsList,
-      },
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
-      width: '100vw',
-      height: '100vh',
-    });
-  }
-
-  clearInput() {
-    this.filterValue = '';
-    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
   onSantimentClick(coin: Coin) {
@@ -188,6 +159,21 @@ export class CoinSorterTableComponent implements OnInit, OnDestroy {
 
     console.log(url); // Log the URL for debugging
     window.open(url, '_blank'); // Open the URL in a new tab
+  }
+
+  onOpenCoinDescription(coin: Coin): void {
+    this.modalDialog.open(CoinDescriptionComponent, {
+      data: { coin: coin, collectionName: CoinsCollections.CoinRepo },
+      enterAnimationDuration: '250ms',
+      exitAnimationDuration: '250ms',
+      width: '100vw',
+      height: '100vh',
+    });
+  }
+
+  clearInput() {
+    this.filterValue = '';
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
   ngOnDestroy(): void {

@@ -34,15 +34,12 @@ export class SantimentChartsComponent implements OnDestroy {
       this.logoUrl = params['image_url'] ? params['image_url'] : this.logoUrl;
     });
 
-    this.subCoins = this.coinsService
-      .coins$(CoinsCollections.CoinRepo)
-      .subscribe((coins: Coin[]) => {
-        console.log('COINS', coins);
-        const coin = coins.find((c) => c.symbol == this.symbol);
-        if (coin) {
-          this.logoUrl = coin.image_url ? coin.image_url : this.logoUrl;
-        }
-      });
+    this.subCoins = this.coinsService.coins$.subscribe((coins: Coin[]) => {
+      const coin = coins.find((c) => c.symbol == this.symbol);
+      if (coin) {
+        this.logoUrl = coin.image_url ? coin.image_url : this.logoUrl;
+      }
+    });
 
     this.subSantiment = this.santimentService
       .santiment$(this.symbol)

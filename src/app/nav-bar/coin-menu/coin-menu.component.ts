@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import {
   ALERTS_AT_WORK,
   ARCHIVED_ALERTS,
-  COIN,
+  COIN_REPO,
   COIN_BLACK_LIST,
   COIN_PROVIDER,
   COIN_SORTER,
@@ -21,7 +21,7 @@ export class CoinMenuComponent implements OnInit {
   ngOnInit(): void {}
 
   onGoToCoin() {
-    this.router.navigate([COIN]);
+    this.router.navigate([COIN_REPO]);
   }
 
   onGoToCoinProvider() {

@@ -48,17 +48,13 @@ import { WorkComponent } from './work/work.component';
 import { WorkFieldComponent } from './work/work-field/work-field.component';
 import { WorkItemComponent } from './work/work-item/work-item.component';
 
-import { CoinComponent } from './coin/coin.component';
 import { DeleteItemComponent } from './shared/delete-item/delete-item.component';
 import { CoinProviderComponent } from './coin-provider/coin-provider.component';
-import { CoinProviderTableComponent } from './coin-provider/coin-provider-table/coin-provider-table.component';
 import { CoinBlackListComponent } from './coin-black-list/coin-black-list.component';
-import { CoinBlackListTableComponent } from './coin-black-list/coin-black-list-table/coin-black-list-table.component';
 import { AlertMenuComponent } from './nav-bar/alert-menu/alert-menu.component';
 import { CoinMenuComponent } from './nav-bar/coin-menu/coin-menu.component';
-import { CoinTableComponent } from './coin/coin-table/coin-table.component';
+
 import { CoinSorterComponent } from './coin-sorter/coin-sorter.component';
-import { CoinSorterTableComponent } from './coin-sorter/coin-sorter-table/coin-sorter-table.component';
 import { TvListComponent } from './shared/tv-list/tv-list.component';
 import { EditCoinComponent } from './shared/edit-coin/edit-coin.component';
 import { EditAlertComponent } from './shared/edit-alert/edit-alert.component';
@@ -70,6 +66,8 @@ import { SantimentChartsComponent } from './santiment-charts/santiment-charts.co
 import { SantimentChartComponent } from './santiment-charts/santiment-chart/santiment-chart.component';
 import { SantimentComponent } from './admin/santiment/santiment.component';
 import { CoinStatsComponent } from './admin/coin-stats/coin-stats.component';
+import { CoinRepoComponent } from './coin-repo/coin-repo.component';
+import { CoinTableComponent } from './shared/coin-table/coin-table.component';
 
 echarts.use([
   LegendComponent,
@@ -90,12 +88,12 @@ echarts.registerTheme('macarons', Marcaron);
 @NgModule({
   declarations: [
     TriggeredAlertsTableComponent,
-    CoinBlackListTableComponent,
     ValidationSummaryComponent,
-    CoinProviderTableComponent,
     DescriptionModalComponent,
-    CoinSorterTableComponent,
     TriggeredAlertsComponent,
+    SantimentChartsComponent,
+    CoinDescriptionComponent,
+    SantimentChartComponent,
     ArchivedAlertsComponent,
     CoinBlackListComponent,
     ArchivedTableComponent,
@@ -105,42 +103,39 @@ echarts.registerTheme('macarons', Marcaron);
     CoinSorterComponent,
     ImageModalComponent,
     AlertMenuComponent,
+    SantimentComponent,
     EditAlertComponent,
     WorkFieldComponent,
     CoinTableComponent,
+    CoinStatsComponent,
     SnackbarComponent,
     WorkItemComponent,
     CarouselComponent,
     CoinMenuComponent,
     EditCoinComponent,
     NewAlertComponent,
+    CoinRepoComponent,
     SpinnerComponent,
     AlertsComponent,
     TvListComponent,
     NavBarComponent,
-    WorkComponent,
-    CoinComponent,
-    AppComponent,
-    SantimentChartsComponent,
-    SantimentChartComponent,
-    WsComponent,
-    CoinDescriptionComponent,
     AdminComponent,
-    SantimentComponent,
-    CoinStatsComponent,
+    WorkComponent,
+    AppComponent,
+    WsComponent,
   ],
   imports: [
-    NgxEchartsModule.forRoot({ echarts }),
+    FormsModule,
     BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AppMaterialModule,
-    AppRoutingModule,
     NgxGaugeModule,
     HttpClientModule,
-    CanvasJSAngularChartsModule,
+    AppRoutingModule,
+    AppRoutingModule,
+    AppMaterialModule,
     ReactiveFormsModule,
-    FormsModule,
+    BrowserAnimationsModule,
+    CanvasJSAngularChartsModule,
+    NgxEchartsModule.forRoot({ echarts }),
   ],
   providers: [],
   bootstrap: [AppComponent],

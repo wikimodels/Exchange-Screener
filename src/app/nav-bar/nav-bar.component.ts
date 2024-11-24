@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NewAlertComponent } from '../alerts/new-alert/new-alert.component';
 import {
   ADMIN,
-  COIN,
+  COIN_REPO,
   COIN_BLACK_LIST,
   COIN_PROVIDER,
   WORK,
@@ -27,7 +27,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   onGoToCoin() {
-    this.router.navigate([COIN]);
+    this.router.navigate([COIN_REPO]);
   }
 
   onGoToWs() {

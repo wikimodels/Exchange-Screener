@@ -13,29 +13,44 @@
   </div>
 
   <div>
-    <h1>Coins</h1>
+    <h1>{{tableHeader}}</h1>
   </div>
 
 
   <div style="display: flex; flex-direction: row; gap: 10px">
 
+    <!-- MOVE TO PROVIDER TABLE  -->
+    <button mat-raised-button [disabled]="buttonsDisabled"
+      (click)="onMoveSelectedToCollection(CoinsCollections.CoinProvider)" color="primary"
+      matTooltip="Move to Repo Table" matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
+    </button>
+
+    <!-- MOVE TO REPO TABLE  -->
+    <button mat-raised-button [disabled]="buttonsDisabled"
+      (click)="onMoveSelectedToCollection(CoinsCollections.CoinRepo)" color="primary" matTooltip="Move to Repo Table"
+      matTooltipPosition="above">
+      <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
+    </button>
+
     <!-- MOVE TO SORTER TABLE  -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToSorterTable()" color="primary"
+    <button mat-raised-button [disabled]="buttonsDisabled"
+      (click)="onMoveSelectedToCollection(CoinsCollections.CoinSorter)" color="primary"
       matTooltip="Move to Sorter Table" matTooltipPosition="above">
       <mat-icon style="margin-left: 5px;" svgIcon="send-to"></mat-icon>
     </button>
 
     <!-- MOVE TO BLACK LIST TABLE -->
-    <button mat-raised-button [disabled]="buttonsDisabled" (click)="onMoveSelectedToBlackListTable()"
-      matTooltip="Move to Black List" matTooltipPosition="above" color="accent">
+    <button mat-raised-button [disabled]="buttonsDisabled"
+      (click)="onMoveSelectedToCollection(CoinsCollections.CoinBlackList)" matTooltip="Move to Black List"
+      matTooltipPosition="above" color="accent">
       <mat-icon style="margin-left: 5px;" svgIcon="black-list"></mat-icon>
     </button>
-
   </div>
 </div>
 
 <div>
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12 coin-table">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z12" [class]="tableCssClass">
 
     <!-- SYMBOL -->
     <ng-container matColumnDef="symbol">

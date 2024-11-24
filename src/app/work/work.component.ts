@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Coin } from 'models/coin/coin';
+import { CoinUpdateData } from 'models/coin/coin-update-data';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { SnackbarType } from 'models/shared/snackbar-type';
 import { Subscription } from 'rxjs';
@@ -17,12 +18,11 @@ import { WorkSelectionService } from 'src/service/work.selection.service';
 export class WorkComponent implements OnInit, OnDestroy {
   count = 0;
   coins!: Coin[];
-  workingCoins!: Coin[];
+  coinsAtWork!: Coin[];
   symbols!: string[];
   form!: FormGroup | null;
   filteredSymbols: string[] = [];
-  coinsSub!: Subscription | null;
-  workingCoinsSub!: Subscription | null;
+  sub!: Subscription | null;
   defaultLink = 'https://www.tradingview.com/chart?symbol=BINANCE:BTCUSDT.P';
   private openedWindows: Window[] = [];
 
@@ -34,21 +34,13 @@ export class WorkComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.coinsService.getAllCoins(CoinsCollections.CoinRepo);
-    this.coinsSub = this.coinsService
-      .coins$(CoinsCollections.CoinRepo)
-      .subscribe((data: Coin[]) => {
-        this.coins = data;
-        this.symbols = data.map((d) => d.symbol);
-      });
-
-    this.workingCoinsSub = this.coinsService
-      .coins$(CoinsCollections.CoinAtWork)
-      .subscribe((data: Coin[]) => {
-        this.workingCoins = data;
-        this.count = this.workingCoins.length;
-        this.selectionService.clear();
-      });
+    this.sub = this.coinsService.coins$.subscribe((data: Coin[]) => {
+      this.coins = data;
+      this.symbols = data.map((d) => d.symbol);
+      this.coinsAtWork = data.filter((c) => c.isAtWork);
+      this.count = this.coinsAtWork.length;
+      this.selectionService.clear();
+    });
 
     this.form = this.fb.group({
       symbol: [''],
@@ -67,16 +59,22 @@ export class WorkComponent implements OnInit, OnDestroy {
     }
   }
 
-  onMoveToWorkingCoinsTable() {
+  onPutToWork() {
     if (this.form?.valid) {
       const symbol = this.form.get('symbol')?.value;
       const coin = this.coins.find((c) => c.symbol == symbol);
 
-      const alreadyAdded = this.workingCoins.find(
+      const alreadyAdded = this.coinsAtWork.find(
         (c) => coin?.symbol == c.symbol
       );
       if (coin && !alreadyAdded) {
-        this.coinsService.addOne(CoinsCollections.CoinAtWork, coin);
+        const updateData: CoinUpdateData = {
+          symbol: coin.symbol,
+          propertiesToUpdate: {
+            isAtWork: true,
+          },
+        };
+        this.coinsService.updateOne(updateData);
       }
       if (coin && alreadyAdded) {
         this.snackbarService.showSnackBar(
@@ -98,15 +96,15 @@ export class WorkComponent implements OnInit, OnDestroy {
   }
 
   toggleAll() {
-    if (this.selectionService.isAllSelected(this.workingCoins)) {
+    if (this.selectionService.isAllSelected(this.coinsAtWork)) {
       this.selectionService.clear();
     } else {
-      this.selectionService.select(this.workingCoins);
+      this.selectionService.select(this.coinsAtWork);
     }
   }
 
   isAllSelected() {
-    return this.selectionService.isAllSelected(this.workingCoins);
+    return this.selectionService.isAllSelected(this.coinsAtWork);
   }
 
   onOpenCoinglass() {
@@ -143,18 +141,20 @@ export class WorkComponent implements OnInit, OnDestroy {
     this.openedWindows = [];
   }
 
-  onDelete() {
+  onRemoveFromWork() {
     const coins = this.selectionService.selectedValues() as Coin[];
-    const symbols = coins.map((c) => c.symbol);
-    this.coinsService.deleteMany(CoinsCollections.CoinAtWork, symbols);
+    const updateData: Array<CoinUpdateData> = coins.map((c) => {
+      return {
+        symbol: c.symbol,
+        propertiesToUpdate: { isAtWork: false },
+      };
+    });
+    this.coinsService.updateMany(updateData, CoinsCollections.CoinRepo);
   }
 
   ngOnDestroy(): void {
-    if (this.coinsSub) {
-      this.coinsSub.unsubscribe();
-    }
-    if (this.workingCoinsSub) {
-      this.workingCoinsSub.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
   }
 }

@@ -17,12 +17,9 @@ export class WorkFieldComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(private coinsService: CoinsGenericService) {}
   ngOnInit(): void {
-    this.coinsService.getAllCoins(CoinsCollections.CoinAtWork);
-    this.sub = this.coinsService
-      .coins$(CoinsCollections.CoinAtWork)
-      .subscribe((data: Coin[]) => {
-        this.coins = data;
-      });
+    this.sub = this.coinsService.coins$.subscribe((data: Coin[]) => {
+      this.coins = data.filter((c) => c.isAtWork);
+    });
   }
 
   isAllSelected() {

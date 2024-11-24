@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Coin } from 'models/coin/coin';
+import { CoinUpdateData } from 'models/coin/coin-update-data';
 import { DescriptionModalComponent } from 'src/app/shared/description-modal/description-modal.component';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 
@@ -31,10 +32,12 @@ export class CoinDescriptionComponent implements OnInit {
   }
 
   saveChanges() {
-    this.coinsService.updateOne(
-      this.data.collectionName,
-      this.coin.symbol,
-      this.coin
-    );
+    const updateData: CoinUpdateData = {
+      symbol: this.coin.symbol,
+      propertiesToUpdate: {
+        description: this.coin.description,
+      },
+    };
+    this.coinsService.updateOne(updateData);
   }
 }
