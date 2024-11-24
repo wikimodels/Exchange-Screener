@@ -181,7 +181,7 @@ export class TriggeredAlertsTableComponent implements OnInit, OnDestroy {
           propertiesToUpdate: { isAtWork: true },
         };
       });
-      this.coinsService.updateMany(updateData, CoinsCollections.CoinRepo);
+      this.coinsService.updateMany(updateData);
     }
     this.selection.clear();
     this.buttonsDisabled = true;

@@ -122,7 +122,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* COINS TABLE */
 /*---------------------- */
 .coin-repo-table .mat-mdc-row:nth-child(even) {
-  background-color: #e4f7df!important;
+  background-color: #E8F5E9!important;
+
 }
 
 .coin-repo-table .mat-mdc-row {
@@ -130,8 +131,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .coin-repo-table .mat-mdc-header-row {
-  background-color: #cbdff5 !important;
+  background-color: #4CAF50 !important;
   height: 45px;
+  color: white;
 }
 
 .coin-repo-table .mat-mdc-row:hover {
@@ -143,7 +145,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* COIN-PROVIDER TABLE */
 /*---------------------- */
 .coin-provider-table .mat-mdc-row:nth-child(even) {
-  background-color: #e4f7df!important;
+  background-color: #FFF3E0!important;
 }
 
 .coin-provider-table .mat-mdc-row {
@@ -151,8 +153,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .coin-provider-table .mat-mdc-header-row {
-  background-color: #cbdff5 !important;
+  background-color: #F57C00 !important;
   height: 45px;
+  color: white;
 }
 
 .coin-provider-table .mat-mdc-row:hover {
@@ -194,8 +197,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .coin-sorter-table .mat-mdc-header-row {
-  background-color: #1818ca !important;
-  color: white;
+  background-color: #7B1FA2 !important;
+  color: #F3E5F5;
   height: 45px;
 }
 

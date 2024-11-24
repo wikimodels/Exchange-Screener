@@ -34,12 +34,14 @@ export class WorkComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.coinsService.loadCoins(CoinsCollections.CoinRepo);
     this.sub = this.coinsService.coins$.subscribe((data: Coin[]) => {
       this.coins = data;
       this.symbols = data.map((d) => d.symbol);
       this.coinsAtWork = data.filter((c) => c.isAtWork);
       this.count = this.coinsAtWork.length;
       this.selectionService.clear();
+      console.log('symbols', this.symbols.length);
     });
 
     this.form = this.fb.group({
@@ -143,13 +145,20 @@ export class WorkComponent implements OnInit, OnDestroy {
 
   onRemoveFromWork() {
     const coins = this.selectionService.selectedValues() as Coin[];
+
+    const currentCoins = this.coinsService.getCoins(); // Assuming you have a getter for the coins BehaviorSubject
+    const updatedCoins = currentCoins.filter(
+      (coin) => !coins.some((selected) => selected.symbol === coin.symbol)
+    );
+
+    this.coinsService.setCoins(updatedCoins); // Update the BehaviorSubject with the filtered list
     const updateData: Array<CoinUpdateData> = coins.map((c) => {
       return {
         symbol: c.symbol,
         propertiesToUpdate: { isAtWork: false },
       };
     });
-    this.coinsService.updateMany(updateData, CoinsCollections.CoinRepo);
+    this.coinsService.updateMany(updateData);
   }
 
   ngOnDestroy(): void {

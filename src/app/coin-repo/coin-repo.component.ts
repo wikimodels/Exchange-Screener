@@ -11,4 +11,10 @@ export class CoinRepoComponent {
   collectionName = CoinsCollections.CoinRepo;
   tableCssClass = TablesCssClasses.CoinRepo;
   tableHeader = 'Coin Repo';
+  showButtons = {
+    coinSorter: true,
+    coinProvider: true,
+    coinRepo: false,
+    coinBlackList: true,
+  };
 }

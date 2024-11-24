@@ -55,8 +55,6 @@ export class CoinsGenericService {
       })
       .subscribe({
         next: (coins: Coin[]) => {
-          const msg = `Loaded ${coins.length} coins`;
-          this.snackbarService.showSnackBar(msg, '', 4000, SnackbarType.Info);
           this.setCoins(coins);
         },
         error: (error) => this.handleError(error),
@@ -151,10 +149,7 @@ export class CoinsGenericService {
   }
 
   // Update multiple coins
-  public updateMany(
-    updatedData: Array<CoinUpdateData>,
-    collectionName: string
-  ): void {
+  public updateMany(updatedData: Array<CoinUpdateData>): void {
     // Send updated data to the server
     this.http
       .put<ModifyResult>(
@@ -166,7 +161,6 @@ export class CoinsGenericService {
         tap((response: ModifyResult) => {
           const msg = `Documents modified ${response.modifiedCount}`;
           this.snackbarService.showSnackBar(msg, '');
-          this.loadCoins(collectionName);
         })
       )
       .subscribe({

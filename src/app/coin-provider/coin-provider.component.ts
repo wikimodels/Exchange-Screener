@@ -11,4 +11,10 @@ export class CoinProviderComponent {
   collectionName = CoinsCollections.CoinProvider;
   tableCssClass = TablesCssClasses.CoinProvider;
   tableHeader = 'Coin Provider';
+  showButtons = {
+    coinSorter: true,
+    coinProvider: false,
+    coinRepo: true,
+    coinBlackList: true,
+  };
 }

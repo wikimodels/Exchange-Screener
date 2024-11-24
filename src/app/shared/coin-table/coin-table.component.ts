@@ -35,6 +35,12 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   @Input() collectionName!: string;
   @Input() tableCssClass!: string;
   @Input() tableHeader!: string;
+  @Input() showButtons!: {
+    coinSorter: boolean;
+    coinProvider: boolean;
+    coinRepo: boolean;
+    coinBlackList: boolean;
+  };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -124,7 +130,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
         propertiesToUpdate: { collection: collectionName },
       };
     });
-    this.coinService.updateMany(updateData, this.collectionName);
+    this.coinService.updateMany(updateData);
 
     this.selection.clear();
     this.buttonsDisabled = true;

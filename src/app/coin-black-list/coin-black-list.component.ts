@@ -11,4 +11,10 @@ export class CoinBlackListComponent {
   collectionName = CoinsCollections.CoinBlackList;
   tableCssClass = TablesCssClasses.CoinBlackList;
   tableHeader = 'Coin Black List';
+  showButtons = {
+    coinSorter: true,
+    coinProvider: true,
+    coinRepo: true,
+    coinBlackList: false,
+  };
 }
