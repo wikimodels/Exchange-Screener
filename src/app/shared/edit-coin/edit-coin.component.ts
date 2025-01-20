@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Coin } from 'models/coin/coin';
 import { CoinUpdateData } from 'models/coin/coin-update-data';
 import { Status } from 'models/coin/status';
+import { CoinLinksService } from 'src/service/coin-links.service';
 
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 
@@ -106,6 +107,7 @@ export class EditCoinComponent implements OnInit {
   ];
 
   constructor(
+    public coinsLinksService: CoinLinksService,
     public dialogRef: MatDialogRef<EditCoinComponent>,
     private coinsService: CoinsGenericService,
     @Inject(MAT_DIALOG_DATA) public data: { coin: Coin; collectionName: string }

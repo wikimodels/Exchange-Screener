@@ -93,7 +93,7 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="element.coinGeckoAvailable">
-          <mat-icon>check</mat-icon>
+          <mat-icon (click)="onEdit(element)">check</mat-icon>
         </ng-container>
       </td>
     </ng-container>
@@ -128,21 +128,19 @@
       <th mat-header-cell *matHeaderCellDef> Links </th>
       <td mat-cell *matCellDef="let element">
         <!-- TRADING VIEW -->
-        <a *ngIf="element.tvLink" [href]="element.tvLink" target="_blank">
+        <a [href]="coinLinksService.tradingViewLink(element.symbol, element.exchanges)" target="_blank">
           <img src="assets/icons/tv.svg" alt="TradingView" class="round-image" />
         </a>
         <!-- COIN GLASS -->
-        <a *ngIf="element.cgLink" [href]="element.cgLink" target="_blank">
+        <a [href]="coinLinksService.coinglassLink(element.symbol, element.exchanges)" target="_blank">
           <img src="assets/icons/coinglass.svg" alt="Coinglass" class="round-image" />
         </a>
-        <!-- BINANCE -->
-        <a *ngIf="element.binanceExch" [href]="element.binanceExch" target="_blank">
-          <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
-        </a>
-        <!-- BYBIT -->
-        <a *ngIf="element.bybitExch" [href]="element.bybitExch" target="_blank">
-          <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
-        </a>
+
+        <div style="display: inline-block;" *ngFor="let exchange of element.exchanges">
+          <a [href]="coinLinksService.exchangeLink(element.symbol,exchange)" target="_blank">
+            <img [src]="coinLinksService.exchangeLogoLink(exchange)" [alt]="exchange" class="round-image" />
+          </a>
+        </div>
       </td>
     </ng-container>
 

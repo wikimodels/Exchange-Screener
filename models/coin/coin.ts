@@ -6,7 +6,8 @@ export interface Coin {
   santimentName?: string;
   symbol: string;
   turnover24h: number;
-  exchange: string;
+  exchanges: string[];
+  strategies: string[];
   category: string;
   status: Status;
   coinGeckoId?: string;
@@ -14,10 +15,6 @@ export interface Coin {
   minQty?: number;
   minNotional?: number;
   tickSize?: number;
-  tvLink?: string;
-  cgLink?: string;
-  bybitExch?: string;
-  binanceExch?: string;
   imageUrl?: string;
   market_cap_rank?: number;
   market_cap_fdv_ratio?: number;
@@ -36,10 +33,10 @@ export interface Coin {
   gh_deletions?: number;
   gh_commit_count_4_weeks?: number;
   image_url?: string;
-  coinExchange?: string;
   coinGeckoAvailable?: boolean;
   santimentAvailable?: boolean;
   description?: string;
-  collection: string;
+  collection?: string;
   isAtWork?: boolean;
+  isSelectedForWork?: boolean;
 }

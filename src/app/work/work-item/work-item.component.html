@@ -7,17 +7,11 @@
   <!-- SYMBOL -->
   <div class="symbol-name">{{ coin.symbol }}</div>
 
-  <!-- BINANCE LINK -->
-  <div *ngIf="coin.binanceExch" class="exchange-link">
-    <a [href]="coin.binanceExch" target="_blank" (click)="$event.stopPropagation()">
-      <img src="assets/icons/binance-black.svg" alt="Binance" class="round-image" />
-    </a>
-  </div>
-
-  <!-- BYBIT LINK -->
-  <div *ngIf="coin.bybitExch" class="exchange-link">
-    <a [href]="coin.bybitExch" target="_blank" (click)="$event.stopPropagation()">
-      <img src="assets/icons/bybit.svg" alt="Bybit" class="round-image" />
+  <!-- EXCHANGES LINKS -->
+  <div style="display: inline-block;" *ngFor="let exchange of coin.exchanges">
+    <a [href]="coinsLinksService.exchangeLink(coin.symbol, exchange)" target="_blank"
+      (click)="$event.stopPropagation()">
+      <img [src]="coinsLinksService.exchangeLogoLink(exchange)" alt="Binance" class="round-image" />
     </a>
   </div>
 </div>

@@ -14,6 +14,9 @@ import { AlertsCollections } from 'models/alerts/alerts-collections';
 import { Alert } from 'models/alerts/alert';
 import { EditAlertComponent } from 'src/app/shared/edit-alert/edit-alert.component';
 import { Subscription } from 'rxjs';
+import { CoinLinksService } from 'src/service/coin-links.service';
+import { NewInclinedAlertComponent } from '../new-inclined-alert/new-inclined-alert.component';
+import { EditInclinedAlertComponent } from 'src/app/shared/edit-inclined-alert/edit-inclined-alert.component';
 
 @Component({
   selector: 'app-alerts-table',
@@ -45,7 +48,8 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private alertsService: AlertsGenericService,
-    private modelDialog: MatDialog
+    private modelDialog: MatDialog,
+    public coinLinksService: CoinLinksService
   ) {}
 
   ngOnInit() {
@@ -94,6 +98,15 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
     });
   }
 
+  onAddInclinedAlert() {
+    this.modelDialog.open(NewInclinedAlertComponent, {
+      enterAnimationDuration: 250,
+      exitAnimationDuration: 250,
+      width: '100vw',
+      height: '100vh',
+    });
+  }
+
   onOpenDescriptionModalDialog(alert: Alert): void {
     this.modelDialog.open(DescriptionModalComponent, {
       data: alert,
@@ -114,13 +127,23 @@ export class AlertsTableComponent implements OnInit, OnDestroy {
 
   onEdit(alert: Alert) {
     console.log('ALERTS TBL ---> ', alert);
-    this.modelDialog.open(EditAlertComponent, {
-      data: { collectionName: this.collectionName, alert: alert },
-      enterAnimationDuration: 250,
-      exitAnimationDuration: 250,
-      width: '95vw',
-      height: '100vh',
-    });
+    if (!alert.isInclined) {
+      this.modelDialog.open(EditAlertComponent, {
+        data: { collectionName: this.collectionName, alert: alert },
+        enterAnimationDuration: 250,
+        exitAnimationDuration: 250,
+        width: '95vw',
+        height: '100vh',
+      });
+    } else {
+      this.modelDialog.open(EditInclinedAlertComponent, {
+        data: { collectionName: this.collectionName, alert: alert },
+        enterAnimationDuration: 250,
+        exitAnimationDuration: 250,
+        width: '95vw',
+        height: '100vh',
+      });
+    }
   }
 
   onMoveToArchive() {

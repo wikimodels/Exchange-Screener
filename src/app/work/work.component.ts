@@ -5,6 +5,7 @@ import { CoinUpdateData } from 'models/coin/coin-update-data';
 import { CoinsCollections } from 'models/coin/coins-collections';
 import { SnackbarType } from 'models/shared/snackbar-type';
 import { Subscription } from 'rxjs';
+import { CoinLinksService } from 'src/service/coin-links.service';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
 
 import { SnackbarService } from 'src/service/snackbar.service';
@@ -28,6 +29,7 @@ export class WorkComponent implements OnInit, OnDestroy {
 
   constructor(
     private coinsService: CoinsGenericService,
+    private coinsLinksService: CoinLinksService,
     private fb: FormBuilder,
     private snackbarService: SnackbarService,
     public selectionService: WorkSelectionService<any>
@@ -112,7 +114,10 @@ export class WorkComponent implements OnInit, OnDestroy {
   onOpenCoinglass() {
     this.selectionService.selectedValues().forEach((v: Coin, index: number) => {
       setTimeout(() => {
-        const newWindow = window.open(v.cgLink, '_blank');
+        const newWindow = window.open(
+          this.coinsLinksService.tradingViewLink(v.symbol, v.exchanges),
+          '_blank'
+        );
         if (newWindow) {
           this.openedWindows.push(newWindow);
         }
@@ -123,7 +128,10 @@ export class WorkComponent implements OnInit, OnDestroy {
   onOpenTradingview() {
     this.selectionService.selectedValues().forEach((v: Coin, index: number) => {
       setTimeout(() => {
-        const newWindow = window.open(v.tvLink, '_blank');
+        const newWindow = window.open(
+          this.coinsLinksService.tradingViewLink(v.symbol, v.exchanges),
+          '_blank'
+        );
         if (newWindow) {
           this.openedWindows.push(newWindow);
         }

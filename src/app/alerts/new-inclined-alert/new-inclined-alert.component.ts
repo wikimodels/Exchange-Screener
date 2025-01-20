@@ -6,7 +6,7 @@ import { SymbolNameValidator } from 'src/functions/validators/symbol-name.valida
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Subscription, take } from 'rxjs';
 import { CoinsGenericService } from 'src/service/coins/coins-generic.service';
-import { CoinsCollections } from 'models/coin/coins-collections';
+
 import { AlertsGenericService } from 'src/service/alerts/alerts-generic.service';
 import { AlertsCollections } from 'models/alerts/alerts-collections';
 import { Coin } from 'models/coin/coin';
@@ -15,11 +15,11 @@ import { Status } from 'models/coin/status';
 
 @Component({
   selector: 'app-new-alert',
-  templateUrl: './new-alert.component.html',
-  styleUrls: ['./new-alert.component.css'],
+  templateUrl: './new-inclined-alert.component.html',
+  styleUrls: ['./new-inclined-alert.component.css'],
   providers: [],
 })
-export class NewAlertComponent implements OnInit, OnDestroy {
+export class NewInclinedAlertComponent implements OnInit, OnDestroy {
   validationMessages: { [key: string]: string[] } = {};
   filteredSymbols!: string[];
   sub!: Subscription;
@@ -57,14 +57,35 @@ export class NewAlertComponent implements OnInit, OnDestroy {
           AlertNameValidator.createValidator(this.alertsService),
         ]),
       ],
-      price: [
+      startPrice: [
         '',
         Validators.compose([
           Validators.required,
           Validators.pattern('^-?\\d*(\\.\\d+)?$'),
         ]),
       ],
-      isActive: [true],
+      startBar: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^-?\\d*(\\.\\d+)?$'),
+        ]),
+      ],
+      endPrice: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^-?\\d*(\\.\\d+)?$'),
+        ]),
+      ],
+      endBar: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^-?\\d*(\\.\\d+)?$'),
+        ]),
+      ],
+
       action: ['', Validators.required],
       description: ['', Validators.required],
       tvImgUrls: this.fb.array([this.createImageUrlControl()]),
@@ -82,7 +103,7 @@ export class NewAlertComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private coinsService: CoinsGenericService,
-    public dialogRef: MatDialogRef<NewAlertComponent>,
+    public dialogRef: MatDialogRef<NewInclinedAlertComponent>,
     private alertsService: AlertsGenericService,
     private _ngZone: NgZone
   ) {}
@@ -153,19 +174,21 @@ export class NewAlertComponent implements OnInit, OnDestroy {
       alert.tvImgUrls = this.form.get('tvImgUrls')?.value;
       alert.alertName = this.form.get('alertName')?.value;
       alert.action = this.form.get('action')?.value;
-      alert.price = this.form.get('price')?.value;
-      alert.isActive = this.form.get('isActive')?.value;
-      alert.isTv = false;
+      alert.startPrice = this.form.get('startPrice')?.value;
+      alert.endPrice = this.form.get('endPrice')?.value;
+      alert.startBar = this.form.get('startBar')?.value;
+      alert.endBar = this.form.get('endBar')?.value;
       alert.isActive = true;
+      alert.isTv = false;
       alert.exchanges = coin?.exchanges;
       alert.category = coin?.category;
       alert.status = coin?.status as Status;
-      alert.isInclined = false;
-      //alert.coinExchange = coin?.coinExchange;
+      alert.isInclined = true;
+
       alert.image_url = coin?.image_url;
       alert.creationTime = new Date().getTime();
       console.log(alert);
-      console.log('COIN ---> ', coin);
+
       this.alertsService.addOne(AlertsCollections.WorkingAlerts, alert);
       this.dialogRef.close();
     }

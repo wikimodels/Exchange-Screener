@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Coin } from 'models/coin/coin';
+import { CoinLinksService } from 'src/service/coin-links.service';
 import { WorkSelectionService } from 'src/service/work.selection.service';
 
 @Component({
@@ -10,7 +11,10 @@ import { WorkSelectionService } from 'src/service/work.selection.service';
 export class WorkItemComponent implements OnInit {
   @Input() coin!: Coin;
   selectedItems$ = this.selectionService.selectionChanges$;
-  constructor(public selectionService: WorkSelectionService<any>) {}
+  constructor(
+    public selectionService: WorkSelectionService<any>,
+    public coinsLinksService: CoinLinksService
+  ) {}
 
   ngOnInit(): void {}
 

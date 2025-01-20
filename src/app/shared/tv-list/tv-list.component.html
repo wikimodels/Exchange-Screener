@@ -1,22 +1,14 @@
 <div class="modal-content">
+  <div *ngFor="let coinList of coinLists; let i = index" class="modal-half">
+    <!-- Header with dynamic exchange names and logos -->
+    <div class="header">
+      <img [src]="getExchangeLogo(i)" [alt]="getExchangeName(i)" class="logo">
+      {{ getExchangeName(i) }}
+    </div>
 
-  <!-- Lefft Half -->
-  <div class="modal-half">
-    <div class="header"><img src="assets/icons/bybit.svg" alt="Left Logo" class="logo">Bybit</div>
+    <!-- Body content with coin list and download functionality -->
     <div class="body">
-      <!-- Right Body Content -->
-      <code (click)="downloadCodeAsTxt('Bybit')">{{data.bybitList}}</code>
+      <code (click)="downloadCodeAsTxt(i)">{{ coinList }}</code>
     </div>
   </div>
-
-  <!-- Right Half -->
-  <div class="modal-half">
-    <div class="header"><img src="assets/icons/binance-black.svg" alt="Left Logo" class="logo">Binance</div>
-    <div class="body">
-      <!-- Left Body Content -->
-      <code (click)="downloadCodeAsTxt('Binance')">{{data.binanceList}}</code>
-    </div>
-  </div>
-
-
 </div>

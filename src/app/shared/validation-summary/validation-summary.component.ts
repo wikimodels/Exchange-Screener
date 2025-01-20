@@ -106,6 +106,14 @@ export class ValidationSummaryComponent implements OnInit, OnDestroy {
         return 'Symbol';
       case 'action':
         return 'Action';
+      case 'startPrice':
+        return 'Start Price';
+      case 'endPrice':
+        return 'End Price';
+      case 'startBar':
+        return 'Start Bar';
+      case 'endBar':
+        return 'End Bar';
       case 'description':
         return 'Description';
 

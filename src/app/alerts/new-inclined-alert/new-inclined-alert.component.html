@@ -44,15 +44,48 @@
               <input matInput type="string" formControlName="action" tabindex="-1" />
             </mat-form-field>
 
-            <!-- Price -->
+            <!-- Start Price -->
             <mat-form-field appearance="fill" class="form">
-              <mat-label>Price</mat-label>
-              <input matInput type="number" formControlName="price" inputmode="numeric" (keydown)="preventEKey($event)"
-                tabindex="-1" />
-              <mat-error *ngIf="form.get('price')?.hasError('pattern')">
+              <mat-label>Start Price</mat-label>
+              <input matInput type="number" formControlName="startPrice" inputmode="numeric"
+                (keydown)="preventEKey($event)" tabindex="-1" />
+              <mat-error *ngIf="form.get('startPrice')?.hasError('pattern')">
                 Price should have only numbers
               </mat-error>
             </mat-form-field>
+
+            <!-- Start Bar -->
+            <mat-form-field appearance="fill" class="form">
+              <mat-label>Start Bar</mat-label>
+              <input matInput type="number" formControlName="startBar" inputmode="numeric"
+                (keydown)="preventEKey($event)" tabindex="-1" />
+              <mat-error *ngIf="form.get('startBar')?.hasError('pattern')">
+                Bar should have only numbers
+              </mat-error>
+            </mat-form-field>
+
+
+            <!-- End Price -->
+            <mat-form-field appearance="fill" class="form">
+              <mat-label>End Price</mat-label>
+              <input matInput type="number" formControlName="endPrice" inputmode="numeric"
+                (keydown)="preventEKey($event)" tabindex="-1" />
+              <mat-error *ngIf="form.get('endPrice')?.hasError('pattern')">
+                Price should have only numbers
+              </mat-error>
+            </mat-form-field>
+
+
+            <!-- End Bar -->
+            <mat-form-field appearance="fill" class="form">
+              <mat-label>End Bar</mat-label>
+              <input matInput type="number" formControlName="endBar" inputmode="numeric" (keydown)="preventEKey($event)"
+                tabindex="-1" />
+              <mat-error *ngIf="form.get('endBar')?.hasError('pattern')">
+                Bar should have only numbers
+              </mat-error>
+            </mat-form-field>
+
           </div>
         </div>
 

@@ -68,6 +68,8 @@ import { SantimentComponent } from './admin/santiment/santiment.component';
 import { CoinStatsComponent } from './admin/coin-stats/coin-stats.component';
 import { CoinRepoComponent } from './coin-repo/coin-repo.component';
 import { CoinTableComponent } from './shared/coin-table/coin-table.component';
+import { NewInclinedAlertComponent } from './alerts/new-inclined-alert/new-inclined-alert.component';
+import { EditInclinedAlertComponent } from './shared/edit-inclined-alert/edit-inclined-alert.component';
 
 echarts.use([
   LegendComponent,
@@ -123,6 +125,8 @@ echarts.registerTheme('macarons', Marcaron);
     WorkComponent,
     AppComponent,
     WsComponent,
+    NewInclinedAlertComponent,
+    EditInclinedAlertComponent,
   ],
   imports: [
     FormsModule,

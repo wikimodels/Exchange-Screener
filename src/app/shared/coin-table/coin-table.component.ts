@@ -26,6 +26,7 @@ import { Subscription } from 'rxjs';
 import { CoinDescriptionComponent } from '../coin-description/coin-description.component';
 import { CoinUpdateData } from 'models/coin/coin-update-data';
 import { TvListComponent } from '../tv-list/tv-list.component';
+import { CoinLinksService } from 'src/service/coin-links.service';
 
 @Component({
   selector: 'app-coin-table',
@@ -75,6 +76,7 @@ export class CoinTableComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   constructor(
     private coinService: CoinsGenericService,
+    public coinLinksService: CoinLinksService,
     private modalDialog: MatDialog,
     private router: Router
   ) {}
@@ -142,21 +144,53 @@ export class CoinTableComponent implements OnInit, OnDestroy {
 
   onCreateTvLists() {
     const coins = this.selection.selected as Coin[];
-    this.bybitCoinsList = coins
-      .filter((c) => c.coinExchange === 'by' || c.coinExchange === 'biby')
+
+    // Initialize an empty array to store the different coin lists
+    const coinLists: string[] = [];
+
+    // Create the list for coins with "Bybit" in their exchanges
+    const bybitCoinsList = coins
+      .filter((c) => c.exchanges.includes('Bybit'))
       .map((c) => `BYBIT:${c.symbol}.P`)
       .join(',');
 
-    // Filter and map Binance coins
-    this.binanceCoinsList = coins
-      .filter((c) => c.coinExchange === 'bi')
+    // Create the list for coins with "Binance" but not "Bybit" in their exchanges
+    const binanceCoinsList = coins
+      .filter(
+        (c) => c.exchanges.includes('Binance') && !c.exchanges.includes('Bybit')
+      )
       .map((c) => `BINANCE:${c.symbol}.P`)
       .join(',');
 
+    // Create the list for coins with "BingX SF" but not "Binance" or "Bybit" in their exchanges
+    const bingxSfCoinsList = coins
+      .filter(
+        (c) =>
+          c.exchanges.includes('BingX SF') &&
+          !c.exchanges.includes('Binance') &&
+          !c.exchanges.includes('Bybit')
+      )
+      .map((c) => `BINGX:${c.symbol}.PS`)
+      .join(',');
+
+    // Create the list for coins with "BingX PF" (this is for the remaining coins)
+    const bingxPfCoinsList = coins
+      .filter((c) => c.exchanges.includes('BingX PF'))
+      .map((c) => `BINGX:${c.symbol}.P`)
+      .join(',');
+
+    // Push all the lists into the coinLists array
+    coinLists.push(
+      bybitCoinsList,
+      binanceCoinsList,
+      bingxSfCoinsList,
+      bingxPfCoinsList
+    );
+
+    // Open the modal with the updated coinLists data
     this.modalDialog.open(TvListComponent, {
       data: {
-        bybitList: this.bybitCoinsList,
-        binanceList: this.binanceCoinsList,
+        coinLists: coinLists,
       },
       enterAnimationDuration: 250,
       exitAnimationDuration: 250,

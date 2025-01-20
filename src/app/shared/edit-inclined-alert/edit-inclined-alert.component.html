@@ -1,14 +1,13 @@
 <div class="container">
-
-  <!-- Header Section -->
   <div class="header">
     <img [src]="logoUrl" alt="logo" class="coin-image" />
-    <h2>{{displayedSymol}}</h2>
+    <h2 style="margin-top: 8px;">{{displayedSymbol}}</h2>
   </div>
 
   <div class="form-container">
     <!-- Validation Errors Summary -->
     <app-validation-summary [form]="form!"></app-validation-summary>
+
     <form [formGroup]="form" *ngIf="form">
       <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
         <!-- COLUMN 1 -->
@@ -17,8 +16,7 @@
             <!-- Symbol -->
             <mat-form-field appearance="fill" class="form">
               <mat-label>Symbol</mat-label>
-              <input type="text" matInput formControlName="symbol" [matAutocomplete]="auto" (input)="filterSymbols()"
-                tabindex="-1" />
+              <input type="text" matInput formControlName="symbol" [matAutocomplete]="auto" tabindex="-1" />
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let suggestion of filteredSymbols" [value]="suggestion">
                   {{ suggestion }}
@@ -32,27 +30,57 @@
             <!-- Alert Name -->
             <mat-form-field appearance="fill" class="form">
               <mat-label>Alert Name</mat-label>
-              <input matInput type="string" formControlName="alertName" tabindex="-1" />
-              <mat-error *ngIf="form.get('alertName')?.errors?.['alertNameTaken']">
-                This Alert Name already taken
-              </mat-error>
+              <input matInput type="string" formControlName="keyLevelName" tabindex="-1" />
+              <!-- <mat-error *ngIf="form.get('keyLevelName')?.errors?.['keyLevelNameExists']">
+                This Key Level Name already exists
+              </mat-error> -->
             </mat-form-field>
 
-            <!-- Action -->
+            <!-- isActive -->
             <mat-form-field appearance="fill" class="form">
-              <mat-label>Action</mat-label>
-              <input matInput type="string" formControlName="action" tabindex="-1" />
+              <mat-label>Active Status</mat-label>
+              <mat-select formControlName="isActive">
+                <mat-option [value]="true">Active</mat-option>
+                <mat-option [value]="false">Inactive</mat-option>
+              </mat-select>
             </mat-form-field>
 
-            <!-- Price -->
+            <!-- Start Price -->
             <mat-form-field appearance="fill" class="form">
-              <mat-label>Price</mat-label>
-              <input matInput type="number" formControlName="price" inputmode="numeric" (keydown)="preventEKey($event)"
-                tabindex="-1" />
-              <mat-error *ngIf="form.get('price')?.hasError('pattern')">
+              <mat-label>Start Price</mat-label>
+              <input matInput type="number" formControlName="startPrice" inputmode="numeric" tabindex="-1" />
+              <mat-error *ngIf="form.get('startPrice')?.hasError('pattern')">
                 Price should have only numbers
               </mat-error>
             </mat-form-field>
+
+            <!-- Start Bar -->
+            <mat-form-field appearance="fill" class="form">
+              <mat-label>Start Bar</mat-label>
+              <input matInput type="number" formControlName="startBar" inputmode="numeric" tabindex="-1" />
+              <mat-error *ngIf="form.get('startBar')?.hasError('pattern')">
+                Price should have only numbers
+              </mat-error>
+            </mat-form-field>
+
+            <!-- End Price -->
+            <mat-form-field appearance="fill" class="form">
+              <mat-label>End Price</mat-label>
+              <input matInput type="number" formControlName="endPrice" inputmode="numeric" tabindex="-1" />
+              <mat-error *ngIf="form.get('endPrice')?.hasError('pattern')">
+                Price should have only numbers
+              </mat-error>
+            </mat-form-field>
+
+            <!-- End Bar -->
+            <mat-form-field appearance="fill" class="form">
+              <mat-label>End Bar</mat-label>
+              <input matInput type="number" formControlName="endBar" inputmode="numeric" tabindex="-1" />
+              <mat-error *ngIf="form.get('endBar')?.hasError('pattern')">
+                Price should have only numbers
+              </mat-error>
+            </mat-form-field>
+
           </div>
         </div>
 
@@ -68,8 +96,8 @@
           </mat-form-field>
 
           <!-- Image Links -->
-          <div formArrayName="tvImgUrls">
-            <div *ngFor="let link of imgUrls.controls; let i = index">
+          <div formArrayName="imageLinks">
+            <div *ngFor="let link of imageLinks.controls; let i = index">
               <div>
                 <mat-form-field appearance="fill" class="form">
                   <mat-label>Image Link {{i + 1}}</mat-label>

@@ -41,17 +41,18 @@
 
   <!-- Footer Section -->
   <div class="footer">
-    <a *ngIf="coin.tvLink" [href]="coin.tvLink" target="_blank">
+    <a [href]="coinsLinksService.tradingViewLink(coin.symbol, coin.exchanges)" target="_blank">
       <img class="round-image" src="assets/icons/tv.svg" alt="TradingView" />
     </a>
-    <a *ngIf="coin.cgLink" [href]="coin.cgLink" target="_blank">
+    <a [href]="coinsLinksService.coinglassLink(coin.symbol, coin.exchanges)" target="_blank">
       <img class="round-image" src="assets/icons/coinglass.svg" alt="CoinGlass" />
     </a>
-    <a *ngIf="coin.bybitExch" [href]="coin.bybitExch" target="_blank">
-      <img class="round-image" src="assets/icons/bybit.svg" alt="Bybit Exchange" />
-    </a>
-    <a *ngIf="coin.binanceExch" [href]="coin.binanceExch" target="_blank">
-      <img class="round-image" src="assets/icons/binance-black.svg" alt="Binance Exchange" />
-    </a>
+    <!-- EXCHANGES LINKS -->
+    <div style="display: inline-block;" *ngFor="let exchange of coin.exchanges">
+      <a [href]="coinsLinksService.exchangeLink(coin.symbol, exchange)" target="_blank"
+        (click)="$event.stopPropagation()">
+        <img [src]="coinsLinksService.exchangeLogoLink(exchange)" alt="Binance" class="round-image" />
+      </a>
+    </div>
   </div>
 </div>
